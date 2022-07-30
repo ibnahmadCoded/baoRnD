@@ -1,9 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const { getProjects, getMyProjects, getProjectsIFollow, getAProject, createProject, updateProject, deleteProject } = require('../controllers/projectController')
+const { getProjects, 
+        getMyProjects, 
+        getProjectsIFollow, 
+        getAProject, 
+        createProject, 
+        updateProject, 
+        deleteProject,
+        getProjectsByFilterKey } = require('../controllers/projectController')
 
 // get all public projects, including private projects of current user if user is logged in. 
 router.get('/', getProjects)
+
+// fileter function: Get all projects (all public projects, including private projects of current user if user is logged in) in a category/field/tags(later), etc
+router.get('/filter/:key', getProjectsByFilterKey)
 
 // get all user's projects, including projects in which they have full view. See projectController for details.
 router.get('/myprojects', getMyProjects)
