@@ -1,0 +1,9 @@
+// make the final result unique projects (i.e. no duplicates)
+    var unique = [];
+    var distinct = [];
+    for( let i = 0; i < mergedObj.length; i++ ){
+        if( !unique[mergedObj[i]._id]){
+            distinct.push(mergedObj[i]);
+            unique[mergedObj[i]._id] = 1;
+        }
+    }

@@ -1,37 +1,60 @@
 const express = require('express')
 const router = express.Router()
 const { getProjects, 
-        getMyProjects, 
-        getProjectsIFollow, 
+        getMyProjects,
         getAProject, 
         createProject, 
         updateProject, 
         deleteProject,
-        getProjectsByFilterKey } = require('../controllers/projectController')
+        getProjectsByFilterKey, 
+        getPublicProjectsOnly,
+        getProjectsIFollow,
+        getProjectsIResearch,
+        getProjectsIInitiated,
+        getProjectsIInvenst,
+        getProjectsISupervise
+} = require('../controllers/projectController')
+
+const { protect } = require('../middleware/authMiddleware')
 
 // get all public projects, including private projects of current user if user is logged in. 
-router.get('/', getProjects)
+router.get('/', protect, getProjects)
+
+// get all public projects, if user is not logged in. 
+router.get('/publiconly', getPublicProjectsOnly)
 
 // fileter function: Get all projects (all public projects, including private projects of current user if user is logged in) in a category/field/tags(later), etc
-router.get('/filter/:key', getProjectsByFilterKey)
+router.get('/filter/:key', protect, getProjectsByFilterKey)
 
 // get all user's projects, including projects in which they have full view. See projectController for details.
-router.get('/myprojects', getMyProjects)
+router.get('/myprojects', protect, getMyProjects)
 
-// get all projects the user is following. ??? move to stakeholder routes?
-router.get('/projectsifollow', getProjectsIFollow)
+// get all projects the loggedin user is following. 
+router.get('/projectsifollow', protect, getProjectsIFollow)
+
+// get all projects on which the user is a reseracher.
+router.get('/projectsiresearch', protect, getProjectsIResearch)
+
+// get all projects on which the user is a reseracher.
+router.get('/projectsiinitiated', protect, getProjectsIInitiated)
+
+// get all projects on which the user is a reseracher.
+router.get('/projectsiinvest', protect, getProjectsIInvenst)
+
+// get all projects on which the user is a reseracher.
+router.get('/projectsisupervise', protect, getProjectsISupervise)
 
 // get a project
-router.get('/:id', getAProject)
+router.get('/:id', protect, getAProject)
 
 // create a project. 
-router.post('/', createProject)
+router.post('/', protect, createProject)
 
 // update a project. 
-router.put('/:id', updateProject)
+router.put('/:id', protect, updateProject)
 
 // Delete a project. 
-router.delete('/:id', deleteProject)
+router.delete('/:id', protect, deleteProject)
 
 // get all followers of a project. ??? move to stakeholder routes?
 //router.get('/followers', (req, res) => {
