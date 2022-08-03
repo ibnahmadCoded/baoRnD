@@ -108,7 +108,7 @@ const removeTag = asyncHandler(async (req, res) => {
             new: true,
         })
 
-        // remove data entirely if there is no stakeholder status left for user&project
+        // remove data entirely if there is no tag left for user&project
         if (tag.tags.length === 0){
             await tag.remove()
 

@@ -7,7 +7,7 @@ const projectSchema = mongoose.Schema({
         ref: 'User' // acts as foreign key, i.e. linked to the userModel, which is exported as User
     },
     visibility: {
-        type: String,
+        type: String,   // can be Public or Private
         required: [true, 'Please provide the visibility status of your project']
     },
     detail: {

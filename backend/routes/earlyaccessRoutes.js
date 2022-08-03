@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { saveEmails, getEmails } = require('../controllers/newslettersignupController')
+const { saveEmails, getEmails } = require('../controllers/earlyaccessController')
 
 const {protect} = require('../middleware/authMiddleware')
 

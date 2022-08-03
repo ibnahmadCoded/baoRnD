@@ -12,7 +12,9 @@ const { getProjects,
         getProjectsIResearch,
         getProjectsIInitiated,
         getProjectsIInvenst,
-        getProjectsISupervise
+        getProjectsISupervise,
+        getProjectsIDevelop,
+        getProjectsICollaborate
 } = require('../controllers/projectController')
 
 const { protect } = require('../middleware/authMiddleware')
@@ -43,6 +45,12 @@ router.get('/projectsiinvest', protect, getProjectsIInvenst)
 
 // get all projects on which the user is a reseracher.
 router.get('/projectsisupervise', protect, getProjectsISupervise)
+
+// get all projects on which the user is a developer on. Developer in the sense of cocntractor (company/individual) developing a project/product not programmer
+router.get('/projectsidevelop', protect, getProjectsIDevelop)
+
+// get all projects on which the user is a collaborator.
+router.get('/projectsicollaborate', protect, getProjectsICollaborate)
 
 // get a project
 router.get('/:id', protect, getAProject)

@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
+const VerificationToken = require('../models/verificationtokenModel')
+const { generateVerificationCode, mailTransport, generateEmailTemplate, plainEmailTemplate } = require('../utils/mailtoken')
+const { isValidObjectId } = require('mongoose')
 
 // desc:  this function registers a user
 // route: POST /api/users
@@ -36,6 +39,36 @@ const registerUser = asyncHandler(async (req, res) => {
         password: hashedPassword
     })
 
+    if(user){
+        const OTP = generateVerificationCode()
+        const verificationtoken = new VerificationToken({
+            user: user._id,
+            token: OTP
+        })
+
+        await verificationtoken.save()
+
+        mailTransport().sendMail({
+            from: 'welcome@bd.com',
+            to: user.email,
+            subject: 'Verify Your Account',
+            html: generateEmailTemplate(OTP),
+        })
+
+        res.status(201).json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+            type: user.type,
+            token: generateToken(user._id)
+        })
+    }
+    else 
+    {
+        res.status(400)
+        throw new Error('Invalid data or token')
+    }
+    /*
     // check that user was created
     if(user){
         res.status(201).json({
@@ -49,6 +82,7 @@ const registerUser = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Invalid data')
     }
+    */
 })
 
 // desc:  this function authenticates a user
@@ -137,10 +171,67 @@ const generateToken = (id) => {
     })
 }
 
+// verify email
+const verifyEmail = async(req, res) => {
+    const {user, otpCode} = req.body
+    if(!user || !otpCode.trim()){
+        res.status(400)
+        throw new Error('Invalid request')
+    }
+
+    if(!isValidObjectId(user)){
+        res.status(400)
+        throw new Error('Invalid user')
+    }
+
+    // fetch the user
+    const u = await User.findById(user)
+    if(!u){
+        res.status(400)
+        throw new Error('User not found')
+    }
+
+    if(u.verified){
+        res.status(400)
+        throw new Error('Account already verified')
+    }
+
+    const token = await VerificationToken.findOne({ user: u._id })
+    if(!token){
+        res.status(400)
+        throw new Error('Sorry, user with token not found')
+    }
+
+    // compare the OTP with the one in the db
+    const otpMatched = await token.compareToken(otpCode)
+    if(!otpMatched){
+        res.status(400)
+        throw new Error('Sorry, token not found')
+    }
+
+    u.verified = true
+
+    await VerificationToken.findByIdAndDelete(token._id)
+    await u.save()
+
+    mailTransport().sendMail({
+        from: 'welcome@bd.com',
+        to: u.email,
+        subject: 'Account Verification Success',
+        html: plainEmailTemplate(
+            "Email Successfully Verified",
+            "Thank you for joining baornd! You can access your account now."
+        ),
+    })
+    
+    res.status(200).json("Your account has been verified")
+}
+
 module.exports = {
     registerUser,
     loginUser,
     getProfile,
     getMyProfile,
     updateProfile,
+    verifyEmail,
 }

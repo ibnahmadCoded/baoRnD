@@ -349,6 +349,60 @@ const getProjectsIInvenst = asyncHandler(async (req, res) => {
     res.status(200).json(projects)
 })
 
+// desc:    Get all projects the logged in user is developing, e.g. a road, a new product, etc.
+// route:   GET /api/projects/projectsidevelop
+// access:  Private
+// dev:     Aliyu A.   
+const getProjectsIDevelop = asyncHandler(async (req, res) => {
+    // get all projects
+    const allProjects = await Project.find()
+    
+    // we need to ensure the current user can view the private projects they have access to view.
+    // a user couldnt see a private project to follow it anyways
+    projects =[]
+    for (var i = 0; i < allProjects.length; i++) {
+        obj = await Stakeholder.findOne({
+           project: allProjects[i]._id,
+           user: req.user.id,
+           viewership: true,
+           type: { "$in" : ["Developer"]}
+        })
+        
+        if (obj) {
+            projects.push(allProjects[i])
+        }
+    }
+
+    res.status(200).json(projects)
+})
+
+// desc:    Get all projects the logged in user is collaborating in
+// route:   GET /api/projects/projectsicollaborate
+// access:  Private
+// dev:     Aliyu A.   
+const getProjectsICollaborate = asyncHandler(async (req, res) => {
+    // get all projects
+    const allProjects = await Project.find()
+    
+    // we need to ensure the current user can view the private projects they have access to view.
+    // a user couldnt see a private project to follow it anyways
+    projects =[]
+    for (var i = 0; i < allProjects.length; i++) {
+        obj = await Stakeholder.findOne({
+           project: allProjects[i]._id,
+           user: req.user.id,
+           viewership: true,
+           type: { "$in" : ["Collaborator"]}
+        })
+        
+        if (obj) {
+            projects.push(allProjects[i])
+        }
+    }
+
+    res.status(200).json(projects)
+})
+
 // desc:    Get a project 
 // route:   GET /api/projects/:id
 // access:  Private. if not logged in, cant view individual project details, even for public projects!
@@ -467,5 +521,7 @@ module.exports = {
     getProjectsIResearch,
     getProjectsIInitiated,
     getProjectsIInvenst,
-    getProjectsISupervise
+    getProjectsISupervise,
+    getProjectsIDevelop,
+    getProjectsICollaborate
 }

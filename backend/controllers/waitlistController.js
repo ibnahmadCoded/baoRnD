@@ -1,8 +1,8 @@
 const asyncHandler = require('express-async-handler')
-const Email = require('../models/newslettersignupModel')
+const Email = require('../models/waitlistModel')
 
-// desc:  this function gets newsletter signup emails from the db
-// route: GET /api/newslettersignups
+// desc:  this function gets waitlist from the db
+// route: GET /api/waitlist
 // access Private
 const getEmails = asyncHandler(async (req, res) => {
     const emails =  await Email.find()
@@ -10,8 +10,8 @@ const getEmails = asyncHandler(async (req, res) => {
     res.status(200).json(emails)
 })
 
-// desc:  this function adds newsletter signup emails to the db
-// route: POST /api/newslettersignups
+// desc:  this function adds email to waitlist collection in db
+// route: POST /api/waitlist
 // access Private
 const saveEmails = asyncHandler(async (req, res) => {
     const email = req.body.email
@@ -21,7 +21,7 @@ const saveEmails = asyncHandler(async (req, res) => {
 
     if(userExists){
         res.status(400)
-        throw new Error('Email already exists in Newsletter Signups List.')
+        throw new Error('Email already exists in Waitlist.')
     }
 
     if(!req.body.email){

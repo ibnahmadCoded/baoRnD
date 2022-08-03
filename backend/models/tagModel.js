@@ -5,7 +5,7 @@ const tagSchema = mongoose.Schema({
         // The id of the project or user
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User' // acts as foreign key, i.e. linked to the userModel, which is exported as User. can also be linked to Project (but it works now. xD)
+        ref: 'Project' // acts as foreign key, i.e. linked to the userModel, which is exported as User. can also be linked to Project (but it works now. xD)
     },
     tags: [{
         // the tag of the project. 

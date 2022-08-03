@@ -29,6 +29,11 @@ const addStakeholder = asyncHandler(async (req, res) => {
         throw new Error('Please set the viewership status of the stakeholder')
     }
 
+    if(!req.body.update){
+        res.status(400)
+        throw new Error('Please set the update status of the stakeholder')
+    }
+
     // check that user exists
     if(!req.body.user){
         res.status(401)
@@ -56,9 +61,10 @@ const addStakeholder = asyncHandler(async (req, res) => {
         throw new Error('Project does not exist')
     }
 
-    // only the initiator of the project (passed as parameter) can add stakeholders (supervisors and researchers) to the project
+    // only the initiator of the project (passed as parameter) can add stakeholders (
+    // supervisors, Developers, Collaborators and researchers) to the project
     // A user can follow or invest in public projects without the authorization of the initiator
-    if(req.body.type === "Supervisor" || req.body.type === "Researcher") {
+    if(req.body.type === "Supervisor" || req.body.type === "Researcher" || req.body.type === "Developer" || req.body.type === "Collaborator") {
         // Check that the logged in user is the same as the project user
         if(project.user.toString() !== user.id){
             res.status(401)
@@ -70,7 +76,10 @@ const addStakeholder = asyncHandler(async (req, res) => {
     
     if(stake){
         // if the user item already exists with its stakes on the project in the collection, just update it with the additional stake
-        const stakeholder = await Stakeholder.findByIdAndUpdate(stake._id, {$addToSet: {type: req.body.type}}, {
+        const stakeholder = await Stakeholder.findByIdAndUpdate(stake._id, {
+            viewership: req.body.viewership, 
+            update: req.body.update,
+            $addToSet: {type: req.body.type}}, {
             new: true,
         })
 
@@ -82,7 +91,8 @@ const addStakeholder = asyncHandler(async (req, res) => {
             user: req.body.user,
             project: req.body.project,
             type: req.body.type,
-            viewership: req.body.viewership
+            viewership: req.body.viewership,
+            update: req.body.update
         })
 
         res.status(200).json(stakeholder)
@@ -94,8 +104,6 @@ const addStakeholder = asyncHandler(async (req, res) => {
 // access:  Private
 // dev:     Aliyu A.  
 const removeStakeholder = asyncHandler(async (req, res) => {
-    const stakeholder = await Stakeholder.findById(req.params.id)
-
     if(!req.body.type){
         res.status(400)
         throw new Error('Please provide the stakeholder type')
@@ -128,9 +136,10 @@ const removeStakeholder = asyncHandler(async (req, res) => {
         throw new Error('Project does not exist')
     }
 
-    // only the initiator of the project (passed as parameter) can add stakeholders (supervisors and researchers) to the project
+    // only the initiator of the project (passed as parameter) can add stakeholders (
+    // supervisors, Developers, Collaborators and researchers) to the project
     // A user can follow or invest in public projects without the authorization of the initiator
-    if(req.body.type === "Supervisor" || req.body.type === "Researcher") {
+    if(req.body.type === "Supervisor" || req.body.type === "Researcher" || req.body.type === "Developer" || req.body.type === "Collaborator") {
         // Check that the logged in user is the same as the project user
         if(project.user.toString() !== user.id){
             res.status(401)
