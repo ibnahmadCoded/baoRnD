@@ -1,4 +1,8 @@
 const nodemailer = require('nodemailer')
+const crypto = require('crypto')
+const { isValidObjectId } = require('mongoose')
+const User = require('../models/userModel')
+const ResetpasswordToken = require('../models/resetpasswordtokenModel')
 
 let verificationCode = ''
 // desc: this function generates an OTP verification code to be sent to user
@@ -81,9 +85,90 @@ const plainEmailTemplate = (heading, message) => {
     `
 }
 
+// email template for Password reset email
+const generatePasswordResetEmailTemplate = url => {
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <style>
+        @media only screen and (max-width: 620px){
+            h1{
+                font-size: 20px;
+                padding: 5px;
+            }
+        }
+        </style>
+    </head>
+    <body>
+    <div>
+        <div style="max-width: 620px; margin: 0 auto; font-family: sans-serif; color: #272727;">
+            <h1 style="background: #f6f6f6; padding: 10px; text-align: center; color: #272727;">Your Password Reset URL is ready!</h1>
+            <p>Please click the link below to reset your password </p>
+            <div style="text-align: center;">
+                <a href="${url}" style="font-family: sans-serif; margin: 0 auto; padding: 20px; text-align: center; 
+                background: #e63946; border-radius: 5px; font-size: 20px 10px; color: #fff; cursor: pointer; text-decoration: none; display: inline-block;"> 
+                Reset Password</a>
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+    `
+}
+
+const generateRandomBytes = () => 
+    new Promise((resolve, reject) => {
+        crypto.randomBytes(30, (err, buff) => {
+            if(err) reject(err)
+
+            const token = buff.toString('hex')
+            resolve(token)
+        })
+    })
+
+// email template for Password reset email
+const generateReferralEmailTemplate = (type, url) => {
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <style>
+        @media only screen and (max-width: 620px){
+            h1{
+                font-size: 20px;
+                padding: 5px;
+            }
+        }
+        </style>
+    </head>
+    <body>
+    <div>
+        <div style="max-width: 620px; margin: 0 auto; font-family: sans-serif; color: #272727;">
+            <h1 style="background: #f6f6f6; padding: 10px; text-align: center; color: #272727;">A user on baoRnD referred you to join the platform as ${type}!</h1>
+            <p>Please click the link below to create an account </p>
+            <div style="text-align: center;">
+                <a href="${url}" style="font-family: sans-serif; margin: 0 auto; padding: 20px; text-align: center; 
+                background: #e63946; border-radius: 5px; font-size: 20px 10px; color: #fff; cursor: pointer; text-decoration: none; display: inline-block;"> 
+                Signup</a>
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+    `
+}
+
 module.exports = {
     generateVerificationCode,
     mailTransport,
     generateEmailTemplate,
-    plainEmailTemplate
+    plainEmailTemplate,
+    generatePasswordResetEmailTemplate,
+    generateRandomBytes,
+    generateReferralEmailTemplate
 }

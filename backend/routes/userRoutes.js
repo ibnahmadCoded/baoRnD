@@ -1,10 +1,23 @@
 const express = require('express')
 const router = express.Router()
-const { registerUser, loginUser, getProfile, getMyProfile, updateProfile, verifyEmail } = require('../controllers/userController')
+const { registerUser, 
+        loginUser, 
+        getProfile, 
+        getMyProfile, 
+        updateProfile, 
+        verifyEmail, 
+        forgotPassword, 
+        resetPassword, 
+        registerReferredUser } = require('../controllers/userController')
+
 const { protect } = require('../middleware/authMiddleware')
+const { isResetTokenValid } = require('../middleware/resettokenMiddleware')
 
 router.post('/', registerUser)
+router.post('/referralsignup', registerReferredUser)
 router.post('/verifyemail', verifyEmail)
+router.post('/forgotpassword', forgotPassword)
+router.post('/resetpassword', isResetTokenValid, resetPassword)
 router.put('/', protect, updateProfile)
 router.post('/login', loginUser)
 router.get('/profile', protect, getMyProfile)

@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const Investment = require('../models/investmentModel')
 const Project = require('../models/projectModel')
 const Stake = require('../models/stakeholderModel')
+const Notification = require('../models/notificationModel')
 
 // desc:    Get all investments of a user.  Can filter for the particular project if we want to show investment of user in a particular project
 // route:   GET /api/investments
@@ -75,6 +76,16 @@ const addInvestment = asyncHandler(async (req, res) => {
             new: true,
         })
 
+        // notify the project owner about investment
+        // get the project
+        const project = await Project.findOne({ _id: req.body.project })
+        await Notification.create({
+            user: project.user,
+            item: project._id,
+            type: "Investment",
+            seen: false,
+        })
+
         res.status(200).json(investment)
     }
     else
@@ -103,6 +114,16 @@ const addInvestment = asyncHandler(async (req, res) => {
                 viewership: false
             })
         }
+
+        // notify the project owner about investment
+        // get the project
+        const project = await Project.findOne({ _id: req.body.project })
+        await Notification.create({
+            user: project.user,
+            item: project._id,
+            type: "Investment",
+            seen: false,
+        })
 
         res.status(200).json(investment)
     }

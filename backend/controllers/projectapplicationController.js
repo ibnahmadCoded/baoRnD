@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const Application = require('../models/projectapplicationModel')
 const Project = require('../models/projectModel')
 const Stake = require('../models/stakeholderModel')
+const Notification = require('../models/notificationModel')
 
 // desc:    Get all applications of a user.  Can filter for the particular project if we want to show applications of user in a particular project
 // route:   GET /api/projectapplications
@@ -90,6 +91,16 @@ const addApplication = asyncHandler(async (req, res) => {
         type: req.body.type,
         message: req.body.message,
         reply: "Pending"
+    })
+
+    // notify the user who owns (initiated) the project about the application
+    // get the project
+    const project = await Project.findOne({ _id: req.body.project })
+    await Notification.create({
+        user: project.user,
+        item: project._id,
+        type: "ProjectApplication",
+        seen: false,
     })
 
     res.status(200).json(application)  

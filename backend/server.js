@@ -37,6 +37,7 @@ app.use('/api/metrics', require('./routes/metricRoutes'))
 app.use('/api/dailymetrics', require('./routes/dailymetricRoutes'))
 app.use('/api/monthlymetrics', require('./routes/monthlymetricRoutes'))
 app.use('/api/yearlymetrics', require('./routes/yearlymetricRoutes'))
+app.use('/api/contacts', require('./routes/contactlistRoutes'))
 
 app.use(errorHandler)
 

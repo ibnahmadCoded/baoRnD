@@ -16,6 +16,12 @@ const protect = asyncHandler(async(req, res, next) => {
             // get user from the token
             req.user = await (await User.findById(decoded_token.id))
 
+            // an unverified user cannot access a protected route
+            if(!req.user.verified){
+                res.status(400)
+                throw new Error('User is unverified')
+            }
+
             next()
         } catch (error) {
             console.log(error)

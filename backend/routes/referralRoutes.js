@@ -13,6 +13,6 @@ router.get('/', protect, getReferrals)
 router.post('/', protect, addReferral)
 
 // Delete a referral from a project. 
-router.delete('/', protect, removeReferral)
+router.delete('/:id', protect, removeReferral)
 
 module.exports = router

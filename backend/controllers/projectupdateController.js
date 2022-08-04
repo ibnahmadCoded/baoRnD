@@ -141,6 +141,10 @@ const addUpdate = asyncHandler(async (req, res) => {
         content: req.body.content
     })
 
+    // notify the user who owns (initiated) the project about the application
+    
+    // TODO: notify all stakeholders of new update on the project (future addition)
+
     res.status(200).json(update)  
 })
 

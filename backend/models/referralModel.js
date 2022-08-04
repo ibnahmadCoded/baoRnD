@@ -7,12 +7,21 @@ const referralSchema = mongoose.Schema({
         required: true,
         ref: 'User' // acts as foreign key, i.e. linked to the userModel, which is exported as User. 
     },
-    referrals: [{
-        // emails and description of the people that were referred. Takes the form: {email: "", type: ""}
-        // e.g. {email: "a@a.com", type: "Supervisor"}
-        type: Object,
-        required: [true, 'Please add details']
-    }],
+    email: {
+        type: String,
+        required: [true, 'Please add the email you want to refer']
+    },
+    type: {
+        // type of referral
+        type: String,
+        required: [true, 'Please add the type']
+    },
+    joined: {
+        // has the referred person joined?
+        type: Boolean,
+        required: true,
+        default: false
+    },
 }, {
     timestamps: true
 })

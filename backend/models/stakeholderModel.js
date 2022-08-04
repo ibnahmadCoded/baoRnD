@@ -25,7 +25,8 @@ const projectSchema = mongoose.Schema({
     update: {
         // can the user update the project? yes(true) or no(false)
         type: Boolean,
-        required: [true, 'Please set the update status of the stakeholder']
+        required: [true, 'Please set the update status of the stakeholder'],
+        default: false,
     },
 }, {
     timestamps: true

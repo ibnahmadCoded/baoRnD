@@ -6,6 +6,7 @@ const User = require('../models/userModel')
 const Category = require('../models/categoryModel')
 const Field = require('../models/fieldModel')
 const Tag = require('../models/tagModel')
+const Notification = require('../models/notificationModel')
 
 // desc:    Get all public projects, including private projects of current user if user is logged in. 
 // route:   GET /api/projects
@@ -455,6 +456,13 @@ const createProject = asyncHandler(async (req, res) => {
         viewership: true
     })
 
+    await Notification.create({
+        user: user._id,
+        item: project._id,
+        type: "ProjectInit",
+        seen: false,
+    })
+
     res.status(200).json(project)
 })
 
@@ -486,6 +494,13 @@ const updateProject = asyncHandler(async (req, res) => {
 
     const updatedProject = await Project.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
+    })
+
+    await Notification.create({
+        user: user._id,
+        item: updatedProject._id,
+        type: "ProjectUpdate",
+        seen: false,
     })
 
     res.status(200).json(updatedProject)
