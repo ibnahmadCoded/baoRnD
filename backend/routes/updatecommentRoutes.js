@@ -11,7 +11,7 @@ const { protect } = require('../middleware/authMiddleware')
 router.get('/', protect, getComments)
 
 // Add a comment on an update. If you cant see an update, you shouldnt be able to comment on it (to be done in frontend) 
-router.post('/', protect, addComment)
+router.post('/', protect, addComment) 
 
 // Update a comment on an update after the edit. 
 // Only the user who made the comment can do this. 

@@ -10,4 +10,4 @@ const newslettersignupSchema = mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('Email', newslettersignupSchema)
+module.exports = mongoose.model('Newsletteremails', newslettersignupSchema)

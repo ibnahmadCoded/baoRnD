@@ -14,7 +14,7 @@ const categorySchema = mongoose.Schema({
     },
     category: [{
         // the category. currently supported are: 
-        // for users: Normal, Investor, Researcher, Professor, for now. More can be added later
+        // for users: Normal, Investor, Researcher, professor, for now. More can be added later
         // for projects: Fund (seeking fund), Res (seeking researcher(s) researcher can be inidivual or company, Collab (seeking to collaborate with other,
         // or Basic (just seeking to store project data to publisize it or not)))
         type: String,

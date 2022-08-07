@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 
 const fieldSchema = mongoose.Schema({
     project: {
-        // The id of the project or user
+        // The id of the project 
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Project' // acts as foreign key, i.e. linked to the userModel, which is exported as User. can also be linked to Project (but it works now. xD)
+        ref: 'Project' // acts as foreign key, i.e. linked to the projectModel, which is exported as Project. 
     },
     fields: [{
         // the field of the project. 

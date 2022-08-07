@@ -52,6 +52,10 @@ const getPublicProjectsOnly = asyncHandler(async (req, res) => {
 // dev:     Aliyu A.   
 // comment: Can include other filter types in the future
 const getProjectsByFilterKey = asyncHandler(async (req, res) => {
+    if(!req.body.filterType){
+        res.status(400)
+        throw new Error('Please provide filter type')
+    }
     if (req.body.filterType === "Category"){
         const data = await Category.find({ category: { "$in" : [`${req.params.key}`]}, type: "Project" })
 
@@ -411,6 +415,13 @@ const getProjectsICollaborate = asyncHandler(async (req, res) => {
 const getAProject = asyncHandler(async (req, res) => {
     const project = await Project.findById(req.params.id)
 
+    // if the project is private, then only the initiator of the project can view it, except stakeholders with view access
+    const stake = Stakeholder.findOne({user: req.user.id, project: req.params.id, viewership: true})
+    if(!stake || req.user.id !== project.user.toString()){
+        res.status(400)
+        throw new Error('You are not authorized to view this project')
+    }
+
     if(!project){
         res.status(400)
         throw new Error('Project does not exist')
@@ -420,18 +431,33 @@ const getAProject = asyncHandler(async (req, res) => {
 })
 
 // desc:    Create a project 
-// route:   POST /api/projects/:id
+// route:   POST /api/projects
 // access:  Private
 // dev:     Aliyu A.   
 const createProject = asyncHandler(async (req, res) => {
+    if(!req.body.title){
+        res.status(400)
+        throw new Error('Please set project title')
+    }
+
+    if(!req.body.overview){
+        res.status(400)
+        throw new Error('Please set project overview')
+    }
+
+    if(!req.body.moreinfo){
+        res.status(400)
+        throw new Error('Please set more info')
+    }
+
     if(!req.body.visibility){
         res.status(400)
         throw new Error('Please set project visibility')
     }
 
-    if(!req.body.detail){
+    if(!req.body.duration){
         res.status(400)
-        throw new Error('There is no project detail')
+        throw new Error('Please set project duration')
     }
 
     const user = await User.findById(req.user.id)
@@ -444,16 +470,20 @@ const createProject = asyncHandler(async (req, res) => {
 
     const project = await Project.create({
         user: user.id,
+        title: req.body.title,
+        overview: req.body.overview,
+        moreinfo: req.body.moreinfo,
         visibility: req.body.visibility,
-        detail: req.body.detail
+        duration: req.body.duration
     })
 
     // Add project and user to the stakeholders collection, with user as initiator
-    const stakeholder = await Stakeholder.create({
+    await Stakeholder.create({
         user: user.id,
         project: project.id,
         type: 'Initiator',
-        viewership: true
+        viewership: true,
+        update: true
     })
 
     await Notification.create({
@@ -517,6 +547,15 @@ const deleteProject = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Project does not exist')
     }
+
+    // only a user who created a project can delete it
+    if(req.user.id !== project.user.toString()){
+        res.status(400)
+        throw new Error('Sorry, you cannot delete a project that is not yours')
+    }
+
+    // delete all stakes reference from project if the project has been deleted: TODO
+    // do cascading deletion for othe project details, like goals, deliverables, etc.
 
     await project.remove()
 

@@ -100,7 +100,7 @@ const addStakeholder = asyncHandler(async (req, res) => {
 })
 
 // desc:    Delete a stakeholder of a project
-// route:   DELETE /api/stakeholders/:id    (id is stakeholder id)
+// route:   DELETE /api/stakeholders
 // access:  Private
 // dev:     Aliyu A.  
 const removeStakeholder = asyncHandler(async (req, res) => {

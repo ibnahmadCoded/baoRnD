@@ -1,20 +1,19 @@
 const mongoose = require('mongoose')
 
-const tagSchema = mongoose.Schema({
+const projectdeliverableSchema = mongoose.Schema({
     project: {
         // The id of the project 
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Project' // acts as foreign key, i.e. linked to the projectModel, which is exported as Project. 
     },
-    tags: [{
-        // the tag of the project. 
-        // the tag can be anything, like #human_learning. Note, tags are stores in collection without the # character
+    deliverables: [{
+        // the deliverables of the project. 
         type: String,
-        required: [true, 'Please set the tag for the project']
+        required: [true, 'Please set the deliverable for the project']
     }],
 }, {
     timestamps: true
 })
 
-module.exports = mongoose.model('Tag', tagSchema)
+module.exports = mongoose.model('Projectdeliverable', projectdeliverableSchema)

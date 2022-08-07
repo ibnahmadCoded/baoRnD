@@ -13,6 +13,11 @@ const getComments = asyncHandler(async (req, res) => {
         throw new Error('Please provide update')
     }
 
+    if(!await Update.findById(req.body.update)){
+        res.status(400)
+        throw new Error('Update does not exist')
+    }
+
     // get all comments on the update
     const comments = await Comment.find({ update: req.body.update })
 

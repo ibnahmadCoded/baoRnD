@@ -16,7 +16,7 @@ const getMetrics = asyncHandler(async (req, res) => {
 const addMetrics = asyncHandler(async (req, res) => {
     if(!req.body.metrics){
         res.status(400)
-        throw new Error('Please provide the metrics for the day')
+        throw new Error('Please provide the metrics for the month')
     }
 
     const dm = await Metric.create({

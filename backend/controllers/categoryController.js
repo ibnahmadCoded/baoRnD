@@ -14,16 +14,21 @@ const getCategories = asyncHandler(async (req, res) => {
         throw new Error('Please provide the category type')
     }
 
+    if(!req.body.item){
+        res.status(400)
+        throw new Error('Please provide the project or user')
+    }
+
     // if the type of categories is project categories
     if(req.body.type === "Project"){
-        const categories = await Category.find({ item: req.body.project, type: req.body.type })
+        const categories = await Category.find({ item: req.body.item, type: req.body.type })
 
         res.status(200).json(categories)
     }
     
     // if the type of categories is user categories
     if(req.body.type === "User"){
-        const categories = await Category.find({ item: req.body.User, type: req.body.type })
+        const categories = await Category.find({ item: req.body.item, type: req.body.type })
 
         res.status(200).json(categories)
     }
@@ -42,6 +47,11 @@ const addCategory = asyncHandler(async (req, res) => {
     if(!req.body.category){
         res.status(400)
         throw new Error('Please provide the category')
+    }
+
+    if(!req.body.item){
+        res.status(400)
+        throw new Error('Please provide the project or user')
     }
 
     // if the type of categories is in project categories
@@ -129,6 +139,16 @@ const removeCategory = asyncHandler(async (req, res) => {
         throw new Error('Please provide the category type')
     }
 
+    if(!req.body.item){
+        res.status(400)
+        throw new Error('Please provide the project or user')
+    }
+
+    if(!req.body.category){
+        res.status(400)
+        throw new Error('Please provide the category')
+    }
+
     // if the type of categories is in project categories
     if(req.body.type === "Project"){
         const cat = await Category.findOne({ item: req.body.item })
@@ -173,7 +193,7 @@ const removeCategory = asyncHandler(async (req, res) => {
     if(req.body.type === "User"){
         const cat = await Category.findOne({ item: req.body.item })
 
-        user = await User.findOne({ _id: req.body.item})
+        const user = await User.findOne({ _id: req.body.item})
 
         if(!user){
             res.status(400)

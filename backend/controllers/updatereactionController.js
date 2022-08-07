@@ -13,6 +13,12 @@ const getReactions = asyncHandler(async (req, res) => {
         throw new Error('Please provide update')
     }
 
+    const update = await Update.findOne({ _id: req.body.update })
+    if(!update){
+        res.status(400)
+        throw new Error('Update not found')
+    }
+
     // get all reactions on the update
     const reactions = await Reaction.find({ update: req.body.update })
 
@@ -79,6 +85,12 @@ const deleteReaction = asyncHandler(async (req, res) => {
     if(!req.body.reaction){
         res.status(400)
         throw new Error('Please provide the reaction')
+    }
+
+    const update = await Update.findOne({ _id: req.body.update })
+    if(!update){
+        res.status(400)
+        throw new Error('Update not found')
     }
 
     // get reaction of update to check if it already exists. We dont want to duplicate reactions in this collection

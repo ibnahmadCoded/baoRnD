@@ -5,6 +5,11 @@ const waitlistSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add an email']
     },
+    signedup: {
+        type: Boolean,
+        required: true,
+        default: false,
+    }
 },
 {
     timestamps: true

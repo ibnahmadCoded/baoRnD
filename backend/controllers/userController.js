@@ -201,6 +201,13 @@ const loginUser = asyncHandler(async (req, res) => {
     
     // get the user email
     const user = await User.findOne({email})
+
+    // an unverified user cannot access a protected route
+    // the login route is notprotected, therefore we have to check verification here
+    if(!user.verified){
+        res.status(400)
+        throw new Error('User is unverified')
+    }
     
     // get the password
     if(user && (await bcrypt.compare(password, user.password))){
@@ -222,6 +229,16 @@ const loginUser = asyncHandler(async (req, res) => {
 // access Private
 // dev:   Aliyu A.
 const updateProfile = asyncHandler(async (req, res) => {
+    if(req.body.password){
+        res.status(400)
+        throw new Error('You cannot update your password via this route')
+    }
+
+    if(req.body.email){
+        res.status(400)
+        throw new Error('You cannot update your email at the moment')
+    }
+
     const user = await User.findById(req.user.id)
 
     if(!user){

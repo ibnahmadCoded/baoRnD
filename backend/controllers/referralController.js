@@ -131,6 +131,11 @@ const removeReferral = asyncHandler(async (req, res) => {
         throw new Error('Referral does not exist')
     }
 
+    if(referral.user.toString() !== req.user.id){
+        res.status(400)
+        throw new Error('User not authorized. You cannot delete a referral you did not make')
+    }
+
     await referral.remove()
 
     res.status(200).json({ id: req.params.id })
