@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { register, reset } from '../features/auth/authSlice'
+import { registerreferral, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
-function Register() {
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
+function Registerreferral() {
     const [formData, setFormData] = useState({
         name: '',
         type: '',
@@ -21,13 +25,16 @@ function Register() {
 
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
+    let query = useQuery();
+    const referral_id = query.get("id")
+
     useEffect(() => {
         if(isError){
             toast.error(message)
         }
 
         if(isSuccess || user){
-            navigate("/verification")   // do otp verification instead, therefore send to otp verificationpage
+            navigate("/verification")   // do otp verification.
         }
 
         dispatch(reset())
@@ -52,9 +59,10 @@ function Register() {
                 email,
                 type,
                 password,
+                referral_id
             }
 
-            dispatch(register(userData))
+            dispatch(registerreferral(userData))
         }
     } 
 
@@ -125,4 +133,4 @@ function Register() {
     )
 }
 
-export default Register
+export default Registerreferral
