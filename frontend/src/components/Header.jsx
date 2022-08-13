@@ -21,18 +21,18 @@ const Header = () => {
             </div>
             <ul className="flex items-center justify-between ml-5 mr-1">
                 {user ? (<>
-                    <li className="ml-5 flex items-center mr-1">
+                    <li className="ml-5 hidden md:block items-center mr-1">
                         <button className="flex items-center mr-1 hover:text-custom-150" onClick={onLogout}>
                             <FaSignInAlt color='#E36414' className="mr-1"/> Logout
                         </button>
                     </li>
                 </>) : (<>
-                    <li className="ml-5 flex items-center mr-1">
+                    <li className="hidden md:block ml-5 items-center mr-1">
                     <Link to='/login' className="flex items-center mr-1 hover:text-custom-150">
                         <FaSignOutAlt color='#386641' className="mr-1"/> Login
                     </Link>
                     </li>
-                    <li className="ml-5 flex items-center mr-1">
+                    <li className="hidden md:block ml-5 items-center mr-1">
                         <Link to='/register' className="flex items-center mr-1 hover:text-custom-150">
                             <FaUser color='#386641' className="mr-1"/> Register
                         </Link>

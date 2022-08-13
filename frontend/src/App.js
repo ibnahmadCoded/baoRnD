@@ -8,12 +8,13 @@ import Register from './pages/Register';
 import Landing from './pages/Landing';
 import Registerreferral from './pages/Registerreferral';
 import Verifyaccount from './pages/Verifyaccount';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <>
       <Router className="md:container md:mx-auto">
-        <div>
+        <div className='flex-1'>
           <Header />
           <Routes>
             <Route path='/login' element={<Login />}/>
@@ -23,6 +24,7 @@ function App() {
             <Route path='/landing' element={<Landing />}/>
             <Route path='/' element={<Dashboard />}/>
           </Routes>
+          <Footer />
         </div>
       </Router>
       <ToastContainer />

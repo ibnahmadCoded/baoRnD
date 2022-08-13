@@ -70,7 +70,7 @@ function Verifyaccount() {
             <p className="text-custom-120 text-2xl text-center">Please check your email inbox for the code</p>
         </section>
 
-        <section className="my-0 mx-auto w-9/12">
+        <section className="my-0 mx-auto w-9/12 mb-44">
             <div class=" sm:mx-auto sm:w-full sm:max-w-md">
                 <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                     <form onSubmit={onSubmit}>

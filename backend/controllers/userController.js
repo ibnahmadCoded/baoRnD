@@ -76,6 +76,7 @@ const registerUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             type: user.type,
+            verified: user.verified,
             token: generateToken(user._id)
         })
     }
@@ -111,7 +112,7 @@ const registerReferredUser = asyncHandler(async (req, res) => {
 
     if(!id){
         res.status(400)
-        throw new Error('Referral link expired! Please use the normal sighnup instead')
+        throw new Error('Referral link expired! Please use the normal signnup instead')
     }
     
     // check that all fields are filled
@@ -182,6 +183,7 @@ const registerReferredUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             type: user.type,
+            verified: user.verified,
             token: generateToken(user._id)
         })
     }
@@ -216,6 +218,7 @@ const loginUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             type: user.type,
+            verified: user.verified,
             token: generateToken(user._id)
         })
     } else {
@@ -246,7 +249,7 @@ const updateProfile = asyncHandler(async (req, res) => {
         throw new Error('User does not exist')
     }
 
-    const { _id, name, email, type } = await User.findByIdAndUpdate(user._id, req.body, {
+    const { _id, name, email, type, verified } = await User.findByIdAndUpdate(user._id, req.body, {
         new: true,
     })
 
@@ -255,6 +258,7 @@ const updateProfile = asyncHandler(async (req, res) => {
         name,
         email,
         type,
+        verified,
     })
 })
 
@@ -263,14 +267,7 @@ const updateProfile = asyncHandler(async (req, res) => {
 // access Private
 // dev:   Aliyu A.
 const getMyProfile = asyncHandler(async (req, res) => {
-    const { _id, name, email, type } = await User.findById(req.user.id)
-
-    res.status(200).json({
-        id: _id,
-        name,
-        email,
-        type,
-    })
+    res.status(200).json(req.user)
 })
 
 // desc:  this function gets a user's data
@@ -349,7 +346,7 @@ const verifyEmail = async(req, res) => {
         ),
     })
     
-    res.status(200).json("Your account has been verified")
+    res.status(200).json(u)
 }
 
 // User forgot password?

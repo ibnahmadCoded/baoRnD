@@ -508,16 +508,14 @@ const updateProject = asyncHandler(async (req, res) => {
         throw new Error('Project does not exist')
     }
 
-    const user = await User.findById(req.user.id)
-
     // check that user exists
-    if(!user){
+    if(!req.user){
         res.status(401)
         throw new Error('User does not exist')
     }
 
     // Check that the logged in user is the same as the project user (only the project creator can edit its details)
-    if(project.user.toString() !== user.id){
+    if(project.user.toString() !== req.user.id){
         res.status(401)
         throw new Error('User not authorized')
     }

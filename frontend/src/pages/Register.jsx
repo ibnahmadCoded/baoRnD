@@ -71,7 +71,7 @@ function Register() {
             <p className="text-custom-120 text-2xl text-center">Please create an account</p>
         </section>
 
-        <section className="my-0 mx-auto w-9/12">
+        <section className="my-0 mx-auto w-9/12 mb-16">
             <div class=" sm:mx-auto sm:w-full sm:max-w-md">
                 <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                     <form onSubmit={onSubmit}>

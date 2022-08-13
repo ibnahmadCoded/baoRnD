@@ -49,7 +49,7 @@ const addReferral = asyncHandler(async (req, res) => {
             to: req.body.email,
             subject: 'baoRnD Referral',
             html: generateReferralEmailTemplate(req.body.type, 
-                `http://localhost:3000/api/users/referralsignup?id=${r._id}`)
+                `http://localhost:3000/registerwithreferral?id=${r._id}`)
         })
 
         res.status(200).json("You already referred this user. A referral link has been resent to the email")
@@ -70,7 +70,7 @@ const addReferral = asyncHandler(async (req, res) => {
             to: req.body.email,
             subject: 'baoRnD Referral',
             html: generateReferralEmailTemplate(req.body.type, 
-                `http://localhost:3000/api/users/referralsignup?id=${referral._id}`)
+                `http://localhost:3000/registerwithreferral?id=${referral._id}`)
         })
 
         res.status(200).json(`Thank you! A referral link has been sent to ${referral.email}`)

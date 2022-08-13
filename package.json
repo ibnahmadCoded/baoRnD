@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node backend/server.js",
     "server": "nodemon backend/server.js",
-    "client": "npm start --prefix frontend"
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Aliyu Alege",
   "license": "MIT",
@@ -23,6 +24,7 @@
     "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
+    "concurrently": "^7.3.0",
     "nodemon": "^2.0.19"
   }
 }
