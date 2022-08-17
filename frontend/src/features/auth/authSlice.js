@@ -42,6 +42,16 @@ export const verify = createAsyncThunk("auth/verification", async (verificationD
     }
 })
 
+// Join waitlist
+export const joinwaitlist = createAsyncThunk("auth/joinwaitlist", async (waitlistData, thunkAPI) => {
+    try {
+        return await authService.joinwaitlist(waitlistData)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // Login user
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
     try {
@@ -107,6 +117,21 @@ export const authSlice = createSlice({
                 state.user = action.payload
             })
             .addCase(verify.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+                state.user = null
+            })
+            .addCase(joinwaitlist.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(joinwaitlist.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.user = null
+                state.message = "Your email has been added to the waitlist. We will contact you shortly. Thank you!"
+            })
+            .addCase(joinwaitlist.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

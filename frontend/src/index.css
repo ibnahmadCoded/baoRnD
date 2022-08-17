@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 
+/* Spinner */
+
 .loadingSpinnerContainer {
     position: fixed;
     top: 0;

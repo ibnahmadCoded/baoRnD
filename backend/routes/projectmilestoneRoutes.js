@@ -7,12 +7,12 @@ const { addProjectmilestone,
 const { protect } = require('../middleware/authMiddleware')
 
 // Get all milestone for a project. 
-router.get('/', protect, getProjectmilestones)
+router.get('/:project', protect, getProjectmilestones)
 
 // Add a milestone to a project. 
 router.post('/', protect, addProjectmilestone)
 
 // Delete a milestone from a project. 
-router.delete('/', protect, removeProjectmilestone)
+router.delete('/:id', protect, removeProjectmilestone)
 
 module.exports = router

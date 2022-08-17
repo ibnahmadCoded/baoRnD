@@ -6,6 +6,9 @@ import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
 function Register() {
+    // no signups during beta period, 
+    const beta = true
+
     const [formData, setFormData] = useState({
         name: '',
         type: '',
@@ -64,6 +67,28 @@ function Register() {
 
     return (
         <>
+        {beta ? (<>
+        <section className="font-bold text-3xl mb-2 py-0 px-5 content-center">
+            <h1 className='text-3xl text-center'>
+                Welcome To <span class="text-custom-100">baoRnD </span>
+            </h1>
+            <p className="text-custom-120 text-2xl text-center">We are currently unavailable in your region, please join the waitlist</p>
+        </section>
+
+        <section className="my-0 mx-auto w-9/12 md:mb-64 ">
+        <div class=" sm:mx-auto sm:w-full sm:max-w-md">
+        {/* Button */}
+            <div class="py-8 px-6 mx-auto sm:px-10">
+              <a
+                href="http://localhosT:3000/earlyaccess"
+                class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Join the waitlist
+              </a>
+            </div>
+        </div>
+        </section>
+        
+        </>) : (
+        <>
         <section className="font-bold text-3xl mb-0 py-0 px-5 content-center">
             <h1 className='text-3xl text-center'>
                  Register
@@ -106,7 +131,7 @@ function Register() {
                                 placeholder="Please repeat your password." value={confirmpassword} onChange={onChange} required 
                             />
                         </div>
-                        {/* sample comment  */}
+                        {/* privacy and terms agreement  */}
                         <div class="flex items-start mb-4">
                             <div class="flex items-center h-5">
                             <input id="terms" type="checkbox" value="" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-custom-100" required />
@@ -115,12 +140,13 @@ function Register() {
                         </div>
                         
                         <div>
-                            <button type="submit" class="text-white bg-custom-100 hover:bg-custom-150 focus:ring-4 focus:outline-none focus:ring-custom-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Register new account</button>
+                            <button type="submit" class="text-black bg-custom-150 hover:bg-custom-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-custom-100 rounded-lg text-sm px-5 py-2.5 text-center">Register new account</button>
                         </div>
                     </form>
                 </div>
             </div>
         </section>
+        </>)} 
         </>
     )
 }

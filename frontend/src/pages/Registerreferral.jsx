@@ -123,7 +123,7 @@ function Registerreferral() {
                         </div>
                         
                         <div>
-                            <button type="submit" class="text-white bg-custom-100 hover:bg-custom-150 focus:ring-4 focus:outline-none focus:ring-custom-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Register new account</button>
+                            <button type="submit" class="text-black bg-custom-150 hover:bg-custom-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-custom-100 rounded-lg text-sm px-5 py-2.5 text-center">Register new account</button>
                         </div>
                     </form>
                 </div>

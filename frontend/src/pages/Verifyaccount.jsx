@@ -17,8 +17,6 @@ function Verifyaccount() {
 
     const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
-    console.log(typeof(otp))
-
     useEffect(() => {
         if(isError){
             toast.error(message)
@@ -53,7 +51,6 @@ function Verifyaccount() {
             }
 
             dispatch(verify(verificationData))
-            console.log(verificationData)
         }
     } 
 

@@ -7,7 +7,7 @@ const { addStakeholder,
 const { protect } = require('../middleware/authMiddleware')
 
 // Get all stakeholders for a project. 
-router.get('/', protect, getStakeholders)
+router.get('/:project', protect, getStakeholders)
 
 // Add a Stakeholder to a project. 
 router.post('/', protect, addStakeholder)

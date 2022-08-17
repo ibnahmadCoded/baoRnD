@@ -1,6 +1,7 @@
 import axios from "axios"
 
 const API_URL = "/api/users/"
+const WAITLIST_URL = "/api/waitlist/"
 
 // Register user
 const register = async (userData) => {
@@ -28,13 +29,20 @@ const registerreferral = async (userData) => {
     return response.data
 }
 
-// Register user
+// Verify user
 const verify = async (verificationData) => {
     const response = await axios.post(API_URL + "verifyemail", verificationData)
 
     if(response.data){
         localStorage.setItem("user", JSON.stringify(response.data))
     }
+
+    return response.data
+}
+
+// Join user
+const joinwaitlist = async (waitlistData) => {
+    const response = await axios.post(WAITLIST_URL, waitlistData)
 
     return response.data
 }
@@ -60,7 +68,8 @@ const authService = {
     registerreferral,
     logout,
     login,
-    verify
+    verify,
+    joinwaitlist,
 }
 
 export default authService

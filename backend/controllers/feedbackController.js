@@ -14,7 +14,6 @@ const getFeedbacks = asyncHandler(async (req, res) => {
 // route: POST /api/feedbacks/
 // access Private
 const saveFeedback = asyncHandler(async (req, res) => {
-
     if(!req.body.feedback){
         // check if there is a query
         res.status(400)
@@ -22,6 +21,7 @@ const saveFeedback = asyncHandler(async (req, res) => {
     }
 
     const f = await Feedback.create({
+        user: req.user.id,
         feedback: req.body.feedback,
     })
 

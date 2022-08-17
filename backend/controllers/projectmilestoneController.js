@@ -4,16 +4,16 @@ const Projectmilestone = require('../models/projectmilestoneModel')
 const Project = require('../models/projectModel')
 
 // desc:    Get all milestones for a project.  
-// route:   GET /api/projectmilestones
+// route:   GET /api/projectmilestones/:project
 // access:  Private 
 // dev:     Aliyu A.   
 const getProjectmilestones = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide the project')
     }
     
-    const projectmilestones = await Projectmilestone.find({ item: req.body.project })
+    const projectmilestones = await Projectmilestone.find({ item: req.params.project })
 
     res.status(200).json(projectmilestones)
     
@@ -29,11 +29,39 @@ const addProjectmilestone = asyncHandler(async (req, res) => {
         throw new Error('Please provide the project')
     }
 
-    if(!req.body.milestone){
+    if(!req.body.title){
         res.status(400)
-        throw new Error('Please provide the project milestone')
+        throw new Error('Please provide the project milestone title')
     }
+
+    if(!req.body.dueDate){
+        res.status(400)
+        throw new Error('Please provide the project milestone dueDate')
+    }
+
+    const project = await Project.findOne({ _id: req.body.project })
+
+    if(!project){
+        res.status(400)
+        throw new Error('Project does not exist')
+    }
+
+    // Only the initiator of the project can add new milestones to it
+    if(project.user.toString() !== req.user.id){
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
+    const projectmilestone = await Projectmilestone.create({
+        project: req.body.project,
+        title: req.body.title,
+        detail: req.body.detail,
+        dueDate: req.body.dueDate
+    })
+
+    res.status(200).json(projectmilestone)
     
+    /*
     // get milestone of project to check if project already exists. We dont want to duplicate projects in this collection
     const pm = await Projectmilestone.findOne({ project: req.body.project })
 
@@ -68,19 +96,40 @@ const addProjectmilestone = asyncHandler(async (req, res) => {
 
         res.status(200).json(projectmilestone)
     }
-    
+    */
 })
 
 // desc:    Remove milestone for a project.  
-// route:   DELETE /api/projectmilestones
+// route:   DELETE /api/projectmilestones/:id
 // access:  Private 
 // dev:     Aliyu A.   
 const removeProjectmilestone = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.id){
         res.status(400)
-        throw new Error('Please provide the project')
+        throw new Error('Please provide the milestone')
     }
 
+    const projectmilestone = await Projectmilestone.findById(req.params.id)
+
+    if(!projectmilestone){
+        res.status(400)
+        throw new Error('Milestone does not exist')
+    }
+
+    const project = await Project.findById(projectmilestone.project)
+
+    if(!project){
+        res.status(400)
+        throw new Error('Project does not exist')
+    }
+
+    // only a user who created a project can delete it
+    if(req.user.id !== project.user.toString()){
+        res.status(400)
+        throw new Error('Sorry, you cannot delete this milestone')
+    }
+
+    /*
     if(!req.body.milestone){
         res.status(400)
         throw new Error('Please provide the project milestone')
@@ -88,6 +137,7 @@ const removeProjectmilestone = asyncHandler(async (req, res) => {
     
     // get milestones of project to check if project already exists. We dont want to duplicate projects in this collection
     const pm = await Projectmilestone.findOne({ project: req.body.project })
+    
 
     const project = await Project.findOne({ _id: req.body.project })
 
@@ -101,7 +151,12 @@ const removeProjectmilestone = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('User not authorized')
     }
+    */
 
+    await projectmilestone.remove()
+
+    res.status(200).json({ id: req.params.id })
+    /*
     if (pm && pm.milestones.includes(req.body.milestone)){
         // if the project already exists with the milestone to be removed in it, remove the item from the array of milestones for the project
         const projectmilestone = await Projectmilestone.findByIdAndUpdate(pm._id, {$pull: {milestones: req.body.milestone}}, {
@@ -123,6 +178,7 @@ const removeProjectmilestone = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Project or milestone does not exist')
     }
+    */
     
 })
 

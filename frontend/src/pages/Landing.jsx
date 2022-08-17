@@ -15,13 +15,15 @@ const Landing = () => {
           <h1 className="max-w-md text-4xl font-bold text-center md:text-5xl md:text-left text-custom-100">
             boarderless and open Research and Development 
           </h1>
-          <p className="max-w-sm text-center md:text-left text-gray-600">
-            baoRnD makes it simple for RnD workers to achieve thier RnD project goals while improving efficiency by a high order of magnitude.
+          <p className="max-w-sm text-center md:text-left">
+            <span className="text-custom-150">All your RnD artefacts and processes in one place! </span>
+             baoRnD makes it easy to achieve RnD goals while improving efficiency. 
+            Host projects and engage stakeholders here.
           </p>
           <div className="flex justify-center md:justify-start">
             <a
             href="http://localhosT:3000/earlyaccess"
-            class="hidden p-3 px-6 pt-2 text-white bg-custom-150 rounded-full baseline hover:bg-custom-100 md:block">Get Early Access
+            class="hidden p-3 px-6 pt-2 text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white md:block">Get Early Access
             </a>
           </div>
         </div>
@@ -56,7 +58,7 @@ const Landing = () => {
                   {/* Heading */}
                   <div className="rounded-l-full bg-custom-155 md:bg-transparent border-solid border-custom-100">
                     <div className="flex items-center space-x-2">
-                      <div className="px-4 py-2-text-white rounded-full md:py-1 bg-custom-150 text-white">
+                      <div className="px-4 py-2-text-white rounded-full md:py-1 bg-custom-150 text-black">
                         01
                       </div>
                       <h3 className="text-base font-bold md:mb-4 text-custom-100 md:hidden">
@@ -82,7 +84,7 @@ const Landing = () => {
                   {/* Heading */}
                   <div className="rounded-l-full bg-custom-155 md:bg-transparent border-solid border-custom-100">
                     <div className="flex items-center space-x-2">
-                      <div className="px-4 py-2-text-white rounded-full md:py-1 bg-custom-150 text-white">
+                      <div className="px-4 py-2-text-white rounded-full md:py-1 bg-custom-150 text-black">
                         02
                       </div>
                       <h3 className="text-base font-bold md:mb-4 text-custom-100 md:hidden">
@@ -95,10 +97,9 @@ const Landing = () => {
                     Collaborate and Get Support
                   </h3>
                   <p className="text-black">
-                    Find RnD talents and research labs/institutes to collaborate with on your RnD efforts or contribute equipment or space to people/teams
-                    working on projects you find interesting. Some users put up their research projects for funding from interested investors. No matter the kind of
-                    support you seek, baoRnD users will give it to you if they find your project interesting because we strive on mutual support. 
-                    Tap into the vast array of support available on baoRnD.
+                    Find RnD talents and research labs/institutes to collaborate with on your RnD efforts. You can also contribute equipment or space to projects. 
+                    Some users put up their projects for investor funding. No matter the kind of
+                    support you seek, you most likely can find it on baoRnD. Tap into the vast array of support available on baoRnD.
                   </p>
                 </div>
               </div>
@@ -109,7 +110,7 @@ const Landing = () => {
                   {/* Heading */}
                   <div className="rounded-l-full bg-custom-155 md:bg-transparent border-solid border-custom-100">
                     <div className="flex items-center space-x-2">
-                      <div className="px-4 py-2-text-white rounded-full md:py-1 bg-custom-150 text-white">
+                      <div className="px-4 py-2-text-white rounded-full md:py-1 bg-custom-150 text-black">
                         03
                       </div>
                       <h3 className="text-base font-bold md:mb-4 text-custom-100 md:hidden">
@@ -119,12 +120,12 @@ const Landing = () => {
                   </div>
 
                   <h3 className="hidden mb-4 text-lg font-bold md:block text-custom-100">
-                        Publicize and Follow RnD Projects
+                        Engage Project Stakeholders
                   </h3>
                   <p className="text-black">
-                    It is traditionally difficult to publicize scientific or RnD work for myriad reasons. banRnD provides a simple 
-                    solution to this problem. You can follow projects or make your project public and have it followed by the interested people. There 
-                    are other interesting features that makes engagement with your project`s followers easy.   
+                    It is traditionally difficult to publicize scientific or RnD work for myriad reasons. Developers also find it tough to efficiently engage
+                    their clients in their projects. banRnD provides a simple solution to these problems. There are many interesting features that make engagement 
+                    with your project`s stakeholders easy. 
                   </p>
                 </div>
               </div>
@@ -147,8 +148,8 @@ const Landing = () => {
               <div className="flex flex-col items-center p-6 space-y-6 rounded-lg bg-custom-50 md:w-1/3 sm:mb-12">
                 <img src={avatar_anisha} class="w-16 -mt-14" alt="" />
                 <h5 className="text-lg font-bold">Anisha Lee</h5>
-                <p className="text-sm text-custom-120">baoRnd has supercharged my research. The ability to publicize my work while ensuring accurate results with the tools on baoRnD.
-                The engagement I get from my project`s followers fill me with new insights.</p>
+                <p className="text-sm text-custom-120">baoRnd has supercharged my work. The ability to engage my clients while ensuring accurate results with the tools on baoRnD 
+                is truly heaven sent.</p>
               </div>
 
               {/* Testimonial 2 */}
@@ -164,22 +165,22 @@ const Landing = () => {
                 <img src={avatar_ali} class="w-16 -mt-14" alt="" />
                 <h5 className="text-lg font-bold">Ali Lam</h5>
                 <p className="text-sm text-custom-120">I did not want to limit myself to RnD projects in big corporations, so I put up my project on baoRnd. I am 2 months into 
-                the project after I recieved funding and lab space on baoRnD.</p>
+                the project after I recieved funding and lab space on baoRnD. The engagement I get from my project`s followers fill me with new insights</p>
               </div>
             </div> 
 
             <div className="my-8">
               {/* Button */}
               <a
-                href="http://localhosT:3000/earlyaccess"
-                class="p-3 px-6 pt-2 text-white bg-custom-150 rounded-full baseline hover:bg-custom-100">Get Early Access
+                href="/earlyaccess"
+                class="p-3 px-6 pt-2 text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Get Early Access
               </a>
             </div>
           </div>
         </section>
 
         {/* Call To Action */}
-        <section id="cta" class="bg-custom-50">
+        <section id="cta" class="bg-custom-150">
           {/* Flex container */}
           <div className="container flex flex-col items-center justify-between px-6 py-24 mx-auto space-y-12 md:py-12 md:flex-row md:space-y-0">
             <h2 className="text-5xl font-bold leading-tight text-center text-black md:text-4xl md:max-w-xl md:text-left">
@@ -189,8 +190,8 @@ const Landing = () => {
             {/* Button */}
             <div>
               <a
-                href="http://localhosT:3000/earlyaccess"
-                class="p-3 px-6 pt-2 shadow-2xl text-white bg-custom-150 rounded-full baseline hover:bg-custom-100">Join the waitlist
+                href="/earlyaccess"
+                class="p-3 px-6 pt-2 shadow-2xl text-white bg-custom-100 rounded-full baseline hover:bg-black">Join the waitlist
               </a>
             </div>
           </div>

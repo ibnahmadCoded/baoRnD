@@ -7,12 +7,23 @@ const projectmiletoneSchema = mongoose.Schema({
         required: true,
         ref: 'Project' // acts as foreign key, i.e. linked to the userModel, which is exported as User. can also be linked to Project (but it works now. xD)
     },
-    milestones: [{
+    title: {
         // the project milestones, takes the form: {milestone: "", dueDate: "", note: ""}
         // e.g.{milestone: "Get feedback", dueDate: "02/08/2022 at 20:00", note: "Contact Mr X for feedback about recent update"}
-        type: Object,
-        required: [true, 'Please add project milestone']
-    }],
+        type: String,
+        required: [true, 'Please add project milestone title']
+    },
+    detail: {
+        // the project milestones, takes the form: {milestone: "", dueDate: "", note: ""}
+        // e.g.{milestone: "Get feedback", dueDate: "02/08/2022 at 20:00", note: "Contact Mr X for feedback about recent update"}
+        type: String,
+    },
+    dueDate: {
+        // the project milestones, takes the form: {milestone: "", dueDate: "", note: ""}
+        // e.g.{milestone: "Get feedback", dueDate: "02/08/2022 at 20:00", note: "Contact Mr X for feedback about recent update"}
+        type: Date,
+        required: [true, 'Please add project milestone date']
+    },
 }, {
     timestamps: true
 })

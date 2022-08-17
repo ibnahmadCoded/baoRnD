@@ -5,11 +5,22 @@ const User = require('../models/userModel')
 const Project = require('../models/projectModel')
 
 // desc:    Get all Stakeholders for a project. 
-// route:   GET /api/stakeholders
+// route:   GET /api/stakeholders/:project
 // access:  Private 
 // dev:     Aliyu A.   
 const getStakeholders = asyncHandler(async (req, res) => {
-    const stakeholders = await Stakeholder.find({ project: req.body.project })
+    if(!req.params.project){
+        res.status(400)
+        throw new Error('Please provide the project')
+    }
+
+    const project = await Project.findById(req.params.project)
+    if(!req.params.project){
+        res.status(400)
+        throw new Error('Project does not exist')
+    }
+
+    const stakeholders = await Stakeholder.find({ project: req.params.project })
 
     res.status(200).json(stakeholders)
 })
@@ -138,8 +149,12 @@ const removeStakeholder = asyncHandler(async (req, res) => {
 
     // only the initiator of the project (passed as parameter) can add stakeholders (
     // supervisors, Developers, Collaborators and researchers) to the project
-    // A user can follow or invest in public projects without the authorization of the initiator
-    if(req.body.type === "Supervisor" || req.body.type === "Researcher" || req.body.type === "Developer" || req.body.type === "Collaborator") {
+    // Any user can follow or invest in public projects without the authorization of the initiator
+    // the stakeholder can also delete themselves
+    if((req.body.type === "Supervisor" && req.user.id !== req.body.user) || 
+        (req.body.type === "Researcher" && req.user.id !== req.body.user) || 
+        (req.body.type === "Developer" && req.user.id !== req.body.user) || 
+        (req.body.type === "Collaborator" && req.user.id !== req.body.user)) {
         // Check that the logged in user is the same as the project user
         if(project.user.toString() !== user.id){
             res.status(401)
@@ -149,7 +164,7 @@ const removeStakeholder = asyncHandler(async (req, res) => {
 
     const stake = await Stakeholder.findOne({ user: req.body.user, project: req.body.project })
     
-    if (stake && stake.type.includes(req.body.type)){
+    if (stake && stake.type.includes(req.body.type) && stake.type.length !== 0){
         // if the stake exists and the type to be removed is in it, then remove the item from the array of stake types for the user&project
         const stakeholder = await Stakeholder.findByIdAndUpdate(stake._id, {$pull: {type: req.body.type}}, {
             new: true,
@@ -157,13 +172,14 @@ const removeStakeholder = asyncHandler(async (req, res) => {
 
         // remove data entirely if there is no stakeholder status left for user&project
         if (stakeholder.type.length === 0){
+            //const a = await stakeholder.remove()
             await stakeholder.remove()
 
-            res.status(200).json(`All stakeholder statuses removed for user and project`)
+            res.status(200).json({id: stakeholder._id})
         }
         else{
-            res.status(200).json(`The ${req.body.type} status removed from project. Current stakes: ${stakeholder.type}`)
-        }
+            res.status(200).json(stakeholder)
+       }
     }
     else
     {

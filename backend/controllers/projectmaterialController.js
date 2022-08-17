@@ -4,16 +4,16 @@ const Projectmaterial = require('../models/projectmaterialModel')
 const Project = require('../models/projectModel')
 
 // desc:    Get all materials for a project.  
-// route:   GET /api/projectmaterials
+// route:   GET /api/projectmaterials/:project
 // access:  Private 
 // dev:     Aliyu A.   
 const getProjectmaterials = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide the project')
     }
     
-    const projectmaterials = await Projectmaterial.find({ item: req.body.project })
+    const projectmaterials = await Projectmaterial.find({ item: req.params.project })
 
     res.status(200).json(projectmaterials)
     
@@ -33,9 +33,16 @@ const addProjectmaterial = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Please provide the project material')
     }
-    
-    // get material of project to check if project already exists. We dont want to duplicate projects in this collection
-    const pm = await Projectmaterial.findOne({ project: req.body.project })
+
+    if(!req.body.visibility){
+        res.status(400)
+        throw new Error('Please set the project material`s visibility')
+    }
+
+    if(!req.body.type){
+        res.status(400)
+        throw new Error('Please set the project material`s type')
+    }
 
     const project = await Project.findOne({ _id: req.body.project })
 
@@ -50,24 +57,14 @@ const addProjectmaterial = asyncHandler(async (req, res) => {
         throw new Error('User not authorized')
     }
 
-    if (pm){
-        // if the project already exists with its materials in the collection, just update it with the additional material
-        const projectmaterial = await Projectmaterial.findByIdAndUpdate(pm._id, {$addToSet: {materials: req.body.material}}, {
-            new: true,
-        })
+    const projectmaterial = await Projectmaterial.create({
+        project: req.body.project,
+        material: req.body.material,
+        visibility: req.body.visibility,
+        type: req.body.type
+    })
 
-        res.status(200).json(projectmaterial)
-    }
-    else
-    {
-        // else we create a new material entry for the project, in the collection
-        const projectmaterial = await Projectmaterial.create({
-            project: req.body.project,
-            materials: req.body.material
-        })
-
-        res.status(200).json(projectmaterial)
-    }
+    res.status(200).json(projectmaterial)
     
 })
 
@@ -76,20 +73,19 @@ const addProjectmaterial = asyncHandler(async (req, res) => {
 // access:  Private 
 // dev:     Aliyu A.   
 const removeProjectmaterial = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.id){
         res.status(400)
-        throw new Error('Please provide the project')
+        throw new Error('Please provide the material')
     }
 
-    if(!req.body.material){
+    const projectmaterial = await Projectmaterial.findById(req.params.id)
+
+    if(!projectmaterial){
         res.status(400)
-        throw new Error('Please provide the project material')
+        throw new Error('Material does not exist')
     }
     
-    // get materials of project to check if project already exists. We dont want to duplicate projects in this collection
-    const pm = await Projectmaterial.findOne({ project: req.body.project })
-
-    const project = await Project.findOne({ _id: req.body.project })
+    const project = await Project.findById(projectmaterial.project)
 
     if(!project){
         res.status(400)
@@ -102,27 +98,9 @@ const removeProjectmaterial = asyncHandler(async (req, res) => {
         throw new Error('User not authorized')
     }
 
-    if (pm && pm.materials.includes(req.body.material)){
-        // if the project already exists with the material to be removed in it, remove the item from the array of materials for the project
-        const projectmaterial = await Projectmaterial.findByIdAndUpdate(pm._id, {$pull: {materials: req.body.material}}, {
-            new: true,
-        })
+    await projectmaterial.remove()
 
-        // remove data entirely if there is material left for user&project
-        if (projectmaterial.materials.length === 0){
-            await projectmaterial.remove()
-
-            res.status(200).json("All materials removed from project")
-        }
-        else{
-            res.status(200).json(`The ${req.body.material} material removed from project. Current materials: ${projectmaterial.materials}`)
-        }
-    }
-    else
-    {
-        res.status(400)
-        throw new Error('Project or material does not exist')
-    }
+    res.status(200).json({ id: req.params.id })
     
 })
 

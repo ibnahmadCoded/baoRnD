@@ -33,7 +33,7 @@ const getProjects = asyncHandler(async (req, res) => {
         }
     }
 
-    res.status(200).json(publicProjects.concat(privates))
+    res.status(200).json(publicProjects.concat(privates).sort(function(){return 0.5 - Math.random()})) // randomise
 })
 
 // desc:    Get all public projects, if user is not logged in. 
@@ -210,13 +210,13 @@ const getMyProjects = asyncHandler(async (req, res) => {
            user: req.user.id,
            viewership: true
         })
-        
+
         if (obj) {
             privates.push(privateProjects[i])
         }
     }
 
-    res.status(200).json(publicProjects.concat(privates))
+    res.status(200).json(publicProjects.concat(privates).sort(function(){return 0.5 - Math.random()})) // show from projects in a random fashion
 })
 
 // desc:    Get all projects the user is following.
@@ -415,16 +415,19 @@ const getProjectsICollaborate = asyncHandler(async (req, res) => {
 const getAProject = asyncHandler(async (req, res) => {
     const project = await Project.findById(req.params.id)
 
-    // if the project is private, then only the initiator of the project can view it, except stakeholders with view access
-    const stake = Stakeholder.findOne({user: req.user.id, project: req.params.id, viewership: true})
-    if(!stake || req.user.id !== project.user.toString()){
-        res.status(400)
-        throw new Error('You are not authorized to view this project')
-    }
-
     if(!project){
         res.status(400)
         throw new Error('Project does not exist')
+    }
+
+    // if the project is private, then only the initiator of the project cannot view it, except stakeholders with view access
+    if(project.visibility === "Private"){
+        const stake = await Stakeholder.findOne({user: req.user.id, project: req.params.id, viewership: true})
+    
+        if(!stake){
+            res.status(400)
+            throw new Error('You are not authorized to view this project')
+        }
     }
 
     res.status(200).json(project)

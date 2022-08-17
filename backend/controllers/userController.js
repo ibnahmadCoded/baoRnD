@@ -270,14 +270,25 @@ const getMyProfile = asyncHandler(async (req, res) => {
     res.status(200).json(req.user)
 })
 
+// desc:  this function gets users, to be used when trying to add  contacts
+// route: GET /api/users
+// access Private
+// dev:   Aliyu A.
+const getUsers = asyncHandler(async (req, res) => {
+    const u = await User.find().select("name")
+
+    res.status(200).json(u)
+})
+
 // desc:  this function gets a user's data
-// route: GET /api/users/profile
+// route: GET /api/users/profile/:id
 // access Private
 // dev:   Aliyu A.
 const getProfile = asyncHandler(async (req, res) => {
     const { _id, name, email, type } = await User.findById(req.params.id)
 
     res.status(200).json({
+        _id,
         name,
         email,
         type,
@@ -445,4 +456,5 @@ module.exports = {
     forgotPassword,
     resetPassword,
     registerReferredUser,
+    getUsers
 }

@@ -1,0 +1,168 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import SideMenu from "../components/SideMenu";
+import { getProject, reset } from "../features/project/projectSlice";
+import ProjectView from "../components/ProjectView";
+import StakeholderView from "../components/StakeholderView";
+import CodeView from "../components/CodeView";
+import MaterialView from "../components/MaterialView";
+import MilestoneView from "../components/MilestoneView";
+
+const Project = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { user } = useSelector((state) => state.auth)
+
+    const params = useParams()
+
+    const [active, setActive] = useState(1);
+    const SetView = (active) => {
+      setActive(active);
+    };
+
+    const ActiveView = () => {
+      switch (active) {
+        case 1:
+          return <ProjectView />;
+        case 2:
+          return <StakeholderView />;
+        case 3:
+          return <CodeView />;
+        case 4:
+            return <MaterialView />;
+        case 5:
+              return <MilestoneView />;
+        default:
+            return <ProjectView />;
+      }
+    };
+
+    useEffect(() => {
+      if(!user){
+          navigate("/landing")
+      }
+
+      dispatch(getProject(params.id))
+
+      return() => {
+        dispatch(reset)
+      }
+    }, [user, navigate, params.id, dispatch])
+
+    return (
+        <>
+        <section className="text-3xl font-bold py-0 px-5 content-center">
+        <h1 className="text-center">Welcome {user && user.name}</h1>
+        <p className="text-custom-120 text-2xl text-center">Here goes the project</p>
+        </section>
+
+        {/* Dashborad Menu */}
+        <section>
+        <div class="container mx-auto">
+            <div class="flex flex-row flex-wrap py-4">
+            <section>
+                {/* Side Menu */}
+                <SideMenu />
+            </section>
+
+            <main role="main" class="w-full sm:w-2/3 pt-1 px-2">
+              <section>
+                <button 
+                    onClick={() => SetView(1)} 
+                    className="ml-24 mb-0 border-custom-150 border-2 border-r-0 p-3 mx-auto text-black hover:bg-custom-100 hover:text-white">
+                    Project
+                </button>
+                <button 
+                    onClick={() => SetView(2)} 
+                    className="mb-0 border-custom-150 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Stakeholders
+                </button>
+                <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-0 border-custom-150 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Code
+                </button>
+                {/* continue from here */}
+                <button 
+                    onClick={() => SetView(4)} 
+                    className="mb-0 border-custom-150 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Materials
+                </button>
+                <button 
+                    onClick={() => SetView(5)} 
+                    className="mb-0 border-custom-150 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Milestones
+                </button>
+                <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-0 border-custom-150 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Updates
+                </button>
+                <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-0 border-custom-150 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Applications
+                </button>
+                <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-0 border-custom-150 border-2 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Investments
+                </button>
+              </section>
+
+              <section>
+                  <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-5 mt-0 ml-64 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Categories
+                  </button>
+                  <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Goals
+                  </button>
+                  <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Deliverables
+                  </button>
+                  <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Fields
+                  </button>
+                  <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-5 mt-0 border-custom-150 border-t-0 border-2 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Tags
+                  </button>
+              </section>
+              
+              {ActiveView()}
+            </main>
+
+            <section>
+                {/* Create Project Button */}
+                <div class="py-8 px-6 mx-auto ">
+                    <a
+                        href="/createproject"
+                        class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Add New Project
+                    </a>
+                </div>
+                <div class="py-8 px-6 mx-auto ">
+                    <a
+                        href="/createproject"
+                        class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Refer Stakeholder
+                    </a>
+                </div>
+            </section>
+            </div>
+        </div>
+        </section>
+        </>
+    )
+}
+
+export default Project

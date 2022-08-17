@@ -11,6 +11,11 @@ const projectSchema = mongoose.Schema({
         required: true,
         ref: 'User' // acts as foreign key, i.e. linked to the userModel, which is exported as User
     },
+    username: {
+        // the name of the user  with the id of user above.
+        type: String,
+        required: true
+    },
     type: [{
         // All current types: Developer (as in the contractor on development project, not programmer ) Initiator, Investor, Follower,... 
         // Supervisor (has full view of project), Researcher (has full view, can push updates), Collaborator
