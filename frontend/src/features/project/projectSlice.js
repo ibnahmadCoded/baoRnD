@@ -20,8 +20,30 @@ export const getProject = createAsyncThunk("project/getProject", async (id, thun
     }
 })
 
+// change the category of a project
+export const changeProjectCategory = createAsyncThunk("project/changeCategory", async (categoryData, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await projectService.changeProjectCategory(categoryData, token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// change the visibility of a project
+export const changeProjectVisibility = createAsyncThunk("project/changeVisibility", async (visibilityData, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await projectService.changeProjectVisibility(visibilityData, token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // Delete user project
-export const deleteProject = createAsyncThunk("projects/delete", async (id, thunkAPI) => {
+export const deleteProject = createAsyncThunk("project/delete", async (id, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await projectService.deleteProject(id, token)
@@ -61,6 +83,32 @@ export const projectSlice = createSlice({
                 state.project = null
             })
             .addCase(deleteProject.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(changeProjectCategory.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(changeProjectCategory.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.project = action.payload
+            })
+            .addCase(changeProjectCategory.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(changeProjectVisibility.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(changeProjectVisibility.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.project = action.payload
+            })
+            .addCase(changeProjectVisibility.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

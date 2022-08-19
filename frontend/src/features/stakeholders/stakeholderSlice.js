@@ -3,6 +3,7 @@ import stakeholderService from "./stakeholderService"
 
 const initialState = {
     stakeholders: [],
+    stake: "",
     isErrorStakeholder: false,
     isSuccessStakeholder: false,
     isLoadingStakeholder: false,
@@ -14,6 +15,17 @@ export const getStakeholders = createAsyncThunk("stakeholders/getAll", async (id
     try {
         const token = thunkAPI.getState().auth.user.token
         return await stakeholderService.getStakeholders(id, token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get the user`s stake in a project
+export const getStake = createAsyncThunk("stakeholders/getStake", async (id, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await stakeholderService.getStake(id, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -63,13 +75,25 @@ export const stakeholderSlice = createSlice({
                 state.isErrorStakeholder = true
                 state.messageStakeholder = action.payload
             })
+            .addCase(getStake.pending, (state) => {
+                state.isLoadingStakeholder = true
+            })
+            .addCase(getStake.fulfilled, (state, action) => {
+                state.isLoadingStakeholder = false
+                state.isSuccessStakeholder = true
+                state.stake = action.payload
+            })
+            .addCase(getStake.rejected, (state, action) => {
+                state.isLoadingStakeholder = false
+                state.isErrorStakeholder = true
+                state.messageStakeholder = action.payload
+            })
             .addCase(deleteStakeholder.pending, (state) => {
                 state.isLoadingStakeholder = true
             })
             .addCase(deleteStakeholder.fulfilled, (state, action) => {
                 state.isLoadingStakeholder = false
                 state.isSuccessStakeholder = true
-                console.log(action.payload)
                 if(action.payload._id){
                     state.stakeholders = state.stakeholders.filter((stakeholder) => (stakeholder._id !== action.payload._id)) // first delete the stakeholder
                     state.stakeholders.push(action.payload) // then push the new stakeholders, if the type array is not empty

@@ -4,6 +4,7 @@ const Investment = require('../models/investmentModel')
 const Project = require('../models/projectModel')
 const Stake = require('../models/stakeholderModel')
 const Notification = require('../models/notificationModel')
+const User = require("../models/userModel")
 
 // desc:    Get all investments of a user.  Can filter for the particular project if we want to show investment of user in a particular project
 // route:   GET /api/investments
@@ -107,8 +108,10 @@ const addInvestment = asyncHandler(async (req, res) => {
             })
         }
         else{
+            const user = await User.findById(req.user.id)
             await Stake.create({
                 user: req.user.id,
+                username: user.name,
                 project: req.body.project,
                 type: "Investor",
                 viewership: false

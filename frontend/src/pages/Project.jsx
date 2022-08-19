@@ -8,6 +8,9 @@ import StakeholderView from "../components/StakeholderView";
 import CodeView from "../components/CodeView";
 import MaterialView from "../components/MaterialView";
 import MilestoneView from "../components/MilestoneView";
+import UpdateView from "../components/UpdateView";
+import SideButtons from "../components/SideButtons";
+import CategoryView from "../components/CategoryView";
 
 const Project = () => {
     const navigate = useNavigate()
@@ -31,9 +34,13 @@ const Project = () => {
         case 3:
           return <CodeView />;
         case 4:
-            return <MaterialView />;
+          return <MaterialView />;
         case 5:
-              return <MilestoneView />;
+          return <MilestoneView />;
+        case 6:
+          return <UpdateView />;
+        case 9:
+          return <CategoryView />;
         default:
             return <ProjectView />;
       }
@@ -96,7 +103,7 @@ const Project = () => {
                     Milestones
                 </button>
                 <button 
-                    onClick={() => SetView(3)} 
+                    onClick={() => SetView(6)} 
                     className="mb-0 border-custom-150 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Updates
                 </button>
@@ -114,9 +121,9 @@ const Project = () => {
 
               <section>
                   <button 
-                    onClick={() => SetView(3)} 
-                    className="mb-5 mt-0 ml-64 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
-                    Categories
+                    onClick={() => SetView(9)} 
+                    className="mb-5 mt-0 ml-60 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Category
                   </button>
                   <button 
                     onClick={() => SetView(3)} 
@@ -127,6 +134,11 @@ const Project = () => {
                     onClick={() => SetView(3)} 
                     className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Deliverables
+                  </button>
+                  <button 
+                    onClick={() => SetView(3)} 
+                    className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
+                    Requests
                   </button>
                   <button 
                     onClick={() => SetView(3)} 
@@ -144,19 +156,8 @@ const Project = () => {
             </main>
 
             <section>
-                {/* Create Project Button */}
-                <div class="py-8 px-6 mx-auto ">
-                    <a
-                        href="/createproject"
-                        class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Add New Project
-                    </a>
-                </div>
-                <div class="py-8 px-6 mx-auto ">
-                    <a
-                        href="/createproject"
-                        class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Refer Stakeholder
-                    </a>
-                </div>
+                {/* Side Buttons */}
+                <SideButtons />
             </section>
             </div>
         </div>

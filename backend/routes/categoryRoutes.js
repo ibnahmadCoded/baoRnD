@@ -6,13 +6,13 @@ const { addCategory,
 
 const { protect } = require('../middleware/authMiddleware')
 
-// Get all categories for a project/user. 
-router.get('/', protect, getCategories)
+// Get all categories for a user. 
+router.get('/:user', protect, getCategories)
 
-// Add a category to a project/user. 
+// Add a category to a user. 
 router.post('/', protect, addCategory)
 
-// Delete a category from a project/user. 
+// Delete a category from a user. 
 router.delete('/', protect, removeCategory)
 
 module.exports = router

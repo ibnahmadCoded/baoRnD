@@ -15,7 +15,7 @@ const getStakeholders = asyncHandler(async (req, res) => {
     }
 
     const project = await Project.findById(req.params.project)
-    if(!req.params.project){
+    if(!project){
         res.status(400)
         throw new Error('Project does not exist')
     }
@@ -23,6 +23,27 @@ const getStakeholders = asyncHandler(async (req, res) => {
     const stakeholders = await Stakeholder.find({ project: req.params.project })
 
     res.status(200).json(stakeholders)
+})
+
+// desc:    Get stake of a user in a project. 
+// route:   GET /api/stakeholders/:project
+// access:  Private 
+// dev:     Aliyu A.   
+const getStake = asyncHandler(async (req, res) => {
+    if(!req.params.project){
+        res.status(400)
+        throw new Error('Please provide the project')
+    }
+
+    const project = await Project.findById(req.params.project)
+    if(!project){
+        res.status(400)
+        throw new Error('Project does not exist')
+    }
+
+    const stake = await Stakeholder.find({ project: req.params.project, user: req.user.id })
+
+    res.status(200).json(stake[0])
 })
 
 // desc:    Add a stakeholder to a project
@@ -56,6 +77,9 @@ const addStakeholder = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('Project does not exist in request')
     }
+
+    // get the name of the user who is the stakeholder
+    stakeUser = await User.findById(req.body.user)
 
     const user = await User.findById(req.user.id)
     const project = await Project.findById(req.body.project)
@@ -100,6 +124,7 @@ const addStakeholder = asyncHandler(async (req, res) => {
     {
         const stakeholder = await Stakeholder.create({
             user: req.body.user,
+            username: stakeUser.name,
             project: req.body.project,
             type: req.body.type,
             viewership: req.body.viewership,
@@ -192,4 +217,5 @@ module.exports = {
     addStakeholder,
     removeStakeholder,
     getStakeholders,
+    getStake
 }

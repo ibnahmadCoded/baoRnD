@@ -32,7 +32,7 @@ const ProjectItem = ({project}) => {
                     <a href={"/project/" + project._id}>{project.title}</a>
                 </h2>
                 <p>{project.overview.substring(0,250) + "..."}</p>
-                <div className="mt-5">
+                <div>
                     {"Created At: " + new Date(project.createdAt).toLocaleString("en-US")}
                     {project.visibility === "Public" ? (
                         <p className="text-custom-100">{project.visibility}</p>
@@ -40,6 +40,30 @@ const ProjectItem = ({project}) => {
                         <p className="text-custom-150">{project.visibility}</p>
                     )}
                 </div>
+                <p>
+                    {/* Show seeking info if the project category is Collab and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Collab" && project.acceptapps) ? (<>Seeking collaborator(s)</>) : (null)}
+                </p>
+
+                <p>
+                    {/* Show seeking info if the project category is Sup and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Sup" && project.acceptapps) ? (<>Seeking supervisor(s)</>) : (null)}
+                </p>
+
+                <p>
+                    {/* Show seeking info if the project category is Dev and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Dev" && project.acceptapps)? (<>Seeking developer(s)</>) : (null)}
+                </p>
+
+                <p>
+                    {/* Show seeking info if the project category is Res and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Res" && project.acceptapps) ? (<>Seeking researcher(s)</>) : (null)}
+                </p>
+
+                <p>
+                    {/* Show seeking info if the project category is Collab, Dev, Fund, or Res and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Fund" && project.acceptapps) ? (<>Seeking investment</>) : (null)}
+                </p>
             </div>
         </div>
     )

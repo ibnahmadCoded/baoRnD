@@ -15,6 +15,14 @@ const getUsers = async (token) => {
     return response.data
 }
 
-const userService = { getUsers }
+// get users
+const getUser = async (userId) => {
+
+    const response = await axios.get(API_URL + "profile/" + userId)
+
+    return response.data
+}
+
+const userService = { getUsers, getUser }
 
 export default userService

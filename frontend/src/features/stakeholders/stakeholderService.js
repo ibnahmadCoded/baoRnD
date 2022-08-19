@@ -15,6 +15,19 @@ const getStakeholders = async (id, token) => {
     return response.data
 }
 
+// get stake of a user in a project
+const getStake = async (id, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(API_URL + "getstake/" + id, config)
+    
+    return response.data
+}
+
 // delete stakeholder
 const deleteStakeholder = async (stakeData, token) => {
     const config = {
@@ -42,6 +55,6 @@ const addStakeholder = async (stakeData, token) => {
     return response.data
 }
 
-const stakeholderService = { getStakeholders, deleteStakeholder, addStakeholder }
+const stakeholderService = { getStakeholders, getStake, deleteStakeholder, addStakeholder }
 
 export default stakeholderService

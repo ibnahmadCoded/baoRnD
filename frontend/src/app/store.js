@@ -9,6 +9,7 @@ import stakeholderReducer from "../features/stakeholders/stakeholderSlice"
 import materialReducer from "../features/materials/materialSlice"
 import contactReducer from "../features/contacts/contactSlice"
 import milestoneReducer from "../features/milestones/milestoneSlice"
+import updateReducer from "../features/updates/updateSlice"
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     materials: materialReducer,
     contacts: contactReducer,
     milestones: milestoneReducer,
+    updates: updateReducer,
   },
 });

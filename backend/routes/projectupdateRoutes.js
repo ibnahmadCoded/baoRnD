@@ -13,7 +13,7 @@ const { protect } = require('../middleware/authMiddleware')
 router.get('/', protect, getMyUpdates) 
 
 // Get all updates on a project. 
-router.get('/getprojectupdates', protect, getProjectUpdates)
+router.get('/getprojectupdates/:project', protect, getProjectUpdates)
 
 // Get an update
 router.get('/:id', protect, getAnUpdate) 

@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const Update = require('../models/projectupdateModel')
 const Stake = require('../models/stakeholderModel')
 const Project = require('../models/projectModel')
+const User = require("../models/userModel")
 
 // desc:    Get all updates made by a user.  Can filter for the particular project if we want to show updates of user in a particular project
 // route:   GET /api/projectupdates
@@ -35,7 +36,7 @@ const getAnUpdate = asyncHandler(async (req, res) => {
         // Hidden (only people with viewership can see) or Normal (default value, visible to ppl wiht viewership on project). 
         // future imporvement is to be able to hide specific parts of an update (e.g. hide a calculaiton or image, etc)
 const getProjectUpdates = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide project')
     }
@@ -43,7 +44,7 @@ const getProjectUpdates = asyncHandler(async (req, res) => {
     updates =[]
 
     // get hidden updates on the project
-    const hiddenupdates = await Update.find({ project: req.body.project, type: "Hidden" })
+    const hiddenupdates = await Update.find({ project: req.params.project, type: "Hidden" })
 
     // Hidden (only people with viewership can see). 
     // we need to ensure the current user can view the hidden updates they have access to view.
@@ -62,7 +63,9 @@ const getProjectUpdates = asyncHandler(async (req, res) => {
             updates.push({
                 _id: hiddenupdates[i]._id,
                 user: hiddenupdates[i].user,
+                username: hiddenupdates[i].username,
                 project: hiddenupdates[i].project,
+                projecttitle: hiddenupdates[i].projecttitle,
                 type: hiddenupdates[i].type,
                 content: "Not available"
                         })
@@ -70,7 +73,7 @@ const getProjectUpdates = asyncHandler(async (req, res) => {
     }
 
     // get Note updates on the project
-    const notes = await Update.find({ project: req.body.project, type: "Note" })
+    const notes = await Update.find({ project: req.params.project, type: "Note" })
 
     // Note (always hidden, only the updater can see it)
     for (var i = 0; i < notes.length; i++) {
@@ -83,7 +86,9 @@ const getProjectUpdates = asyncHandler(async (req, res) => {
             updates.push({
                 _id: notes[i]._id,
                 user: notes[i].user,
+                username: notes[i].username,
                 project: notes[i].project,
+                projecttitle: notes[i].projecttitle,
                 type: notes[i].type,
                 content: "Not available"
                         })
@@ -91,7 +96,7 @@ const getProjectUpdates = asyncHandler(async (req, res) => {
     }
 
     // get normal updates on the project
-    const normalupdates = await Update.find({ project: req.body.project, type: "Normal" })
+    const normalupdates = await Update.find({ project: req.params.project, type: "Normal" })
 
     res.status(200).json(updates.concat(normalupdates))
     
@@ -133,10 +138,14 @@ const addUpdate = asyncHandler(async (req, res) => {
         throw new Error('User not authorized')
     }
 
+    const user = await User.findById(req.user.id)
+
     // we create the update
     const update = await Update.create({
         user: req.user.id,
+        username: user.name,
         project: req.body.project,
+        projecttitle: project.title,
         type: req.body.type,
         content: req.body.content
     })

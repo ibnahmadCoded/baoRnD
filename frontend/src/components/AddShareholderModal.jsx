@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const AddShareholderModal = () => {
   const [showModal, setShowModal] = useState(false);

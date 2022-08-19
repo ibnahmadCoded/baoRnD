@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { deleteStakeholder } from "../features/stakeholders/stakeholderSlice"
-import { getUsers, resetusers } from "../features/users/userSlice"
 
 const StakeholderItem = ({stakeholder}) => {
     const navigate = useNavigate()
@@ -30,7 +29,7 @@ const StakeholderItem = ({stakeholder}) => {
                         </>
                     ) : (
                         <>
-                        <a href={"/profile/" + stakeholder.user}>{stakeholder.user}</a> {/* can view user profile via the link */}
+                        <a href={"/profile/" + stakeholder.user}>{stakeholder.username}</a> {/* can view user profile via the link */}
                         </>
                     )
                     }

@@ -82,7 +82,7 @@ function Feedback() {
                     </p>
                     <section className="my-0 mx-auto w-9/12 mb-44">
                         <div class=" sm:mx-auto sm:w-full sm:max-w-md">
-                            <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+                            <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg sm:px-10">
                                 <form onSubmit={onSubmit}>
                                     <div class="mb-4">
                                         <textarea type="textarea" id="feedback" name="feedback"

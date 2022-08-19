@@ -463,6 +463,21 @@ const createProject = asyncHandler(async (req, res) => {
         throw new Error('Please set project duration')
     }
 
+    if(!req.body.category){
+        res.status(400)
+        throw new Error('Please set project category')
+    }
+
+    if(req.body.category === "Fund" && !req.body.amount){
+        res.status(400)
+        throw new Error('Please set investment amount you are seeking')
+    }
+
+    if(!req.body.acceptapps){
+        res.status(400)
+        throw new Error('Please choose if you want to accept applications for this project')
+    }
+
     const user = await User.findById(req.user.id)
 
     // check that user exists
@@ -477,13 +492,17 @@ const createProject = asyncHandler(async (req, res) => {
         overview: req.body.overview,
         moreinfo: req.body.moreinfo,
         visibility: req.body.visibility,
-        duration: req.body.duration
+        duration: req.body.duration,
+        category: req.body.category,
+        amount: req.body.amount,
+        acceptapps: req.body.acceptapps
     })
 
     // Add project and user to the stakeholders collection, with user as initiator
     await Stakeholder.create({
         user: user.id,
         project: project.id,
+        username: user.name,
         type: 'Initiator',
         viewership: true,
         update: true
@@ -511,12 +530,6 @@ const updateProject = asyncHandler(async (req, res) => {
         throw new Error('Project does not exist')
     }
 
-    // check that user exists
-    if(!req.user){
-        res.status(401)
-        throw new Error('User does not exist')
-    }
-
     // Check that the logged in user is the same as the project user (only the project creator can edit its details)
     if(project.user.toString() !== req.user.id){
         res.status(401)
@@ -528,7 +541,7 @@ const updateProject = asyncHandler(async (req, res) => {
     })
 
     await Notification.create({
-        user: user._id,
+        user: req.user.id,
         item: updatedProject._id,
         type: "ProjectUpdate",
         seen: false,

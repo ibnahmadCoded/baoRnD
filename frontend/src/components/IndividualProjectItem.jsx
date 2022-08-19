@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { deleteProject } from "../features/project/projectSlice"
+import { changeProjectVisibility, deleteProject } from "../features/project/projectSlice"
 import { getStakeholders, deleteStakeholder, addStakeholder, resetstakeholders } from "../features/stakeholders/stakeholderSlice"
 import Spinner from "./Spinner"
 
@@ -33,13 +33,16 @@ const IndividualProjectItem = ({project}) => {
         console.log(messageStakeholder)
       }
 
+      if(isSuccessStakeholder){
+      }
+
       dispatch(getStakeholders(params.id))
 
       return() => {
         dispatch(resetstakeholders)
       }
 
-    }, [user, params.id, messageStakeholder, isErrorStakeholder, navigate, dispatch])
+    }, [user, params.id, messageStakeholder, isErrorStakeholder, isSuccessStakeholder, navigate, dispatch])
 
     if(isLoadingStakeholder){
         return <Spinner />
@@ -83,19 +86,44 @@ const IndividualProjectItem = ({project}) => {
             }
             
             <div class="bg-custom-50 py-8 px-6 rounded-lg sm:px-10">
-                <h2 className="text-2xl pt-7 text-custom-100 font-bold mb-5">
+                <h2 className="text-2xl pt-7 text-custom-100 font-bold mb-2">
                     Title: {project.title}
                 </h2>
-                <div className="mb-5">
+                <div className="">
+                    {"Created At: " + new Date(project.createdAt).toLocaleString("en-US")}
                     {project.visibility === "Public" ? (
                         <p className="text-custom-100">{project.visibility}</p>
                     ) : (
                         <p className="text-custom-150">{project.visibility}</p>
                     )}
-                    {"Created At: " + new Date(project.createdAt).toLocaleString("en-US")}
+                    
                 </div>
+                <p>
+                    {/* Show seeking info if the project category is Collab and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Collab" && project.acceptapps) ? (<>Seeking collaborator(s)</>) : (null)}
+                </p>
 
-                <h3 className="text-1xl text-custom-100 font-bold mb-2">
+                <p>
+                    {/* Show seeking info if the project category is Sup and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Sup" && project.acceptapps) ? (<>Seeking supervisor(s)</>) : (null)}
+                </p>
+
+                <p>
+                    {/* Show seeking info if the project category is Dev and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Dev" && project.acceptapps)? (<>Seeking developer(s)</>) : (null)}
+                </p>
+
+                <p>
+                    {/* Show seeking info if the project category is Res and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Res" && project.acceptapps) ? (<>Seeking researcher(s)</>) : (null)}
+                </p>
+
+                <p>
+                    {/* Show seeking info if the project category is Collab, Dev, Fund, or Res and the project owner is accepting applications b*/}
+                    {(project.category && project.category === "Fund" && project.acceptapps) ? (<>Seeking investment</>) : (null)}
+                </p>
+
+                <h3 className="text-1xl mt-5 text-custom-100 font-bold mb-2">
                     Overview
                 </h3>
                 <p className="mb-5">{project.overview}</p>
@@ -109,6 +137,22 @@ const IndividualProjectItem = ({project}) => {
                     Project Duration
                 </h3>
                 <p className="mb-5">{project.duration}</p>
+
+                {(project.user === user._id && project.visibility === "Public")? (
+                    <button 
+                        onClick={() => dispatch(changeProjectVisibility({projectId: params.id, visibility: "Private"}))} 
+                        className="rounded-lg hover:text-custom-150 text-custom-100 h-12 rounded-tr-lg">
+                            Take project private
+                    </button>
+                ) : (null)}
+
+                {(project.user === user._id && project.visibility === "Private")? (
+                    <button 
+                        onClick={() => dispatch(changeProjectVisibility({projectId: params.id, visibility: "Public"}))} 
+                        className="rounded-lg hover:text-custom-150 text-custom-100 h-12 rounded-tr-lg">
+                            Take project public
+                    </button>
+                ) : (null)}
             </div>
         </div>
     )

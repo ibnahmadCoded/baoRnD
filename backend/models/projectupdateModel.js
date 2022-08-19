@@ -8,11 +8,21 @@ const projectupdateSchema = mongoose.Schema({
         required: true,
         ref: 'User' // acts as foreign key, i.e. linked to the userModel, which is exported as User. 
     },
+    username: {
+        // name of the user who pushed the update. Better to do it this as React returns error otherwise
+        type: String,
+        required: true
+    },
     project: {
         // The id of the project for which an update is being pushed
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Project' // acts as foreign key, i.e. linked to the projectModel, which is exported as Project. 
+    },
+    projecttitle: {
+        // title of the project for which the update was pushed
+        type: String,
+        required: true
     },
     type: {
         // the type of the update can be either Note (always hidden, only the updater can see it), 

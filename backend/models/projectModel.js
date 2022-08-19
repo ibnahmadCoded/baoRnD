@@ -25,6 +25,21 @@ const projectSchema = mongoose.Schema({
         type: String,
         required: [true, 'Project duration cannot be empty']
     },
+    category: {
+        // for projects: Fund (seeking fund), Res (seeking researcher(s) researcher can be inidivual or company, Collab (seeking to collaborate with other,
+        // or Basic (just seeking to store project data))), Dev (seeking a developer), Pub (I want to publicize my project), Sup (seeking a supervisor)
+        type: String,
+        required: [true, 'Project category cannot be empty']
+    },
+    amount: {
+        // the amount of investment the user is seeking if the category is fund
+        type: Number
+    },
+    acceptapps: {
+        // does the owner want to accept applications or investments?
+        type: Boolean,
+        required: true
+    },
 }, {
     timestamps: true
 })

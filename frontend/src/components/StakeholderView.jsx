@@ -43,6 +43,15 @@ const StakeholderView = () => {
         if(isErrorUsers){
           console.log(messageUsers)
         }
+
+        if(isSuccessUsers){
+        }
+
+        if(isSuccessContact){
+        }
+
+        if(isSuccessStakeholder){
+        }
   
         dispatch(getStakeholders(params.id))
 
@@ -56,7 +65,8 @@ const StakeholderView = () => {
           dispatch(resetusers)
         }
   
-      }, [user, params.id, messageStakeholder, isErrorStakeholder, isErrorContact, isErrorUsers, messageContact, messageUsers, navigate, dispatch])
+      }, [user, params.id, messageStakeholder, isErrorStakeholder, isSuccessContact, isSuccessStakeholder,
+        isSuccessUsers, isErrorContact, isErrorUsers, messageContact, messageUsers, navigate, dispatch])
 
       const onSubmit = e => {
         e.preventDefault()
@@ -87,6 +97,10 @@ const StakeholderView = () => {
     return <Spinner />
   }
 
+  if(isLoadingUsers){
+    return <Spinner />
+  }
+
   const handleTypeSelect = e => {
     setSelectedOption(e.value);
   };
@@ -106,9 +120,9 @@ const StakeholderView = () => {
         <>
             
         <section className="content">
+            <p className="md:ml-28 md:mb-5">You can find project stakeholders here. NOTE: this is still in beta stage. Please bear with us.</p>
             {stakeholders.length > 0 ? (
             <div>
-              <p className="md:ml-28 md:mb-5">You can find project stakeholders here. NOTE: this is still in beta stage. Please bear with us.</p>
                     {/* The project owner should be able add new stakeholder */}
                     {project.user === user._id ? (
                         <section className="my-0 mx-auto w-9/12">
@@ -161,6 +175,7 @@ const StakeholderView = () => {
                     ) : (null)}
                 {stakeholders.map((stakeholder) => (
                   <>
+                    {}
                     <StakeholderItem key={stakeholder._id} stakeholder={stakeholder}/>
                     </>
                 ))}

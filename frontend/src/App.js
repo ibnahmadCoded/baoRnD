@@ -18,6 +18,7 @@ import Messaging from './pages/Messaging';
 import MyProfile from "./pages/MyProfile"
 import MyProjects from "./pages/MyProjects"
 import Project from './pages/Project';
+import Update from './pages/Update';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path='/myprofile' element={<MyProfile />}/>
             <Route path='/myprojects' element={<MyProjects />}/>
             <Route path='/project/:id' element={<Project />}/>
+            <Route path='/update/:id' element={<Update />}/>
             <Route path='/' element={<Dashboard />}/>
           </Routes>
           <Footer />

@@ -106,7 +106,7 @@ export const contactSlice = createSlice({
             .addCase(acceptContact.fulfilled, (state, action) => {
                 state.isLoadingContact = false
                 state.isSuccessContact = true
-                state.contacts = state.contacts.filter((contact) => (contact._id !== action.payload.id))
+                state.contacts = state.contacts.filter((contact) => (contact._id !== action.payload._id))
                 state.contacts.push(action.payload) 
             })
             .addCase(acceptContact.rejected, (state, action) => {
