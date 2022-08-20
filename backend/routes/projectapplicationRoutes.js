@@ -14,7 +14,7 @@ router.get('/', protect, getMyApplications)
 
 // Get all applications to a project. Only the initiator of a project can use this route to see all applications to join a project.
 // make sure to filter foronly pending applications in frontend. No need to show applications already replied to.
-router.get('/getprojectapplications', protect, getProjectapplications)
+router.get('/getprojectapplications/:project', protect, getProjectapplications)
 
 // Get an application
 router.get('/:id', protect, getApplication) 

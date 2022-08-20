@@ -69,7 +69,7 @@ const MilestoneView = () => {
 
     return (
         <>   
-        <section className="content">
+        <section>
             <p className="md:ml-28 md:mb-5">You can find project milestones here. We are still in beta stage. Please bear with us.</p>
             {/* The project owner should be able add new milestones */}
             {project.user === user._id ? (

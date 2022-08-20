@@ -120,7 +120,7 @@ const IndividualProjectItem = ({project}) => {
 
                 <p>
                     {/* Show seeking info if the project category is Collab, Dev, Fund, or Res and the project owner is accepting applications b*/}
-                    {(project.category && project.category === "Fund" && project.acceptapps) ? (<>Seeking investment</>) : (null)}
+                    {(project.category && project.category === "Fund" && project.acceptapps) ? (<>Seeking investment to the tune of ${project.amount}</>) : (null)}
                 </p>
 
                 <h3 className="text-1xl mt-5 text-custom-100 font-bold mb-2">

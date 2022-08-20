@@ -25,7 +25,7 @@ const changeProjectCategory = async(categoryData, token) => {
 
     const projectId = categoryData.projectId
     
-    const body = {category: categoryData.category, amount: categoryData.amount, acceptapps: categoryData.acceptapps}
+    const body = {category: categoryData.category, amount: categoryData.amount, acceptapps: categoryData.acceptapps, appmsg: categoryData.appmsg}
     
     const response = await axios.put(API_URL + projectId, body, config)
 

@@ -495,7 +495,8 @@ const createProject = asyncHandler(async (req, res) => {
         duration: req.body.duration,
         category: req.body.category,
         amount: req.body.amount,
-        acceptapps: req.body.acceptapps
+        acceptapps: req.body.acceptapps,
+        appmsg: req.body.appmsg
     })
 
     // Add project and user to the stakeholders collection, with user as initiator

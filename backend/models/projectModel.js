@@ -40,6 +40,10 @@ const projectSchema = mongoose.Schema({
         type: Boolean,
         required: true
     },
+    appmsg: {
+        // project owner`s message to potential applicants
+        type: String,
+    },
 }, {
     timestamps: true
 })

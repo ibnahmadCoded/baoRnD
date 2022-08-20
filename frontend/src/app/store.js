@@ -10,6 +10,7 @@ import materialReducer from "../features/materials/materialSlice"
 import contactReducer from "../features/contacts/contactSlice"
 import milestoneReducer from "../features/milestones/milestoneSlice"
 import updateReducer from "../features/updates/updateSlice"
+import applicationReducer from "../features/applications/applicaitonSlice"
 
 export const store = configureStore({
   reducer: {
@@ -24,5 +25,6 @@ export const store = configureStore({
     contacts: contactReducer,
     milestones: milestoneReducer,
     updates: updateReducer,
+    applications: applicationReducer,
   },
 });

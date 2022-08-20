@@ -43,10 +43,10 @@ export const addContact = createAsyncThunk("contact/add", async (contact, thunkA
 })
 
 // accept contact
-export const acceptContact = createAsyncThunk("contact/accept", async (_, thunkAPI) => {
+export const acceptContact = createAsyncThunk("contact/accept", async (contactId, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await contactService.acceptContact(token)
+        return await contactService.acceptContact(contactId, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)

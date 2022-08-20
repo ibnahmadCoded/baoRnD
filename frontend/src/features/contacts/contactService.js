@@ -42,14 +42,14 @@ const addContact = async (contact, token) => {
 }
 
 // accept contact
-const acceptContact = async (token) => {
+const acceptContact = async (contactId, token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
-    const response = await axios.post(API_URL, config)
+    const response = await axios.put(API_URL + contactId, config)
     
     return response.data
 }

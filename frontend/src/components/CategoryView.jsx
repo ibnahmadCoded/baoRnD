@@ -13,16 +13,19 @@ const CategoryView = () => {
     const { user } = useSelector((state) => state.auth)
     const { project, isLoading, isError, isSuccess, message } = useSelector((state) => state.project)
     const [showCategoryModal, setShowCategoryModal] = useState(false);
+    const [showAppmsgModal, setShowAppmsgModal] = useState(false);
+    const [showInvestormsgModal, setShowInvestormsgModal] = useState(false);
     
     //const { project } = useSelector((state) => state.project)
 
     const [formCategory, setFormCategory] = useState({
         category: '',
         amount: '',
-        acceptapps: false
+        acceptapps: false,
+        appmsg: ""
     })
 
-    const { category, amount, acceptapps } = formCategory
+    const { category, amount, acceptapps, appmsg } = formCategory
 
     useEffect(() => {
         if(!user){
@@ -47,7 +50,7 @@ const CategoryView = () => {
       const onSubmit = e => {
         e.preventDefault()
 
-        const categoryData = {projectId: params.id, category: category, amount: amount, acceptapps: acceptapps  }
+        const categoryData = {projectId: params.id, category: category, amount: amount, acceptapps: acceptapps, appmsg: appmsg  }
 
         // continue from here
         dispatch(changeProjectCategory(categoryData))
@@ -55,7 +58,8 @@ const CategoryView = () => {
         setFormCategory({
             category: '',
             amount: '',
-            acceptapps: false
+            acceptapps: false,
+            appmsg: ""
         })
     }
 
@@ -120,6 +124,22 @@ const CategoryView = () => {
                                         <input class="mr-1 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="true" name="acceptapps" /> Yes
                                         <input class="mr-1 ml-8 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="false" name="acceptapps" /> No
                                     </div>
+
+                                    <div class="mb-4">
+                                    <label for="appmsg" class="block mb-2 text-sm font-medium text-gray-900">
+                                        Any message for portential investors? Enter it  here
+                                        <button 
+                                            className="ml-2 rounded-full bg-custom-150 w-4 h-4 text-black hover:bg-custom-100 hover:text-white text-xs"
+                                            onClick={() => setShowInvestormsgModal(true)}
+                                            >
+                                            i
+                                        </button>
+                                    </label>
+                                        <textarea type="text" id="appmsg" name="appmsg"
+                                            class="shadow-sm h-28 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
+                                            placeholder="Enter message for potential investors" value={appmsg} onChange={onChange}
+                                        />
+                                    </div>
                             </>
                             : null
                         } 
@@ -130,6 +150,22 @@ const CategoryView = () => {
                                     <div class="flex items-center mb-4" onChange={onChange}>
                                         <input class="mr-1 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="true" name="acceptapps" /> Yes
                                         <input class="mr-1 ml-8 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="false" name="acceptapps" /> No
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="appmsg" class="block mb-2 text-sm font-medium text-gray-900">
+                                            Any message for portential applicants? Enter it  here
+                                            <button 
+                                                className="ml-2 rounded-full bg-custom-150 w-4 h-4 text-black hover:bg-custom-100 hover:text-white text-xs"
+                                                onClick={() => setShowAppmsgModal(true)}
+                                                >
+                                                i
+                                            </button>
+                                        </label>
+                                        <textarea type="text" id="appmsg" name="appmsg"
+                                            class="shadow-sm h-28 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
+                                            placeholder="Enter message for potential applicants" value={appmsg} onChange={onChange}
+                                        />
                                     </div>
                             </>
                             : null
@@ -161,14 +197,21 @@ const CategoryView = () => {
                                 {project.category === "Basic" ? <> seeking to just host project</> : (null)}
                             </span>
                         </p>
+                        
+                        {project.appmsg && project.category === "Fund" ? <p>Message to Investors: {project.appmsg}</p> : null}
+                        {project.appmsg && project.category === "Collab" ? <p>Message to Applicants: {project.appmsg}</p> : null}
+                        {project.appmsg && project.category === "Sup" ? <p>Message to Applicants: {project.appmsg}</p> : null}
+                        {project.appmsg && project.category === "Res" ? <p>Message to Applicants: {project.appmsg}</p> : null}
+                        {project.appmsg && project.category === "Dev" ? <p>Message to Applicants: {project.appmsg}</p> : null}
+
                         {/* Allow users to toggle accept applications for this category or not */}
-                        {(project.user === user._id && project.acceptapps && project.category !== "Basic" && project.category !== "Pub") ? (
+                        {(project.user === user._id && project.acceptapps && project.category !== "Basic" && project.category !== "Pub") ? 
                             <button 
                                 onClick={() => dispatch(changeProjectCategory({projectId: params.id, acceptapps: false}))} 
                                 className="rounded-lg hover:text-custom-150 text-custom-100 h-12 rounded-tr-lg">
                                     Stop Accepting Applications
                             </button>
-                        ) : (null)}
+                         : (null)}
                         {(project.user === user._id && !project.acceptapps && project.category !== "Basic" && project.category !== "Pub")? (
                             <button 
                                 onClick={() => dispatch(changeProjectCategory({projectId: params.id, acceptapps: true}))} 
@@ -226,6 +269,100 @@ const CategoryView = () => {
                                 <button data-modal-toggle="defaultModal" type="button" 
                                     class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                                     onClick={() => setShowCategoryModal(false)}>
+                                    Close
+                                </button>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    </>
+                ) : null}
+                </>
+                <>
+                {showAppmsgModal ? (
+                    <>
+                    <div class="flex justify-center items-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        {/* Modal Content */}
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+                            {/* Modal Header */}
+                            <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Understanding Application Message
+                                </h3>
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal"
+                                    onClick={() => setShowAppmsgModal(false)}>
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+
+                            
+                            {/* Modal Body */}
+                            <div class="p-6 space-y-2">
+                                
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                Enter message for potential applicants. Fill this if you are accepting applications for this project. 
+                                For example, you can put what your are offering the researcher if they join your project. 
+                                You can also leave this blank if you do not have any message for potential applicants. 
+                                </p>
+
+                            </div>
+
+                            {/* Modal footer */}
+                            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                <button data-modal-toggle="defaultModal" type="button" 
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                                    onClick={() => setShowAppmsgModal(false)}>
+                                    Close
+                                </button>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    </>
+                ) : null}
+                </>
+                <>
+                {showInvestormsgModal ? (
+                    <>
+                    <div class="flex justify-center items-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        {/* Modal Content */}
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+                            {/* Modal Header */}
+                            <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Understanding Investment Message
+                                </h3>
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal"
+                                    onClick={() => setShowInvestormsgModal(false)}>
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+
+                            
+                            {/* Modal Body */}
+                            <div class="p-6 space-y-2">
+                                
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                Enter message for potential investors. Fill this if you are accepting investment for this project. 
+                                For example, you can put what you are offering the investor if they invest your project. 
+                                You can also leave this blank if you do not have any message for potential investors. 
+                                </p>
+
+                            </div>
+
+                            {/* Modal footer */}
+                            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                <button data-modal-toggle="defaultModal" type="button" 
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                                    onClick={() => setShowInvestormsgModal(false)}>
                                     Close
                                 </button>
                             </div>

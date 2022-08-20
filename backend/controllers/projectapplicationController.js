@@ -4,6 +4,7 @@ const Application = require('../models/projectapplicationModel')
 const Project = require('../models/projectModel')
 const Stake = require('../models/stakeholderModel')
 const Notification = require('../models/notificationModel')
+const User = require('../models/userModel')
 
 // desc:    Get all applications of a user.  Can filter for the particular project if we want to show applications of user in a particular project
 // route:   GET /api/projectapplications
@@ -28,17 +29,17 @@ const getApplication = asyncHandler(async (req, res) => {
 })
 
 // desc:    Get all applications to a project. Only the initiator of a project can use this route to see all applications to join a project.
-// route:   GET /api/projectapplications/apps
+// route:   GET /api/projectapplications/apps/:project
 // access:  Private 
 // dev:     Aliyu A.   
 const getProjectapplications = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide project')
     }
 
     // get the project
-    const project = await Project.findOne({ _id: req.body.project })
+    const project = await Project.findOne({ _id: req.params.project })
 
     if(!project){
         res.status(400)
@@ -47,14 +48,14 @@ const getProjectapplications = asyncHandler(async (req, res) => {
     
     // only the initiator of a project can view all applications made to join it
     // get stakeholder of the project, where user matches project
-    const stake = await Stake.findOne({ user: req.user.id, project: req.body.project, type: { "$in" : ["Initiator"]} })
+    const stake = await Stake.findOne({ user: req.user.id, project: req.params.project, type: { "$in" : ["Initiator"]} })
     
     if(!stake){
         res.status(400)
         throw new Error('User not authorized')
     }
 
-    const applications = await Application.find({ project: req.body.project })
+    const applications = await Application.find({ project: req.params.project })
 
     res.status(200).json(applications)
     
@@ -84,11 +85,14 @@ const addApplication = asyncHandler(async (req, res) => {
         throw new Error('There is a pending application from the user for the same role on the same project')
     }
 
+    const user = await User.findById(req.user.id)
+
     // we create the application
     const application = await Application.create({
         user: req.user.id,
         project: req.body.project,
         type: req.body.type,
+        username: user.name,
         message: req.body.message,
         reply: "Pending"
     })

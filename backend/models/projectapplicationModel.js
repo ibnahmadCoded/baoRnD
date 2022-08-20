@@ -18,6 +18,11 @@ const projectapplicationSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add what you are applying as']
     },
+    username: {
+        // the name of the user submitting the application.
+        type: String,
+        required: [true, 'Please add the name of the user']
+    },
     message: {
         // Message is a simple answer to the question: why do you want to join the project?
         type: String,

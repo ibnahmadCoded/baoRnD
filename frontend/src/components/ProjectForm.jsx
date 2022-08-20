@@ -14,18 +14,21 @@ const ProjectForm = () => {
         duration: '',
         category: "",
         amount: "",
-        acceptapps: false
+        acceptapps: false,
+        appmsg: ""
     })
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { title, overview, moreinfo, visibility, duration, category, amount, acceptapps } = formData
+    const { title, overview, moreinfo, visibility, duration, category, amount, acceptapps, appmsg } = formData
 
     const { projects, isLoading, isError, isSuccess, message } = useSelector((state) => state.projects)
 
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [showVisibilityModal, setShowVisibilityModal] = useState(false);
+    const [showAppmsgModal, setShowAppmsgModal] = useState(false);
+    const [showInvestormsgModal, setShowInvestormsgModal] = useState(false);
 
     useEffect(() => {
         if(isError){
@@ -49,7 +52,7 @@ const ProjectForm = () => {
     const onSubmit = e => {
         e.preventDefault()
 
-        const projectData = { title, overview, moreinfo, visibility, duration, category, amount, acceptapps }
+        const projectData = { title, overview, moreinfo, visibility, duration, category, amount, acceptapps, appmsg }
 
         dispatch(createProject(projectData))
 
@@ -62,6 +65,7 @@ const ProjectForm = () => {
             category: "",
             amount: "",
             acceptapps: false,
+            appmsg: ""
         })
     }
 
@@ -120,6 +124,22 @@ const ProjectForm = () => {
                             <input class="mr-1 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="true" name="acceptapps" /> Yes
                             <input class="mr-1 ml-8 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="false" name="acceptapps" /> No
                         </div>
+                        
+                        <div class="mb-4">
+                            <label for="appmsg" class="block mb-2 text-sm font-medium text-gray-900">
+                                Any message for portential investors? Enter it  here.
+                                <button 
+                                    className="ml-2 rounded-full bg-custom-150 w-4 h-4 text-black hover:bg-custom-100 hover:text-white text-xs"
+                                    onClick={() => setShowInvestormsgModal(true)}
+                                    >
+                                    i
+                                </button>
+                            </label>
+                            <textarea type="text" id="appmsg" name="appmsg"
+                                class="shadow-sm h-28 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
+                                placeholder="Enter message for potential investors." value={appmsg} onChange={onChange}
+                            />
+                        </div>
                    </>
                    : null
                } 
@@ -130,6 +150,22 @@ const ProjectForm = () => {
                         <div class="flex items-center mb-4" onChange={onChange}>
                             <input class="mr-1 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="true" name="acceptapps" /> Yes
                             <input class="mr-1 ml-8 w-4 h-4 border-gray-300 focus:ring-2 focus:ring-custom-100" type="radio" value="false" name="acceptapps" /> No
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="appmsg" class="block mb-2 text-sm font-medium text-gray-900">
+                                Any message for portential applicants? Enter it  here
+                                <button 
+                                    className="ml-2 rounded-full bg-custom-150 w-4 h-4 text-black hover:bg-custom-100 hover:text-white text-xs"
+                                    onClick={() => setShowAppmsgModal(true)}
+                                    >
+                                    i
+                                </button>
+                            </label>
+                            <textarea type="text" id="appmsg" name="appmsg"
+                                class="shadow-sm h-28 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
+                                placeholder="Enter message for potential applicants." value={appmsg} onChange={onChange}
+                            />
                         </div>
                    </>
                    : null
@@ -248,7 +284,7 @@ const ProjectForm = () => {
                             {/* Modal Header */}
                             <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                    Understanding Project Categories
+                                    Understanding Project Visibility
                                 </h3>
                                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal"
                                     onClick={() => setShowVisibilityModal(false)}>
@@ -280,6 +316,101 @@ const ProjectForm = () => {
                                 <button data-modal-toggle="defaultModal" type="button" 
                                     class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                                     onClick={() => setShowVisibilityModal(false)}>
+                                    Close
+                                </button>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    </>
+                ) : null}
+                </>
+                <>
+                {showAppmsgModal ? (
+                    <>
+                    <div class="flex justify-center items-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        {/* Modal Content */}
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+                            {/* Modal Header */}
+                            <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Understanding Application Message
+                                </h3>
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal"
+                                    onClick={() => setShowAppmsgModal(false)}>
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+
+                            
+                            {/* Modal Body */}
+                            <div class="p-6 space-y-2">
+                                
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                Enter message for potential applicants. Fill this if you are accepting applications for this project. 
+                                For example, you can put what you are offering the researcher if they join your project. 
+                                You can also leave this blank if you do not have any message for potential applicants. 
+                                </p>
+
+                            </div>
+
+                            {/* Modal footer */}
+                            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                <button data-modal-toggle="defaultModal" type="button" 
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                                    onClick={() => setShowAppmsgModal(false)}>
+                                    Close
+                                </button>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    </>
+                ) : null}
+                </>
+
+                <>
+                {showInvestormsgModal ? (
+                    <>
+                    <div class="flex justify-center items-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        {/* Modal Content */}
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+                            {/* Modal Header */}
+                            <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Understanding Investment Message
+                                </h3>
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="defaultModal"
+                                    onClick={() => setShowInvestormsgModal(false)}>
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+
+                            
+                            {/* Modal Body */}
+                            <div class="p-6 space-y-2">
+                                
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                Enter message for potential investors. Fill this if you are accepting investment for this project. 
+                                For example, you can put what you are offering the investor if they invest your project. 
+                                You can also leave this blank if you do not have any message for potential investors. 
+                                </p>
+
+                            </div>
+
+                            {/* Modal footer */}
+                            <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                                <button data-modal-toggle="defaultModal" type="button" 
+                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                                    onClick={() => setShowInvestormsgModal(false)}>
                                     Close
                                 </button>
                             </div>
