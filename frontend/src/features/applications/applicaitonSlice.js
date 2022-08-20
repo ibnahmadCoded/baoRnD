@@ -54,10 +54,10 @@ export const addApplication = createAsyncThunk("applications/add", async (applic
 })
 
 // reply application with acceptance or rejection
-export const replyApplication = createAsyncThunk("applications/reply", async (applicationId, thunkAPI) => {
+export const replyApplication = createAsyncThunk("applications/reply", async (applicationData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await applicationService.replyApplication(applicationId, token)
+        return await applicationService.replyApplication(applicationData, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)

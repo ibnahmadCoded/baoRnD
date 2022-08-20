@@ -48,12 +48,12 @@ const getProjectapplications = asyncHandler(async (req, res) => {
     
     // only the initiator of a project can view all applications made to join it
     // get stakeholder of the project, where user matches project
-    const stake = await Stake.findOne({ user: req.user.id, project: req.params.project, type: { "$in" : ["Initiator"]} })
+    //const stake = await Stake.findOne({ user: req.user.id, project: req.params.project, type: { "$in" : ["Initiator"]} })
     
-    if(!stake){
-        res.status(400)
-        throw new Error('User not authorized')
-    }
+    //if(!stake){
+    //    res.status(400)
+    //    throw new Error('User not authorized')
+    //}
 
     const applications = await Application.find({ project: req.params.project })
 
@@ -139,6 +139,73 @@ const updateApplication = asyncHandler(async (req, res) => {
     const updatedApplication = await Application.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
     })
+
+    // add stakeholder to project 
+    const project = await Project.findById(updatedApplication.project)
+
+    var cat
+
+    if(project.category === "Res"){
+        cat = "Researcher"
+    }
+
+    if(project.category === "Sup"){
+        cat = "Supervisor"
+    }
+
+    if(project.category === "Dev"){
+        cat = "Developer"
+    }
+
+    if(project.category === "Collab"){
+        cat = "Collaborator"
+    }
+
+    // notify the user
+    if(req.body.reply === "Accepted"){
+        
+        // add stakeholder
+        const stake = await Stake.findOne({ user: updatedApplication.user, project: updatedApplication.project })
+    
+        if(stake){
+            // if the user item already exists with its stakes on the project in the collection, just update it with the additional stake
+            await Stake.findByIdAndUpdate(stake._id, {
+                viewership: true, 
+                update: true,
+                $addToSet: {type: cat}}, {
+                new: true,
+            })
+        }
+        else
+        {
+            await Stake.create({
+                user: updatedApplication.user,
+                username: updatedApplication.username,
+                project: updatedApplication.project,
+                type: cat,
+                viewership: true,
+                update: true,
+            })
+
+        }    
+
+        await Notification.create({
+            user: project.user,
+            item: project._id,
+            type: "ProjectApplicationAccepted",
+            seen: false,
+        })
+    }
+
+    if(req.body.reply === "Rejected"){
+
+        await Notification.create({
+            user: project.user,
+            item: project._id,
+            type: "ProjectApplicationRejected",
+            seen: false,
+        })
+    }
 
     res.status(200).json(updatedApplication) 
 })

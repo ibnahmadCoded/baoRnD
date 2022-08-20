@@ -26,6 +26,8 @@ const notificationSchema = mongoose.Schema({
         // ContactRequest (A user sent you a contact request <- [link to the request, stored in item])
         // ContactRequestAccepted (User A <- [link to the user] accepted your contact addition request, and has been added to your contact list <- [link to the contact list])
         // ContactAdded (User A <- [link to the user] has been added to your contact list <- [link to the contact list])
+        // ProjectApplicationRejected (your application to project(... project link) has been rejected)
+        // ProjectApplicationAccepted (your application to project(... project link) has been accepted)
         // message sent in frontend
         // Add 3 more types every month with new product update
         type: String,
