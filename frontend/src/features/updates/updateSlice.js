@@ -55,7 +55,7 @@ export const deleteUpdate = createAsyncThunk("updates/delete", async (updateId, 
 })
 
 // add update
-export const addUpdate = createAsyncThunk("materials/add", async (updateData, thunkAPI) => {
+export const addUpdate = createAsyncThunk("updates/add", async (updateData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await updateService.addUpdate(updateData, token)

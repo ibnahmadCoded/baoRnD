@@ -7,6 +7,7 @@ import { getContacts, resetcontacts } from "../features/contacts/contactSlice";
 import Spinner from "./Spinner";
 import Select from 'react-select'
 import { getUsers, resetusers } from "../features/users/userSlice";
+import { toast } from "react-toastify"
 
 const StakeholderView = () => {
     const navigate = useNavigate()
@@ -68,12 +69,14 @@ const StakeholderView = () => {
       }, [user, params.id, messageStakeholder, isErrorStakeholder, isSuccessContact, isSuccessStakeholder,
         isSuccessUsers, isErrorContact, isErrorUsers, messageContact, messageUsers, navigate, dispatch])
 
-      const onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault()
 
         const stakeData = { user: selectedOption, project: params.id, type: type, viewership: viewership, update: update }
 
         dispatch(addStakeholder(stakeData))
+
+        toast.success("Stakeholder successfully added")
 
         setFormData({
           type: '',

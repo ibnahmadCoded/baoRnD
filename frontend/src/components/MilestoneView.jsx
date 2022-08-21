@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import MilestoneItem from "../components/MilestoneItem"
 import { addMilestone, getMilestones, resetmilestones } from "../features/milestones/milestoneSlice"
 import Spinner from "./Spinner"
+import { toast } from "react-toastify"
 
 const MilestoneView = () => {
     const navigate = useNavigate()
@@ -42,12 +43,14 @@ const MilestoneView = () => {
   
       }, [user, params.id, messageMilestone, isSuccessMilestone, isErrorMilestone, navigate, dispatch])
 
-      const onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault()
 
         const milestoneData = { project: params.id, title: title, detail: detail, dueDate: dueDate  }
 
         dispatch(addMilestone(milestoneData))
+
+        toast.success("New milestone successfully added")
 
         setFormMilestone({
             title: '',

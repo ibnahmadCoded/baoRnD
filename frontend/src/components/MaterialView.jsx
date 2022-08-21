@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import MaterialItem from "../components/MaterialItem"
 import { addMaterial, getMaterials, resetmaterials } from "../features/materials/materialSlice"
 import Spinner from "./Spinner"
+import { toast } from "react-toastify"
 
 const MaterialView = () => {
     const navigate = useNavigate()
@@ -39,12 +40,14 @@ const MaterialView = () => {
   
       }, [user, params.id, messageMaterial, isErrorMaterial, navigate, dispatch])
 
-      const onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault()
 
         const materialData = { project: params.id, material: material, type: type, visibility: visibility }
 
         dispatch(addMaterial(materialData))
+
+        toast.success("New material successfully added")
 
         setFormMaterial({
             material: '',

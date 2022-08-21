@@ -9,7 +9,9 @@ const ApplicationItem = ({application}) => {
         <div className="my-0 mx-auto w-9/12 mb-5">
         <div class="bg-custom-50 py-8 px-6 rounded-lg sm:px-10">
             <p>
-                Applicant: <span className="text-custom-100 text-bold">{application.username}</span>
+                Applicant: <span>
+                    <a className="text-custom-100 font-bold hover:text-custom-150" href={"/profile/" + application.user}> {application.username}</a>
+                </span>
             </p>
             {/* Allow project users to accept or reject applications to projects that are theirs */}
             {(application.reply === "Pending") ? (

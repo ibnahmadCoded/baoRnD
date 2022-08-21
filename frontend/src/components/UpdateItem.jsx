@@ -17,11 +17,11 @@ const UpdateItem = ({update}) => {
                 Update made by 
                     {update.user === user._id ? (
                     <>
-                        <a className="hover:text-custom-150" href={"/profile/" + update.user}> you </a> {/* can view user profile via the link */}
+                        <a className="hover:text-custom-150 font-bold" href={"/profile/" + update.user}> you </a> {/* can view user profile via the link */}
                         </>
                     ) : (
                         <>
-                        <a className="hover:text-custom-150" href={"/profile/" + update.user}>{update.username}</a> {/* can view user profile via the link */}
+                        <a className="hover:text-custom-150 font-bold" href={"/profile/" + update.user}>{update.username}</a> {/* can view user profile via the link */}
                         </>
                     )
                     }

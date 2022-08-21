@@ -18,17 +18,17 @@ const getMyInvestments = asyncHandler(async (req, res) => {
 })
 
 // desc:    Get all investments on a project.  Only the initiator of a project can use this route to see all investments on a project.
-// route:   GET /api/investments/projectinvestments
+// route:   GET /api/investments/projectinvestments/:project
 // access:  Private 
 // dev:     Aliyu A.   
 const getProjectInvestments = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide project')
     }
 
     // get the project
-    const project = await Project.findOne({ _id: req.body.project })
+    const project = await Project.findById(req.params.project)
 
     if(!project){
         res.status(400)
@@ -37,14 +37,14 @@ const getProjectInvestments = asyncHandler(async (req, res) => {
 
     // only the initiator of a project can view all investments in it
     // get stakeholder of the project, where user matches project
-    const stake = await Stake.findOne({ user: req.user.id, project: req.body.project, type: { "$in" : ["Initiator"]} })
+    const stake = await Stake.findOne({ user: req.user.id, project: req.params.project, type: { "$in" : ["Initiator"]} })
 
     if(!stake){
         res.status(400)
         throw new Error('User not authorized')
     }
 
-    const investments = await Investment.find({ project: req.body.project })
+    const investments = await Investment.find({ project: req.params.project })
 
     res.status(200).json(investments)
     
@@ -71,6 +71,10 @@ const addInvestment = asyncHandler(async (req, res) => {
     // i.e. already invested in it before. We dont want to duplicate users in this collection
     const i = await Investment.findOne({ user: req.user.id, project: req.body.project })
 
+    // get the project and user
+    const project = await Project.findById(req.body.project)
+    const user = await User.findById(req.user.id)
+
     if (i){
         // if the user already exists with investments on project in the collection, just update it with the additional amounts
         const investment = await Investment.findByIdAndUpdate(i._id, {$push: {amounts: req.body.amount}}, {
@@ -78,8 +82,6 @@ const addInvestment = asyncHandler(async (req, res) => {
         })
 
         // notify the project owner about investment
-        // get the project
-        const project = await Project.findOne({ _id: req.body.project })
         await Notification.create({
             user: project.user,
             item: project._id,
@@ -94,7 +96,9 @@ const addInvestment = asyncHandler(async (req, res) => {
         // else we create a new investment entry for the user on the project, in the collection
         const investment = await Investment.create({
             user: req.user.id,
+            username: user.name,
             project: req.body.project,
+            projectname: project.title,
             amounts: req.body.amount
         })
 
@@ -108,7 +112,6 @@ const addInvestment = asyncHandler(async (req, res) => {
             })
         }
         else{
-            const user = await User.findById(req.user.id)
             await Stake.create({
                 user: req.user.id,
                 username: user.name,
@@ -120,7 +123,6 @@ const addInvestment = asyncHandler(async (req, res) => {
 
         // notify the project owner about investment
         // get the project
-        const project = await Project.findOne({ _id: req.body.project })
         await Notification.create({
             user: project.user,
             item: project._id,

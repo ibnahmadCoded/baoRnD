@@ -10,7 +10,7 @@ const initialState = {
 }
 
 // get the project`s milestones
-export const getMilestones = createAsyncThunk("materials/getAll", async (projectId, thunkAPI) => {
+export const getMilestones = createAsyncThunk("milestones/getAll", async (projectId, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await milestoneService.getMilestones(projectId, token)
@@ -21,7 +21,7 @@ export const getMilestones = createAsyncThunk("materials/getAll", async (project
 })
 
 // delete milestone
-export const deleteMilestone = createAsyncThunk("materials/delete", async (milestoneId, thunkAPI) => {
+export const deleteMilestone = createAsyncThunk("milestones/delete", async (milestoneId, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await milestoneService.deleteMilestone(milestoneId, token)
@@ -32,7 +32,7 @@ export const deleteMilestone = createAsyncThunk("materials/delete", async (miles
 })
 
 // add material
-export const addMilestone = createAsyncThunk("materials/add", async (milestoneData, thunkAPI) => {
+export const addMilestone = createAsyncThunk("milestones/add", async (milestoneData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await milestoneService.addMilestone(milestoneData, token)

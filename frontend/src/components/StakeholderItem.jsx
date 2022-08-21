@@ -22,7 +22,7 @@ const StakeholderItem = ({stakeholder}) => {
         <div className="my-0 mx-auto w-9/12 mb-5">
             
             <div class="bg-custom-50 py-8 px-6 rounded-lg sm:px-10">
-                <p className="text-custom-100 text-bold hover:text-custom-150">
+                <p className="text-custom-100 font-bold hover:text-custom-150">
                     {stakeholder.user === user._id ? (
                     <>
                         <a href={"/profile/" + stakeholder.user}>You</a> {/* can view user profile via the link */}

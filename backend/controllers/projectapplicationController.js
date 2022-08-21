@@ -87,19 +87,21 @@ const addApplication = asyncHandler(async (req, res) => {
 
     const user = await User.findById(req.user.id)
 
+    const project = await Project.findById(req.body.project)
+
     // we create the application
     const application = await Application.create({
         user: req.user.id,
         project: req.body.project,
         type: req.body.type,
         username: user.name,
+        projectname: project.title,
         message: req.body.message,
         reply: "Pending"
     })
 
     // notify the user who owns (initiated) the project about the application
     // get the project
-    const project = await Project.findOne({ _id: req.body.project })
     await Notification.create({
         user: project.user,
         item: project._id,

@@ -12,6 +12,7 @@ import UpdateView from "../components/UpdateView";
 import SideButtons from "../components/SideButtons";
 import CategoryView from "../components/CategoryView";
 import ApplicationView from "../components/ApplicationView";
+import InvestmentView from "../components/InvestmentView";
 
 const Project = () => {
     const navigate = useNavigate()
@@ -42,6 +43,8 @@ const Project = () => {
           return <UpdateView />;
         case 7:
           return <ApplicationView />;
+        case 8:
+            return <InvestmentView />;
         case 9:
           return <CategoryView />;
         default:
@@ -116,7 +119,7 @@ const Project = () => {
                     Applications
                 </button>
                 <button 
-                    onClick={() => SetView(3)} 
+                    onClick={() => SetView(8)} 
                     className="mb-0 border-custom-150 border-2 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Investments
                 </button>

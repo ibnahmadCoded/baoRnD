@@ -64,7 +64,7 @@ const ApplicationView = () => {
     }
   
     if(isLoadingApplication){
-          return <Spinner />
+        return <Spinner />
     }
 
     const stakes = stakeholders.filter((stakeholder) => stakeholder.user === user._id)
@@ -157,7 +157,7 @@ const ApplicationView = () => {
                         </>
                     ))}
                 </div>
-                ) : (<h3>You are not authorized to view applications to this project</h3>)}
+                ) : (<h3>You are not authorized to view applications to this project or there are no applications.</h3>)}
 
             
         </section>          

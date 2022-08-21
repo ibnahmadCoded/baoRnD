@@ -12,7 +12,7 @@ const MilestoneItem = ({milestone}) => {
         <div className="my-0 mx-auto w-9/12 mb-5">
         <div class="bg-custom-50 py-8 px-6 rounded-lg sm:px-10">
             <p>
-                Milestone: <span className="text-custom-100 text-bold">{milestone.title}</span>
+                Milestone: <span className="text-custom-100 font-bold">{milestone.title}</span>
             </p>
             {/* Allow users to delete milestones on projects that is theirs */}
             {project.user === user._id ? (
@@ -25,11 +25,11 @@ const MilestoneItem = ({milestone}) => {
             <p>
                 Detail: {milestone.detail}
             </p>
-            <p className="text-custom-150">
-                Due Date: {new Date(milestone.dueDate).toLocaleString("en-Us")}
+            <p>
+                Due Date: <span className="text-custom-150">{new Date(milestone.dueDate).toLocaleString("en-Us")}</span> 
             </p>
             <p>
-                Created At: {new Date(milestone.createdAt).toLocaleString("en-Us")}
+                Created at: {new Date(milestone.createdAt).toLocaleString("en-Us")}
             </p>
         </div>
         </div>

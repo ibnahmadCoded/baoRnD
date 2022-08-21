@@ -10,7 +10,7 @@ const { protect } = require('../middleware/authMiddleware')
 router.get('/', protect, getMyInvestments)
 
 // Get all investments of a project. Only the initiator of a project can use this route to see all investments on a project.
-router.get('/projectinvestments', protect, getProjectInvestments)
+router.get('/projectinvestments/:project', protect, getProjectInvestments)
 
 // Add an investment. 
 router.post('/', protect, addInvestment)

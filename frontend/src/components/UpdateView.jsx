@@ -5,6 +5,7 @@ import { addUpdate, getProjectUpdates, resetupdates } from "../features/updates/
 import Spinner from "./Spinner"
 import { getStake, resetstakeholders } from "../features/stakeholders/stakeholderSlice"
 import UpdateItem from "./UpdateItem"
+import { toast } from "react-toastify"
 
 const UpdateView = () => {
     const navigate = useNavigate()
@@ -59,6 +60,8 @@ const UpdateView = () => {
         const updateData = { project: params.id, type: type, content: content  }
 
         dispatch(addUpdate(updateData))
+
+        toast.success("Your update was successfully saved.")
 
         setFormUpdate({
             type: '',
