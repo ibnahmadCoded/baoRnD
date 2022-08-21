@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { changeProjectCategory, getProject, reset } from "../features/project/projectSlice"
 import Spinner from "./Spinner"
+const lodash = require('lodash')
 
 // change category, accept/reject apps
 const CategoryView = () => {
@@ -11,6 +12,7 @@ const CategoryView = () => {
     const params = useParams()
 
     const { user } = useSelector((state) => state.auth)
+    const { investments } = useSelector((state) => state.investments)
     const { project, isLoading, isError, isSuccess, message } = useSelector((state) => state.project)
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [showAppmsgModal, setShowAppmsgModal] = useState(false);
@@ -72,6 +74,16 @@ const CategoryView = () => {
 
     if(isLoading){
         return <Spinner />
+    }
+
+    const invs = investments.filter((inv) => (inv.project === params.id && inv.amount !== []))
+
+    var totalInvested = 0
+
+    if(invs){
+        for (var i = 0; i < invs.length; i++) {
+            totalInvested += lodash.sum(invs[i].amounts)
+        }
     }
 
     return (
@@ -206,18 +218,32 @@ const CategoryView = () => {
 
                         {/* Allow users to toggle accept applications for this category or not */}
                         {(project.user === user._id && project.acceptapps && project.category !== "Basic" && project.category !== "Pub") ? 
-                            <button 
-                                onClick={() => dispatch(changeProjectCategory({projectId: params.id, acceptapps: false}))} 
-                                className="rounded-lg hover:text-custom-150 text-custom-100 h-12 rounded-tr-lg">
-                                    Stop Accepting Applications
-                            </button>
+                            <>
+                                {project.category === "Fund" && project.amount === totalInvested ? 
+                                <p>
+                                    Investment goal has been reached
+                                </p> : 
+                                <button 
+                                    onClick={() => dispatch(changeProjectCategory({projectId: params.id, acceptapps: false}))} 
+                                    className="rounded-lg hover:text-custom-150 text-custom-100 h-12 rounded-tr-lg">
+                                        Stop Accepting Applications
+                                </button>
+                                }
+                            </>
                          : (null)}
                         {(project.user === user._id && !project.acceptapps && project.category !== "Basic" && project.category !== "Pub")? (
-                            <button 
-                                onClick={() => dispatch(changeProjectCategory({projectId: params.id, acceptapps: true}))} 
-                                className="rounded-lg hover:text-custom-150 text-custom-100 h-12 rounded-tr-lg">
-                                    Start Accepting Applications
-                            </button>
+                            <>
+                                {project.category === "Fund" && project.amount === totalInvested ? 
+                                <p>
+                                    Investment goal has been reached
+                                </p> : 
+                                <button 
+                                    onClick={() => dispatch(changeProjectCategory({projectId: params.id, acceptapps: true}))} 
+                                    className="rounded-lg hover:text-custom-150 text-custom-100 h-12 rounded-tr-lg">
+                                        Start Accepting Applications
+                                </button>
+                                }
+                            </>
                         ) : (null)}
                     </div>
                     </div>
