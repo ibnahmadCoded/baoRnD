@@ -40,6 +40,7 @@ app.use('/api/yearlymetrics', require('./routes/yearlymetricRoutes'))
 app.use('/api/contacts', require('./routes/contactlistRoutes'))
 app.use('/api/projectgoals', require('./routes/projectgoalRoutes'))
 app.use('/api/projectdeliverables', require('./routes/projectdeliverableRoutes'))
+app.use('/api/payment', require('./routes/paymentRoutes'))
 
 app.use(errorHandler)
 

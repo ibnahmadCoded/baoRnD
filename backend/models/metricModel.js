@@ -99,6 +99,14 @@ const metricSchema = mongoose.Schema({
         // count of tags added. Can be improved to include specific fields
         type: Number,
     },
+    payments: {
+        // count of payments
+        type: Number,
+    },
+    paymentamount: {
+        // total amount of payments
+        type: Number,
+    },
 },
 {
     timestamps: true
