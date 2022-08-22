@@ -82,6 +82,7 @@ export const investmentSlice = createSlice({
             .addCase(addInvestment.fulfilled, (state, action) => {
                 state.isLoadingInvestment = false
                 state.isSuccessInvestment = true
+                state.investments = state.investments.filter((investment) => (investment._id !== action.payload._id))
                 state.investments.push(action.payload) 
             })
             .addCase(addInvestment.rejected, (state, action) => {
