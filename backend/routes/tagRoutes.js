@@ -7,7 +7,7 @@ const { addTag,
 const { protect } = require('../middleware/authMiddleware')
 
 // Get all tags for a project. 
-router.get('/', protect, getTags)
+router.get('/:project', protect, getTags)
 
 // Add a tag to a project. 
 router.post('/', protect, addTag)

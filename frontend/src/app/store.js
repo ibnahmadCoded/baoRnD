@@ -12,6 +12,10 @@ import milestoneReducer from "../features/milestones/milestoneSlice"
 import updateReducer from "../features/updates/updateSlice"
 import applicationReducer from "../features/applications/applicaitonSlice"
 import investmentReducer from '../features/investments/investmentSlice';
+import goalReducer from "../features/goals/goalSlice"
+import deliverableReducer from "../features/deliverables/deliverableSlice"
+import fieldReducer from "../features/fields/fieldSlice"
+import tagReducer from "../features/tags/tagSlice"
 
 export const store = configureStore({
   reducer: {
@@ -28,5 +32,9 @@ export const store = configureStore({
     updates: updateReducer,
     applications: applicationReducer,
     investments: investmentReducer,
+    goals: goalReducer,
+    deliverables: deliverableReducer,
+    fields: fieldReducer,
+    tags: tagReducer,
   },
 });

@@ -7,7 +7,7 @@ const { addField,
 const { protect } = require('../middleware/authMiddleware')
 
 // Get all fields for a project. 
-router.get('/', protect, getFields)
+router.get('/:project', protect, getFields)
 
 // Add a field to a project. 
 router.post('/', protect, addField)

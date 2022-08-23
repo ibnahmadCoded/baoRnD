@@ -8,12 +8,12 @@ const Project = require('../models/projectModel')
 // access:  Private 
 // dev:     Aliyu A.   
 const getDeliverables = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide the project')
     }
     
-    const deliverables = await Deliverable.find({ project: req.body.project })
+    const deliverables = await Deliverable.find({ project: req.params.project })
 
     res.status(200).json(deliverables)
     
@@ -35,7 +35,7 @@ const addDeliverable = asyncHandler(async (req, res) => {
     }
     
     // get deliverable of project to check if project already exists. We dont want to duplicate projects in this collection
-    const g = await Deliverable.findOne({ project: req.body.project })
+    // const g = await Deliverable.findOne({ project: req.body.project })
 
     const project = await Project.findOne({ _id: req.body.project })
 
@@ -50,6 +50,15 @@ const addDeliverable = asyncHandler(async (req, res) => {
         throw new Error('User not authorized')
     }
 
+    const deliverable = await Deliverable.create({
+        project: req.body.project,
+        deliverable: req.body.deliverable,
+        delivered: false,
+    })
+
+    res.status(200).json(deliverable)
+
+    /*
     if (g){
         // if the project already exists with its tags in the collection, just update it with the additional deliverable
         const deliverable = await Deliverable.findByIdAndUpdate(g._id, {$addToSet: {deliverables: req.body.deliverable}}, {
@@ -68,28 +77,23 @@ const addDeliverable = asyncHandler(async (req, res) => {
 
         res.status(200).json(deliverable)
     }
+    */
     
 })
 
 // desc:    Remove deliverable for a project.  
-// route:   DELETE /api/tags
+// route:   DELETE /api/projectdeliverables/:id
 // access:  Private 
 // dev:     Aliyu A.   
 const removeDeliverable = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    const deliverable = await Deliverable.findById(req.params.id)
+
+    if(!deliverable){
         res.status(400)
-        throw new Error('Please provide the project')
+        throw new Error('Deliverable does not exist')
     }
 
-    if(!req.body.deliverable){
-        res.status(400)
-        throw new Error('Please provide the project deliverable')
-    }
-    
-    // get tags of project to check if project already exists. We dont want to duplicate projects in this collection
-    const g = await Deliverable.findOne({ project: req.body.project })
-
-    const project = await Project.findOne({ _id: req.body.project })
+    const project = await Project.findOne({ _id: deliverable.project })
 
     if(!project){
         res.status(400)
@@ -101,6 +105,12 @@ const removeDeliverable = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('User not authorized')
     }
+
+    await deliverable.remove()
+
+    res.status(200).json({ id: req.params.id })
+
+    /*
 
     if (g && g.deliverables.includes(req.body.deliverable)){
         // if the project already exists with to be removed is in it, then remove the item from the array of tags for the project
@@ -123,6 +133,40 @@ const removeDeliverable = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Project or deliverable does not exist')
     }
+    */
+    
+})
+
+// desc:    Update a deliverable as delivered or not.  
+// route:   PUT /api/projectdeliverables/:id
+// access:  Private 
+// dev:     Aliyu A.   
+const updateDeliverable = asyncHandler(async (req, res) => {
+    const deliverable = await Deliverable.findById(req.params.id)
+    
+    const project = await Project.findOne({ _id: deliverable.project })
+
+    if(!project){
+        res.status(400)
+        throw new Error('Project does not exist')
+    }
+
+    // Only the initiator of the project can remove tags from it
+    if(project.user.toString() !== req.user.id){
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
+    if(!deliverable){
+        res.status(400)
+        throw new Error('Deliverable does not exist')
+    }
+
+    const d = await Deliverable.findByIdAndUpdate(req.params.id, {delivered: !deliverable.delivered}, {
+        new: true,
+    })
+
+    res.status(200).json(d)
     
 })
 
@@ -130,4 +174,5 @@ module.exports = {
     addDeliverable,
     removeDeliverable,
     getDeliverables,
+    updateDeliverable,
 }

@@ -13,6 +13,10 @@ import SideButtons from "../components/SideButtons";
 import CategoryView from "../components/CategoryView";
 import ApplicationView from "../components/ApplicationView";
 import InvestmentView from "../components/InvestmentView";
+import GoalView from "../components/GoalView";
+import DeliverableView from "../components/DeliverableView";
+import FieldView from "../components/FieldView";
+import TagView from "../components/TagView";
 
 const Project = () => {
     const navigate = useNavigate()
@@ -47,6 +51,14 @@ const Project = () => {
             return <InvestmentView />;
         case 9:
           return <CategoryView />;
+        case 10:
+          return <GoalView />;
+        case 11:
+          return <DeliverableView />
+        case 13:
+            return <FieldView />
+        case 14:
+            return <TagView />
         default:
             return <ProjectView />;
       }
@@ -132,12 +144,12 @@ const Project = () => {
                     Category
                   </button>
                   <button 
-                    onClick={() => SetView(3)} 
+                    onClick={() => SetView(10)} 
                     className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Goals
                   </button>
                   <button 
-                    onClick={() => SetView(3)} 
+                    onClick={() => SetView(11)} 
                     className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Deliverables
                   </button>
@@ -147,12 +159,12 @@ const Project = () => {
                     Requests
                   </button>
                   <button 
-                    onClick={() => SetView(3)} 
+                    onClick={() => SetView(13)} 
                     className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Fields
                   </button>
                   <button 
-                    onClick={() => SetView(3)} 
+                    onClick={() => SetView(14)} 
                     className="mb-5 mt-0 border-custom-150 border-t-0 border-2 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Tags
                   </button>

@@ -2,17 +2,21 @@ const express = require('express')
 const router = express.Router()
 const { addGoal,
         removeGoal,
-        getGoals, } = require('../controllers/projectgoalController')
+        getGoals, 
+        updateGoal, } = require('../controllers/projectgoalController')
 
 const { protect } = require('../middleware/authMiddleware')
 
-// Get all tags for a project. 
-router.get('/', protect, getGoals)
+// Get all goals for a project. 
+router.get('/:project', protect, getGoals)
 
-// Add a tag to a project. 
+// Add a goal to a project. 
 router.post('/', protect, addGoal)
 
-// Delete a tag from a project. 
-router.delete('/', protect, removeGoal)
+// Update a goal completed or uncompleted. 
+router.put('/:id', protect, updateGoal)
+
+// Delete a goal from a project. 
+router.delete('/:id', protect, removeGoal)
 
 module.exports = router

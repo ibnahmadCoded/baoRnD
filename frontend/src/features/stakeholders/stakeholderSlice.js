@@ -113,7 +113,6 @@ export const stakeholderSlice = createSlice({
             .addCase(addStakeholder.fulfilled, (state, action) => {
                 state.isLoadingStakeholder = false
                 state.isSuccessStakeholder = true
-                console.log(action.payload)
                 state.stakeholders = state.stakeholders.filter((stakeholder) => (stakeholder._id !== action.payload._id)) // first delete the stakeholder
                 state.stakeholders.push(action.payload) // then push the new stakeholders
             })

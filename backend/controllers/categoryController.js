@@ -108,7 +108,7 @@ const removeCategory = asyncHandler(async (req, res) => {
         if (category.category.length === 0){
             await category.remove()
 
-            res.status(200).json({id: category.id})
+            res.status(200).json({id: category._id})
         }
         else{
             res.status(200).json(category)

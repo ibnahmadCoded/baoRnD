@@ -7,11 +7,17 @@ const projectdeliverableSchema = mongoose.Schema({
         required: true,
         ref: 'Project' // acts as foreign key, i.e. linked to the projectModel, which is exported as Project. 
     },
-    deliverables: [{
+    deliverable: {
         // the deliverables of the project. 
         type: String,
         required: [true, 'Please set the deliverable for the project']
-    }],
+    },
+    delivered: {
+        // the deliverable has been delivered. 
+        type: Boolean,
+        default: false,
+        required: [true, 'Please set the deliverable for the project']
+    },
 }, {
     timestamps: true
 })

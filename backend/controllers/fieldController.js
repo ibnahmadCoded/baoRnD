@@ -8,12 +8,12 @@ const Project = require('../models/projectModel')
 // access:  Private 
 // dev:     Aliyu A.   
 const getFields = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide the project')
     }
     
-    const fields = await Field.find({ item: req.body.project })
+    const fields = await Field.find({ project: req.params.project })
 
     res.status(200).json(fields)
     
@@ -111,10 +111,10 @@ const removeField = asyncHandler(async (req, res) => {
         if (field.fields.length === 0){
             await field.remove()
 
-            res.status(200).json("All fields removed from project")
+            res.status(200).json({ id: field._id })
         }
         else{
-            res.status(200).json(`The ${req.body.field} status removed from project. Current fields: ${field.fields}`)
+            res.status(200).json(field)
         }
     }
     else
@@ -125,7 +125,7 @@ const removeField = asyncHandler(async (req, res) => {
     
 })
 
-module.exports = {
+module.exports = { 
     getFields,
     addField,
     removeField,

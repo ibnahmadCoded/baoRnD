@@ -8,12 +8,12 @@ const Project = require('../models/projectModel')
 // access:  Private 
 // dev:     Aliyu A.   
 const getTags = asyncHandler(async (req, res) => {
-    if(!req.body.project){
+    if(!req.params.project){
         res.status(400)
         throw new Error('Please provide the project')
     }
     
-    const tags = await Tag.find({ item: req.body.project })
+    const tags = await Tag.find({ project: req.params.project })
 
     res.status(200).json(tags)
     
@@ -112,10 +112,10 @@ const removeTag = asyncHandler(async (req, res) => {
         if (tag.tags.length === 0){
             await tag.remove()
 
-            res.status(200).json("All tags removed from project")
+            res.status(200).json({ id: tag._id })
         }
         else{
-            res.status(200).json(`The ${req.body.tag} status removed from project. Current tags: ${tag.tags}`)
+            res.status(200).json(tag)
         }
     }
     else
