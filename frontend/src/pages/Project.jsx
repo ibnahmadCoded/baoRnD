@@ -17,6 +17,7 @@ import GoalView from "../components/GoalView";
 import DeliverableView from "../components/DeliverableView";
 import FieldView from "../components/FieldView";
 import TagView from "../components/TagView";
+import RequestView from "../components/RequestView";
 
 const Project = () => {
     const navigate = useNavigate()
@@ -55,6 +56,8 @@ const Project = () => {
           return <GoalView />;
         case 11:
           return <DeliverableView />
+        case 12:
+            return <RequestView />
         case 13:
             return <FieldView />
         case 14:
@@ -154,7 +157,7 @@ const Project = () => {
                     Deliverables
                   </button>
                   <button 
-                    onClick={() => SetView(3)} 
+                    onClick={() => SetView(12)} 
                     className="mb-5 mt-0 border-custom-150 border-t-0 border-2 border-r-0 mx-auto p-3 text-black hover:bg-custom-100 hover:text-white">
                     Requests
                   </button>

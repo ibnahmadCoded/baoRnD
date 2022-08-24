@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner"
 import { getProjects, reset } from "../features/projects/projectSlice"
 import SideMenu from "../components/SideMenu"
 import ProjectItem from "../components/ProjectItem"
+import SideButtons from "../components/SideButtons"
 
 function Dashboard() {
     const navigate = useNavigate()
@@ -21,12 +22,15 @@ function Dashboard() {
           navigate("/landing")
       }
 
+      if(isSuccess){
+      }
+
       dispatch(getProjects())
 
       return() => {
         dispatch(reset)
       }
-    }, [user, navigate, isError, message, dispatch])
+    }, [user, navigate, isError, isSuccess, message, dispatch])
 
     if(isLoading){
       return <Spinner />
@@ -61,13 +65,8 @@ function Dashboard() {
             </main>
 
             <section>
-              {/* Create Project Button */}
-              <div class="py-8 px-6 mx-auto ">
-                    <a
-                      href="/createproject"
-                      class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Add New Project
-                    </a>
-                </div>
+                {/* Side Buttons */}
+                <SideButtons />
             </section>
             
             

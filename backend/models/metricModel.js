@@ -107,6 +107,18 @@ const metricSchema = mongoose.Schema({
         // total amount of payments
         type: Number,
     },
+    requests: {
+        // count of requests
+        type: Number,
+    },
+    requestamount: {
+        // total amount requested
+        type: Number,
+    },
+    requestreplies: {
+        // total amount requests replied to
+        type: Number,
+    },
 },
 {
     timestamps: true

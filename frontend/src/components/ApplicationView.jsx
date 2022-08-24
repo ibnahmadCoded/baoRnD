@@ -42,7 +42,7 @@ const ApplicationView = () => {
   
       }, [user, params.id, messageApplication, isSuccessApplication, isErrorApplicaiton, navigate, dispatch])
 
-      const onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault()
 
         const applicationData = { project: params.id, type: project.category, message: message  }
@@ -104,6 +104,7 @@ const ApplicationView = () => {
     }
 
     var stakestatus
+    
     if(stakes.length > 0 && !stakes[0].type.includes(cat)){
         stakestatus = "Allowed"
     }

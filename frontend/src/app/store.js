@@ -16,6 +16,7 @@ import goalReducer from "../features/goals/goalSlice"
 import deliverableReducer from "../features/deliverables/deliverableSlice"
 import fieldReducer from "../features/fields/fieldSlice"
 import tagReducer from "../features/tags/tagSlice"
+import requestReducer from "../features/requests/requestSlice"
 
 export const store = configureStore({
   reducer: {
@@ -36,5 +37,6 @@ export const store = configureStore({
     deliverables: deliverableReducer,
     fields: fieldReducer,
     tags: tagReducer,
+    requests: requestReducer,
   },
 });
