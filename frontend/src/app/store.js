@@ -17,6 +17,7 @@ import deliverableReducer from "../features/deliverables/deliverableSlice"
 import fieldReducer from "../features/fields/fieldSlice"
 import tagReducer from "../features/tags/tagSlice"
 import requestReducer from "../features/requests/requestSlice"
+import referralReducer from '../features/referrals/referralSlice';
 
 export const store = configureStore({
   reducer: {
@@ -38,5 +39,6 @@ export const store = configureStore({
     fields: fieldReducer,
     tags: tagReducer,
     requests: requestReducer,
+    referrals: referralReducer,
   },
 });

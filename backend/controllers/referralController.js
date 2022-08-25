@@ -52,7 +52,7 @@ const addReferral = asyncHandler(async (req, res) => {
                 `http://localhost:3000/registerwithreferral?id=${r._id}`)
         })
 
-        res.status(200).json("You already referred this user. A referral link has been resent to the email")
+        res.status(400).json("You already referred this user. A referral link has been resent to the email")
     }
     else
     {

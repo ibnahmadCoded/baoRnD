@@ -19,6 +19,7 @@ import MyProfile from "./pages/MyProfile"
 import MyProjects from "./pages/MyProjects"
 import Project from './pages/Project';
 import Update from './pages/Update';
+import ReferUser from './pages/ReferUser';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path='/earlyaccess' element={<Waitlist />}/>
             <Route path='/givefeedback' element={<Feedback />}/>
             <Route path='/createproject' element={<CreateProject />}/>
+            <Route path='/refer' element={<ReferUser />}/>
             <Route path='/support' element={<Support />}/>
             <Route path='/notifications' element={<Notification />}/>
             <Route path='/messaging' element={<Messaging />}/>
