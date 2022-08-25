@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { submitfeedback, reset } from '../features/feedbacks/feedbackSlice'
+import { submitfeedback } from '../features/feedbacks/feedbackSlice'
 import Spinner from '../components/Spinner'
 import SideMenu from '../components/SideMenu'
 
@@ -31,9 +31,7 @@ function Feedback() {
             toast.success(message)
         }
 
-        dispatch(reset())
-
-    }, [user, isError, isSuccess, message, navigate, dispatch])
+    }, [user, isError, isSuccess, message, navigate ])
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -50,6 +48,8 @@ function Feedback() {
         }
 
         dispatch(submitfeedback(feedbackData))
+
+        toast.success("Feedback successfully submitted. Thank you.")
 
         setFormData({
             feedback: ""

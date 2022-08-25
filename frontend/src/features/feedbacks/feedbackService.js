@@ -28,6 +28,40 @@ const getfeedbacks = async (token) => {
     return response.data
 }
 
-const feedbackService = { submitfeedback, getfeedbacks }
+// update feedback with upvote (+1) or downvote (-1)
+const upvoteFeedback = async (feedbackData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const feedbackId = feedbackData.feedbackId
+    
+    const body = {upvote: feedbackData.upvote}
+
+    const response = await axios.put(API_URL + feedbackId, body, config)
+    
+    return response.data
+}
+
+// update feedback with upvote (+1) or downvote (-1)
+const updateFeedback = async (feedbackData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const feedbackId = feedbackData.feedbackId
+    
+    const body = {underreview: feedbackData.underreview, resolved: feedbackData.resolved}
+
+    const response = await axios.put(API_URL + feedbackId, body, config)
+    
+    return response.data
+}
+
+const feedbackService = { submitfeedback, getfeedbacks, upvoteFeedback, updateFeedback }
 
 export default feedbackService

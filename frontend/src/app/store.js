@@ -18,6 +18,7 @@ import fieldReducer from "../features/fields/fieldSlice"
 import tagReducer from "../features/tags/tagSlice"
 import requestReducer from "../features/requests/requestSlice"
 import referralReducer from '../features/referrals/referralSlice';
+import statusReducer from '../features/feedbackstatus/statusSlice';
 
 export const store = configureStore({
   reducer: {
@@ -40,5 +41,6 @@ export const store = configureStore({
     tags: tagReducer,
     requests: requestReducer,
     referrals: referralReducer,
+    feedbackstatus: statusReducer,
   },
 });

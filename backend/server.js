@@ -42,6 +42,7 @@ app.use('/api/projectgoals', require('./routes/projectgoalRoutes'))
 app.use('/api/projectdeliverables', require('./routes/projectdeliverableRoutes'))
 app.use('/api/payment', require('./routes/paymentRoutes'))
 app.use('/api/request', require('./routes/requestRoutes'))
+app.use('/api/userfeedback', require('./routes/userFeedbackRoutes'))
 
 app.use(errorHandler)
 
