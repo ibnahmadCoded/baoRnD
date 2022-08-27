@@ -5,6 +5,7 @@ const Project = require('../models/projectModel')
 const Stake = require('../models/stakeholderModel')
 const Notification = require('../models/notificationModel')
 const User = require("../models/userModel")
+const Metric = require("../models/metricModel")
 
 // desc:    Get all investments of a user.  Can filter for the particular project if we want to show investment of user in a particular project
 // route:   GET /api/investments
@@ -71,9 +72,10 @@ const addInvestment = asyncHandler(async (req, res) => {
     // i.e. already invested in it before. We dont want to duplicate users in this collection
     const i = await Investment.findOne({ user: req.user.id, project: req.body.project })
 
-    // get the project and user
+    // get the project, user and metrics
     const project = await Project.findById(req.body.project)
     const user = await User.findById(req.user.id)
+    const m = await Metric.findOne() 
 
     if (i){
         // if the user already exists with investments on project in the collection, just update it with the additional amounts
@@ -89,6 +91,21 @@ const addInvestment = asyncHandler(async (req, res) => {
             seen: false,
         })
 
+        // add metric 
+        // set the new maximum investment amount
+        max_amount = parseInt(m.investments.MaxAmount)
+        
+        if(max_amount < parseInt(req.body.amount)){
+            max_amount = parseInt(req.body.amount)
+        }
+        
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "investments.TotalInventment": m.investments.TotalInventment + 1,
+            "investments.TotalAmount": parseInt(m.investments.TotalAmount) + parseInt(req.body.amount), 
+            "investments.MaxAmount": max_amount,}}, {
+            new: true,
+        })
+
         res.status(200).json(investment)
     }
     else
@@ -102,12 +119,34 @@ const addInvestment = asyncHandler(async (req, res) => {
             amounts: req.body.amount
         })
 
+        // add metric 
+        // set the new maximum investment amount
+        max_amount = parseInt(m.investments.MaxAmount)
+        
+        if(max_amount < parseInt(req.body.amount)){
+            max_amount = parseInt(req.body.amount)
+        }
+        
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "investments.TotalInventment": m.investments.TotalInventment + 1,
+            "investments.TotalAmount": parseInt(m.investments.TotalAmount) + parseInt(req.body.amount), 
+            "investments.MaxAmount": max_amount,}}, {
+            new: true,
+        })
+
         // after creation, add Investor status to stakeholders collection for the user on the project
         const s = await Stake.findOne({ user: req.user.id, project: req.body.project }) 
         
         if (s){
             // if the user already exists with investment stake on project in the collection, just update it with the investor stake
             await Stake.findByIdAndUpdate(s._id, {$addToSet: {type: "Investor"}}, {
+                new: true,
+            })
+
+            // add metric
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Investor": m.stakeholders.Investor + 1, }}, {
                 new: true,
             })
         }
@@ -118,6 +157,13 @@ const addInvestment = asyncHandler(async (req, res) => {
                 project: req.body.project,
                 type: "Investor",
                 viewership: false
+            })
+
+            // add metric
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Investor": m.stakeholders.Investor + 1, }}, {
+                new: true,
             })
         }
 

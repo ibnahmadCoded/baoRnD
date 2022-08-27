@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-
+const Metric = require("../models/metricModel")
 const Projectmaterial = require('../models/projectmaterialModel')
 const Project = require('../models/projectModel')
 
@@ -62,6 +62,12 @@ const addProjectmaterial = asyncHandler(async (req, res) => {
         material: req.body.material,
         visibility: req.body.visibility,
         type: req.body.type
+    })
+
+    const m = await Metric.findOne() 
+
+    await Metric.findByIdAndUpdate(m._id, {projectmaterials: m.projectmaterials + 1}, {
+        new: true,
     })
 
     res.status(200).json(projectmaterial)

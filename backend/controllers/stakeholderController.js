@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const Stakeholder = require('../models/stakeholderModel')
 const User = require('../models/userModel')
 const Project = require('../models/projectModel')
+const Metric = require("../models/metricModel")
 
 // desc:    Get all Stakeholders for a project. 
 // route:   GET /api/stakeholders/:project
@@ -108,6 +109,8 @@ const addStakeholder = asyncHandler(async (req, res) => {
     }
 
     const stake = await Stakeholder.findOne({ user: req.body.user, project: req.body.project })
+
+    const m = await Metric.findOne() 
     
     if(stake){
         // if the user item already exists with its stakes on the project in the collection, just update it with the additional stake
@@ -117,6 +120,63 @@ const addStakeholder = asyncHandler(async (req, res) => {
             $addToSet: {type: req.body.type}}, {
             new: true,
         })
+
+        // update metrics
+        if(req.body.type === "Collaborator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Collaborator": m.stakeholders.Collaborator + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Supervisor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Supervisor": m.stakeholders.Supervisor + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Researcher"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Researcher": m.stakeholders.Researcher + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Developer"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Developer": m.stakeholders.Developer + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Initiator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Initiator": m.stakeholders.Initiator + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Follower"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Follower": m.stakeholders.Follower + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Investor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Investor": m.stakeholders.Investor + 1, }}, {
+                new: true,
+            })
+        }
 
         res.status(200).json(stakeholder)
     }
@@ -130,6 +190,63 @@ const addStakeholder = asyncHandler(async (req, res) => {
             viewership: req.body.viewership,
             update: req.body.update
         })
+
+        // update metrics
+        if(req.body.type === "Collaborator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Collaborator": m.stakeholders.Collaborator + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Supervisor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Supervisor": m.stakeholders.Supervisor + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Researcher"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Researcher": m.stakeholders.Researcher + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Developer"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Developer": m.stakeholders.Developer + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Initiator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Initiator": m.stakeholders.Initiator + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Follower"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Follower": m.stakeholders.Follower + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Investor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total + 1,
+                "stakeholders.Investor": m.stakeholders.Investor + 1, }}, {
+                new: true,
+            })
+        }
 
         res.status(200).json(stakeholder)
     }    
@@ -194,6 +311,65 @@ const removeStakeholder = asyncHandler(async (req, res) => {
         const stakeholder = await Stakeholder.findByIdAndUpdate(stake._id, {$pull: {type: req.body.type}}, {
             new: true,
         })
+
+        // update metrics
+        const m = await Metric.findOne()
+
+        if(req.body.type === "Collaborator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total - 1,
+                "stakeholders.Collaborator": m.stakeholders.Collaborator - 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Supervisor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total - 1,
+                "stakeholders.Supervisor": m.stakeholders.Supervisor - 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Researcher"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total - 1,
+                "stakeholders.Researcher": m.stakeholders.Researcher - 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Developer"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total - 1,
+                "stakeholders.Developer": m.stakeholders.Developer - 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Initiator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total - 1,
+                "stakeholders.Initiator": m.stakeholders.Initiator - 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Follower"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total - 1,
+                "stakeholders.Follower": m.stakeholders.Follower - 1, }}, {
+                new: true,
+            })
+        }
+
+        if(req.body.type === "Investor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "stakeholders.Total": m.stakeholders.Total - 1,
+                "stakeholders.Investor": m.stakeholders.Investor - 1, }}, {
+                new: true,
+            })
+        }
 
         // remove data entirely if there is no stakeholder status left for user&project
         if (stakeholder.type.length === 0){

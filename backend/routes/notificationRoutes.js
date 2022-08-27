@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const { addNotification,
         getNotifications,
-        updateNotification } = require('../controllers/notificationController')
+        updateNotification, 
+        deleteNotification} = require('../controllers/notificationController')
 
 const { protect } = require('../middleware/authMiddleware')
 
@@ -14,5 +15,8 @@ router.post('/', addNotification)
 
 // Update a notification as seen.
 router.put('/:id', updateNotification)
+
+// Delete a notification.
+router.delete('/:id', protect, deleteNotification)
 
 module.exports = router

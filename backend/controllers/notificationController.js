@@ -90,8 +90,32 @@ const updateNotification = asyncHandler(async (req, res) => {
     
 })
 
+// desc:    // delete a notification.
+// route:   DELETE /api/notifications/:id
+// access:  Private 
+// dev:     Aliyu A.
+
+const deleteNotification = asyncHandler(async (req, res) => {
+    const notification = await Notification.findById(req.params.id)
+
+    if(!notification){
+        res.status(400)
+        throw new Error('Notification does not exist')
+    }
+    
+    if(notification.user.toString() !== req.user.id){
+        res.status(400)
+        throw new Error('User not authorized')
+    }
+
+    await notification.remove()
+
+    res.status(200).json({id: notification._id})
+})
+
 module.exports = {
     addNotification,
     getNotifications,
-    updateNotification
+    updateNotification,
+    deleteNotification
 }

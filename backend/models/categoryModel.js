@@ -11,7 +11,7 @@ const categorySchema = mongoose.Schema({
         // the category. currently supported are: 
         // for users: Normal, Investor, Researcher, professor, for now. More can be added later
         type: String,
-        required: [true, 'Please set the category of the user or project']
+        required: [true, 'Please set the category of the user']
     }],
 }, {
     timestamps: true

@@ -23,7 +23,7 @@ const metricSchema = mongoose.Schema({
     },
     projectcategories: {
         // count of project categories
-        // takes the form: {Total: Number, Fund: Number, Res: Number, Collab: Number, Basic: Number}
+        // takes the form: {Total: Number, Fund: Number, Res: Number, Collab: Number, Basic: Number, Sup: Number, Dev: Number, Pub: Number}
         // e.g. {Total: 1130, Fund: 10, Res: 20, Collab: 100, Basic: 1000}
         type: Object,
     },

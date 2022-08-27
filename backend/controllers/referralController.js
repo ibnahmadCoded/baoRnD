@@ -2,6 +2,8 @@ const asyncHandler = require('express-async-handler')
 
 const Referral = require('../models/referralModel')
 const User = require('../models/userModel')
+const Metric = require("../models/metricModel")
+const Notification = require("../models/notificationModel")
 const { mailTransport, generateReferralEmailTemplate } = require('../utils/mailtoken')
 
 // desc:    Get all referrals of a user.  
@@ -42,6 +44,8 @@ const addReferral = asyncHandler(async (req, res) => {
     // get referral of user to check if user already exists. We dont want to duplicate users in this collection
     const r = await Referral.findOne({ user: req.user.id, email: req.body.email })
 
+    const m = await Metric.findOne()
+
     if(r){
         // send referral email to the user again
         mailTransport().sendMail({
@@ -71,6 +75,71 @@ const addReferral = asyncHandler(async (req, res) => {
             subject: 'baoRnD Referral',
             html: generateReferralEmailTemplate(req.body.type, 
                 `http://localhost:3000/registerwithreferral?id=${referral._id}`)
+        })
+
+        // update metric
+        if(req.body.type === "Collaborator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "referrals.Total": m.referrals.Total + 1,
+                "referrals.Collaborator": m.referrals.Collaborator + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Supervisor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "referrals.Total": m.referrals.Total + 1,
+                "referrals.Supervisor": m.referrals.Supervisor + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Researcher"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "referrals.Total": m.referrals.Total + 1,
+                "referrals.Researcher": m.referrals.Researcher + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Developer"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "referrals.Total": m.referrals.Total + 1,
+                "referrals.Developer": m.referrals.Developer + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Initiator"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "referrals.Total": m.referrals.Total + 1,
+                "referrals.Initiator": m.referrals.Initiator + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Follower"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "referrals.Total": m.referrals.Total + 1,
+                "referrals.Follower": m.referrals.Follower + 1, }}, {
+                new: true,
+            })
+        }
+    
+        if(req.body.type === "Investor"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "referrals.Total": m.referrals.Total + 1,
+                "referrals.Investor": m.referrals.Investor + 1, }}, {
+                new: true,
+            })
+        }
+
+        // notify user
+        await Notification.create({
+            user: req.user.id,
+            item: req.user.id,
+            type: "Referral",
+            seen: false,
         })
 
         res.status(200).json(`Thank you! A referral link has been sent to ${referral.email}`)

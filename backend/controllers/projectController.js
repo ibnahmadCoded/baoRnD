@@ -7,6 +7,13 @@ const Category = require('../models/categoryModel')
 const Field = require('../models/fieldModel')
 const Tag = require('../models/tagModel')
 const Notification = require('../models/notificationModel')
+const Metric = require("../models/metricModel")
+const Projectmaterial = require("../models/projectmaterialModel")
+const Projectmilestone = require("../models/projectmilestoneModel")
+const Projectupdate = require("../models/projectupdateModel")
+const Projectapplicaiton = require("../models/projectapplicationModel")
+const Projectdeliverable = require("../models/projectdeliverableModel")
+const Projectgoal = require("../models/projectgoalModel")
 
 // desc:    Get all public projects, including private projects of current user if user is logged in. 
 // route:   GET /api/projects
@@ -473,10 +480,12 @@ const createProject = asyncHandler(async (req, res) => {
         throw new Error('Please set investment amount you are seeking')
     }
 
-    if(!req.body.acceptapps){
+    /*
+    if(req.body.acceptapps === "false"){
         res.status(400)
         throw new Error('Please choose if you want to accept applications for this project')
     }
+    */
 
     const user = await User.findById(req.user.id)
 
@@ -484,6 +493,11 @@ const createProject = asyncHandler(async (req, res) => {
     if(!user){
         res.status(401)
         throw new Error('User does not exist')
+    }
+
+    var amount = 0
+    if(req.body.amount !== ""){
+        amount = req.body.amount
     }
 
     const project = await Project.create({
@@ -494,7 +508,7 @@ const createProject = asyncHandler(async (req, res) => {
         visibility: req.body.visibility,
         duration: req.body.duration,
         category: req.body.category,
-        amount: req.body.amount,
+        amount: amount,
         acceptapps: req.body.acceptapps,
         appmsg: req.body.appmsg
     })
@@ -515,6 +529,87 @@ const createProject = asyncHandler(async (req, res) => {
         type: "ProjectInit",
         seen: false,
     })
+
+    // add metrics
+    const m = await Metric.findOne() 
+
+    await Metric.findByIdAndUpdate(m._id, {$set: {
+        "stakeholders.Total": m.stakeholders.Total + 1,
+        "stakeholders.Initiator": m.stakeholders.Initiator + 1, }}, {
+        new: true,
+    })
+
+    if(req.body.visibility === "Public"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projects.Total": m.projects.Total + 1,
+            "projects.Public": m.projects.Public + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.visibility === "Private"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projects.Total": m.projects.Total + 1,
+            "projects.Private": m.projects.Private + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.category === "Fund"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectcategories.Total": m.projectcategories.Total + 1,
+            "projectcategories.Fund": m.projectcategories.Fund + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.category === "Res"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectcategories.Total": m.projectcategories.Total + 1,
+            "projectcategories.Res": m.projectcategories.Res + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.category === "Collab"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectcategories.Total": m.projectcategories.Total + 1,
+            "projectcategories.Collab": m.projectcategories.Collab + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.category === "Basic"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectcategories.Total": m.projectcategories.Total + 1,
+            "projectcategories.Basic": m.projectcategories.Basic + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.category === "Sup"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectcategories.Total": m.projectcategories.Total + 1,
+            "projectcategories.Sup": m.projectcategories.Sup + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.category === "Dev"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectcategories.Total": m.projectcategories.Total + 1,
+            "projectcategories.Dev": m.projectcategories.Dev + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.category === "Pub"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectcategories.Total": m.projectcategories.Total + 1,
+            "projectcategories.Pub": m.projectcategories.Pub + 1, }}, {
+            new: true,
+        })
+    }
 
     res.status(200).json(project)
 })
@@ -573,6 +668,62 @@ const deleteProject = asyncHandler(async (req, res) => {
     // do cascading deletion for othe project details, like goals, deliverables, etc.
 
     await project.remove()
+
+    // cascading deletion of all project info
+    const stakes = await Stakeholder.find({project: project._id})
+    const materials = await Projectmaterial.find({project: project._id})
+    const milestones = await Projectmilestone.find({project: project._id})
+    const updates = await Projectupdate.find({project: project._id})
+    const applications = await Projectapplicaiton.find({project: project._id})
+    const deliverables = await Projectdeliverable.find({project: project._id})
+    const fields = await Field.find({project: project._id})
+    const tags = await Tag.find({project: project._id})
+    const goals = await Projectgoal.find({project: project._id})
+
+    for (var i = 0; i < stakes.length; i++) {
+        //console.log(myStringArray[i]);
+        await stakes[i].remove()
+    }
+
+    for (var i = 0; i < materials.length; i++) {
+        //console.log(myStringArray[i]);
+        await materials[i].remove()
+    }
+
+    for (var i = 0; i < milestones.length; i++) {
+        //console.log(myStringArray[i]);
+        await milestones[i].remove()
+    }
+
+    for (var i = 0; i < updates.length; i++) {
+        //console.log(myStringArray[i]);
+        await updates[i].remove()
+    }
+
+    for (var i = 0; i < applications.length; i++) {
+        //console.log(myStringArray[i]);
+        await applications[i].remove()
+    }
+
+    for (var i = 0; i < deliverables.length; i++) {
+        //console.log(myStringArray[i]);
+        await deliverables[i].remove()
+    }
+
+    for (var i = 0; i < fields.length; i++) {
+        //console.log(myStringArray[i]);
+        await fields[i].remove()
+    }
+
+    for (var i = 0; i < tags.length; i++) {
+        //console.log(myStringArray[i]);
+        await tags[i].remove()
+    }
+
+    for (var i = 0; i < goals.length; i++) {
+        //console.log(myStringArray[i]);
+        await goals[i].remove()
+    }
 
     res.status(200).json({ id: req.params.id })
 })

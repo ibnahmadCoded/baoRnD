@@ -5,6 +5,7 @@ const Project = require('../models/projectModel')
 const Stake = require('../models/stakeholderModel')
 const Notification = require('../models/notificationModel')
 const User = require('../models/userModel')
+const Metric = require("../models/metricModel")
 
 // desc:    Get all applications of a user.  Can filter for the particular project if we want to show applications of user in a particular project
 // route:   GET /api/projectapplications
@@ -109,6 +110,45 @@ const addApplication = asyncHandler(async (req, res) => {
         seen: false,
     })
 
+    // add metrics
+    const m = await Metric.findOne()
+
+    if(req.body.type === "Collaborator"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectapplications.Total": m.projectapplications.Total + 1,
+            "projectapplications.Collaborator": m.projectapplications.Collaborator + 1,
+            "projectapplications.Pending": m.projectapplications.Pending + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.type === "Supervisor"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectapplications.Total": m.projectapplications.Total + 1,
+            "projectapplications.Supervisor": m.projectapplications.Supervisor + 1,
+            "projectapplications.Pending": m.projectapplications.Pending + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.type === "Researcher"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectapplications.Total": m.projectapplications.Total + 1,
+            "projectapplications.Researcher": m.projectapplications.Researcher + 1,
+            "projectapplications.Pending": m.projectapplications.Pending + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.type === "Developer"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectapplications.Total": m.projectapplications.Total + 1,
+            "projectapplications.Developer": m.projectapplications.Developer + 1,
+            "projectapplications.Pending": m.projectapplications.Pending + 1, }}, {
+            new: true,
+        })
+    }
+
     res.status(200).json(application)  
 })
 
@@ -163,6 +203,8 @@ const updateApplication = asyncHandler(async (req, res) => {
         cat = "Collaborator"
     }
 
+    const m = await Metric.findOne()
+
     // notify the user
     if(req.body.reply === "Accepted"){
         
@@ -189,6 +231,39 @@ const updateApplication = asyncHandler(async (req, res) => {
                 update: true,
             })
 
+            // add stake metric
+            if(cat === "Collaborator"){
+                await Metric.findByIdAndUpdate(m._id, {$set: {
+                    "stakeholders.Total": m.stakeholders.Total + 1,
+                    "stakeholders.Collaborator": m.stakeholders.Collaborator + 1, }}, {
+                    new: true,
+                })
+            }
+
+            if(cat === "Developer"){
+                await Metric.findByIdAndUpdate(m._id, {$set: {
+                    "stakeholders.Total": m.stakeholders.Total + 1,
+                    "stakeholders.Developer": m.stakeholders.Developer + 1, }}, {
+                    new: true,
+                })
+            }
+
+            if(cat === "Supervisor"){
+                await Metric.findByIdAndUpdate(m._id, {$set: {
+                    "stakeholders.Total": m.stakeholders.Total + 1,
+                    "stakeholders.Supervisor": m.stakeholders.Supervisor + 1, }}, {
+                    new: true,
+                })
+            }
+
+            if(cat === "Researcher"){
+                await Metric.findByIdAndUpdate(m._id, {$set: {
+                    "stakeholders.Total": m.stakeholders.Total + 1,
+                    "stakeholders.Researcher": m.stakeholders.Researcher + 1, }}, {
+                    new: true,
+                })
+            }
+
         }    
 
         await Notification.create({
@@ -196,6 +271,13 @@ const updateApplication = asyncHandler(async (req, res) => {
             item: project._id,
             type: "ProjectApplicationAccepted",
             seen: false,
+        })
+
+        // add metrics
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectapplications.Acceptances": m.projectapplications.Acceptances + 1,
+            "projectapplications.Pending": m.projectapplications.Pending - 1, }}, {
+            new: true,
         })
     }
 
@@ -206,6 +288,13 @@ const updateApplication = asyncHandler(async (req, res) => {
             item: project._id,
             type: "ProjectApplicationRejected",
             seen: false,
+        })
+
+        // add metric
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectapplications.Rejections": m.projectapplications.Rejections + 1,
+            "projectapplications.Pending": m.projectapplications.Pending - 1, }}, {
+            new: true,
         })
     }
 

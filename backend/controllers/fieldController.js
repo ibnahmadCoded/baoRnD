@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-
+const Metric = require("../models/metricModel")
 const Field = require('../models/fieldModel')
 const Project = require('../models/projectModel')
 
@@ -56,6 +56,12 @@ const addField = asyncHandler(async (req, res) => {
             new: true,
         })
 
+        const m = await Metric.findOne() 
+
+        await Metric.findByIdAndUpdate(m._id, {fields: m.fields + 1}, {
+            new: true,
+        })
+
         res.status(200).json(field)
     }
     else
@@ -65,6 +71,13 @@ const addField = asyncHandler(async (req, res) => {
             project: req.body.project,
             fields: req.body.field
         })
+
+        const m = await Metric.findOne() 
+
+        await Metric.findByIdAndUpdate(m._id, {fields: m.fields + 1}, {
+            new: true,
+        })
+        
         res.status(200).json(field)
     }
     

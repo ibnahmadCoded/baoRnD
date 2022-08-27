@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-
+const Metric = require("../models/metricModel")
 const Tag = require('../models/tagModel')
 const Project = require('../models/projectModel')
 
@@ -56,6 +56,12 @@ const addTag = asyncHandler(async (req, res) => {
             new: true,
         })
 
+        const m = await Metric.findOne() 
+
+        await Metric.findByIdAndUpdate(m._id, {tags: m.tags + 1}, {
+            new: true,
+        })
+
         res.status(200).json(tag)
     }
     else
@@ -64,6 +70,12 @@ const addTag = asyncHandler(async (req, res) => {
         const tag = await Tag.create({
             project: req.body.project,
             tags: req.body.tag
+        })
+
+        const m = await Metric.findOne() 
+
+        await Metric.findByIdAndUpdate(m._id, {tags: m.tags + 1}, {
+            new: true,
         })
 
         res.status(200).json(tag)

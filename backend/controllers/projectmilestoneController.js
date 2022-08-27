@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-
+const Metric = require("../models/metricModel")
 const Projectmilestone = require('../models/projectmilestoneModel')
 const Project = require('../models/projectModel')
 
@@ -57,6 +57,12 @@ const addProjectmilestone = asyncHandler(async (req, res) => {
         title: req.body.title,
         detail: req.body.detail,
         dueDate: req.body.dueDate
+    })
+
+    const m = await Metric.findOne() 
+
+    await Metric.findByIdAndUpdate(m._id, {projectmilestones: m.projectmilestones + 1}, {
+        new: true,
     })
 
     res.status(200).json(projectmilestone)

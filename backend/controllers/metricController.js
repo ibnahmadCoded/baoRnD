@@ -416,8 +416,6 @@ const updateMetrics = asyncHandler(async (req, res) => {
             max_amount = parseInt(req.body.amount)
         }
         
-        console.log(max_amount)
-        
         const metrics = await Metric.findByIdAndUpdate(m._id, {$set: {
             "investments.TotalInventment": m.investments.TotalInventment + 1,
             "investments.TotalAmount": parseInt(m.investments.TotalAmount) + parseInt(req.body.amount), 
@@ -674,7 +672,7 @@ const updateMetrics = asyncHandler(async (req, res) => {
         logins: 0,
         accounttypes: {Total: 0, Company: 0, Individual: 0},
         projects: {Total: 0, Public: 0, Private: 0},
-        projectcategories: {Total: 0, Fund: 0, Res: 0, Collab: 0, Basic: 0},
+        projectcategories: {Total: 0, Fund: 0, Res: 0, Collab: 0, Basic: 0, Sup: 0, Dev: 0, Pub: 0},
         usercategories: {Total: 0, Normal: 0, Investor: 0, Researcher: 0, Professor: 0},
         projectapplications: {Total: 0, Collaborator: 0, Supervisor: 0, Researcher: 0, Developer: 0, Acceptances: 0, Rejections: 0, Pending: 0},
         stakeholders: {Total: 0, Collaborator: 0, Supervisor: 0, Researcher: 0, Developer: 0, Initiator: 0, Follower: 0, Investor: 0},
@@ -689,7 +687,12 @@ const updateMetrics = asyncHandler(async (req, res) => {
         projectmilestones: 0,
         comments: 0,
         fields: 0,
-        tags: 0
+        tags: 0,
+        paymentamount: 0,
+        payments: 0,
+        requestamount: 0,
+        requestreplies: 0,
+        requests: 0
     })
     
     res.status(200).json(m)

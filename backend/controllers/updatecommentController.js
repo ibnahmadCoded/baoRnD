@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
-
+const Metric = require("../models/metricModel")
 const Comment = require('../models/updatecommentModel')
+const Notification = require("../models/notificationModel")
 const Update = require('../models/projectupdateModel')
 
 // desc:    Get all comments on an update. If you cant see an update, you shouldnt be able to see comments on it (to be done in frontend)
@@ -52,6 +53,21 @@ const addComment = asyncHandler(async (req, res) => {
         user: req.user.id,
         update: req.body.update,
         comment: req.body.comment
+    })
+    
+    // add notification
+    await Notification.create({
+        user: update.user,
+        item: req.body.update,
+        type: "UpdateComment",
+        seen: false,
+    })
+
+    // add metric
+    const m = await Metric.findOne() 
+
+    await Metric.findByIdAndUpdate(m._id, {comments: m.comments + 1}, {
+            new: true,
     })
 
     res.status(200).json(comment)  

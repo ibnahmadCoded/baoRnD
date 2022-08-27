@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Feedback = require('../models/feedbackModel')
 const UserFeedback = require('../models/userFeedbackModel')
+const Metric = require("../models/metricModel")
 
 // desc:  this function gets feedbacks from the db
 // route: POST /api/feedbacks/
@@ -37,6 +38,13 @@ const saveFeedback = asyncHandler(async (req, res) => {
             status: false,
         })
     }
+
+    // update metric
+    const m = await Metric.findOne() 
+
+    await Metric.findByIdAndUpdate(m._id, {feedbacks: m.feedbacks + 1}, {
+        new: true,
+    })
 
     res.status(200).json(f)
 })

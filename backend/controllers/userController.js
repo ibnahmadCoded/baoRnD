@@ -6,6 +6,7 @@ const VerificationToken = require('../models/verificationtokenModel')
 const ResetpasswordToken = require('../models/resetpasswordtokenModel')
 const Notification = require('../models/notificationModel')
 const Referral = require('../models/referralModel')
+const Metric = require("../models/metricModel")
 const { generateVerificationCode, 
         mailTransport, 
         generateEmailTemplate, 
@@ -70,6 +71,29 @@ const registerUser = asyncHandler(async (req, res) => {
             type: "Signup",
             seen: false,
         })
+
+        // create the metrics
+        const m = await Metric.findOne()          
+
+        await Metric.findByIdAndUpdate(m._id, {signups: m.signups + 1}, {
+            new: true,
+        })
+
+        if(type === "Company"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "accounttypes.Total": m.accounttypes.Total + 1,
+                "accounttypes.Company": m.accounttypes.Company + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(type === "Individual"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "accounttypes.Total": m.accounttypes.Total + 1,
+                "accounttypes.Individual": m.accounttypes.Individual + 1, }}, {
+                new: true,
+            })
+        }
 
         res.status(201).json({
             _id: user.id,
@@ -164,6 +188,29 @@ const registerReferredUser = asyncHandler(async (req, res) => {
             type: "Signup",
             seen: false,
         })
+
+        // create the metric
+        const m = await Metric.findOne()          
+
+        await Metric.findByIdAndUpdate(m._id, {signups: m.signups + 1}, {
+            new: true,
+        })
+
+        if(type === "Company"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "accounttypes.Total": m.accounttypes.Total + 1,
+                "accounttypes.Company": m.accounttypes.Company + 1, }}, {
+                new: true,
+            })
+        }
+
+        if(type === "Individual"){
+            await Metric.findByIdAndUpdate(m._id, {$set: {
+                "accounttypes.Total": m.accounttypes.Total + 1,
+                "accounttypes.Individual": m.accounttypes.Individual + 1, }}, {
+                new: true,
+            })
+        }
         
         // update the referrals to show the user has created an account using the referral link
         const r = await Referral.findByIdAndUpdate(id, {joined: true}, {
@@ -213,6 +260,14 @@ const loginUser = asyncHandler(async (req, res) => {
     
     // get the password
     if(user && (await bcrypt.compare(password, user.password))){
+
+        // add metric
+        const m = await Metric.findOne() 
+
+        await Metric.findByIdAndUpdate(m._id, {logins: m.logins + 1}, {
+            new: true,
+        })
+
         res.json({
             _id: user.id,
             name: user.name,

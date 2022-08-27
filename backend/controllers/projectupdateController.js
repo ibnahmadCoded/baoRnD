@@ -4,6 +4,8 @@ const Update = require('../models/projectupdateModel')
 const Stake = require('../models/stakeholderModel')
 const Project = require('../models/projectModel')
 const User = require("../models/userModel")
+const Metric = require("../models/metricModel")
+const Notification = require("../models/notificationModel")
 
 // desc:    Get all updates made by a user.  Can filter for the particular project if we want to show updates of user in a particular project
 // route:   GET /api/projectupdates
@@ -129,6 +131,8 @@ const addUpdate = asyncHandler(async (req, res) => {
         throw new Error('Project not found')
     }
 
+    const m = await Metric.findOne() 
+
     // Only a researcher, developer, initiator, collaborator or supervisor can push an update to a project
     // get user + project + update status = true from the stakeholders collection
     const stake = await Stake.findOne({ user: req.user.id, project: req.body.project, update: true })
@@ -149,10 +153,57 @@ const addUpdate = asyncHandler(async (req, res) => {
         type: req.body.type,
         content: req.body.content
     })
-
-    // notify the user who owns (initiated) the project about the application
     
-    // TODO: notify all stakeholders of new update on the project (future addition)
+    // notify all stakeholders of new update on the project (future addition)
+    const stakeholders = await Stake.find({ project: req.body.project })
+
+    //console.log(stakeholders)
+    for (var i = 0; i < stakeholders.length; i++) {
+        //console.log(myStringArray[i]);
+        await Notification.create({
+            user: stakeholders[i].user,
+            item: update._id,
+            type: "UpdatePush",
+            seen: false,
+        })
+    }
+    /*
+    stakeholders.map((stakeholder) => {
+        
+        await Notification.create({
+            user: stakeholder.user,
+            item: update._id,
+            type: "UpdatePush",
+            seen: false,
+        })
+       
+       console.log(stakeholder)
+    })
+ */
+    // add/update metric
+    if(req.body.type === "Normal"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectupdates.Total": m.projectupdates.Total + 1,
+            "projectupdates.Normal": m.projectupdates.Normal + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.type === "Hidden"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectupdates.Total": m.projectupdates.Total + 1,
+            "projectupdates.Hidden": m.projectupdates.Hidden + 1, }}, {
+            new: true,
+        })
+    }
+
+    if(req.body.type === "Note"){
+        await Metric.findByIdAndUpdate(m._id, {$set: {
+            "projectupdates.Total": m.projectupdates.Total + 1,
+            "projectupdates.Note": m.projectupdates.Note + 1, }}, {
+            new: true,
+        })
+    }
 
     res.status(200).json(update)  
 })

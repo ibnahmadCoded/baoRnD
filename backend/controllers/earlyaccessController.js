@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const Email = require('../models/earlyaccessModel')
+const Metric = require("../models/metricModel")
 
 // desc:  this function gets waitlist from the db
 // route: GET /api/waitlist
@@ -32,6 +33,13 @@ const saveEmails = asyncHandler(async (req, res) => {
 
     const e = await Email.create({
         email: req.body.email,
+    })
+
+    // update metric
+    const m = await Metric.findOne() 
+
+    await Metric.findByIdAndUpdate(m._id, {earlyaccesssignups: m.earlyaccesssignups + 1}, {
+        new: true,
     })
 
     res.status(200).json(e)

@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const Email = require('../models/waitlistModel')
 const User = require('../models/userModel')
 const Referral = require("../models/referralModel")
+const Metric = require("../models/metricModel")
 const { mailTransport, generateWaitlistEmailTemplate } = require('../utils/mailtoken')
 
 // desc:  this function gets waitlist from the db
@@ -43,6 +44,12 @@ const saveEmails = asyncHandler(async (req, res) => {
 
     const e = await Email.create({
         email: req.body.email,
+    })
+
+    const m = await Metric.findOne() 
+
+    await Metric.findByIdAndUpdate(m._id, {waitlistsignups: m.waitlistsignups + 1}, {
+        new: true,
     })
 
     res.status(200).json(e)
