@@ -87,6 +87,8 @@ const ReferralForm = () => {
                             <option value="Developer">Developer</option>
                             <option value="Supervisor">Supervisor</option>
                             <option value="Collaborator">Collaborator</option>
+                            <option value="Investor">Investor</option>
+                            <option value="Initiator">Initiator</option>
                             <option value="Basic">Ths person just wants to join baoRnD</option>
                         </select>
                     </div>
@@ -122,8 +124,9 @@ const ReferralForm = () => {
                             <div class="p-6 space-y-2">
                                 <p className="font-semibold text-black">Investment Category</p>
                                 <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                    You can refer the user as a supervisor, researcher, developer, collaborator, follower or even just to join baoRnD. Note that
+                                    You can refer the user as a supervisor, researcher, developer, investor, collaborator, follower or even just to join baoRnD. Note that
                                     preference will be automaticlly given to people who you immediately need on your project, as we select the next set of users.
+                                    You can also refer someone as Initiator, to host their project(s) on baoRnD.
                                 </p>
                             </div>
 

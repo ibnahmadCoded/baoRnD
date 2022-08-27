@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from "../components/Spinner"
 import SideMenu from "../components/SideMenu"
+import NotificationItem from "../components/NotificationItem"
 import { getNotifications, reset } from "../features/notifications/notificationSlice"
 
 function Notification() {
@@ -20,12 +21,15 @@ function Notification() {
           navigate("/landing")
       }
 
+      if(isSuccess){
+      }
+
       dispatch(getNotifications())
 
       return() => {
         dispatch(reset)
       }
-    }, [user, navigate, isError, message, dispatch])
+    }, [user, navigate, isError, isSuccess, message, dispatch])
 
     if(isLoading){
       return <Spinner />
@@ -45,7 +49,17 @@ function Notification() {
           <SideMenu />
 
           <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
-          
+            {notifications.length > 0 ? 
+              <div>
+                {[...notifications].reverse().map((notification) => (
+                  <>
+                    <NotificationItem key={notification._id} notification={notification}/>
+                  </>
+                ))}
+              </div>
+            : 
+            
+              <p>You have no notifications</p>}
                 
           </main>
         </div>

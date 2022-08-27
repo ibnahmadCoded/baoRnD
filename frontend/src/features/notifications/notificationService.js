@@ -15,6 +15,32 @@ const getNotifications = async (token) => {
     return response.data
 }
 
-const notificationService = { getNotifications }
+// update notification as seen
+const updateNotification = async (notificationId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.put(API_URL + notificationId, config)
+    
+    return response.data
+}
+
+// delete notification
+const deleteNotification = async (notificaitonId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(API_URL + notificaitonId, config)
+    
+    return response.data
+}
+
+const notificationService = { getNotifications, updateNotification, deleteNotification }
 
 export default notificationService

@@ -122,7 +122,7 @@ const UpdateView = () => {
 
             {updates.length > 0 ? (
                 <div>
-                    {updates.map((update) => (
+                    {[...updates].reverse().map((update) => (
                         <>
                         {update.project === params.id ? (
                             <UpdateItem key={update._id} update={update}/>

@@ -31,15 +31,11 @@ const ProjectItem = ({project}) => {
                 <h2 className="text-2xl text-custom-100 text-bold hover:text-custom-150">
                     <a href={"/project/" + project._id}>{project.title}</a>
                 </h2>
-                <p>{project.overview.substring(0,250) + "..."}</p>
-                <div>
-                    {"Created At: " + new Date(project.createdAt).toLocaleString("en-US")}
-                    {project.visibility === "Public" ? (
-                        <p className="text-custom-100">{project.visibility}</p>
-                    ) : (
-                        <p className="text-custom-150">{project.visibility}</p>
-                    )}
-                </div>
+                {project.visibility === "Public" ? (
+                    <p className="text-custom-100">{project.visibility}</p>
+                ) : (
+                    <p className="text-custom-150">{project.visibility}</p>
+                )}
                 <p>
                     {/* Show seeking info if the project category is Collab and the project owner is accepting applications b*/}
                     {(project.category && project.category === "Collab" && project.acceptapps) ? (<>Seeking collaborator(s)</>) : (null)}
@@ -64,6 +60,10 @@ const ProjectItem = ({project}) => {
                     {/* Show seeking info if the project category is Collab, Dev, Fund, or Res and the project owner is accepting applications b*/}
                     {(project.category && project.category === "Fund" && project.acceptapps) ? (<>Seeking investment</>) : (null)}
                 </p>
+                <p className="mb-3 mt-3">Overview: {project.overview.substring(0,250) + "..."}</p>
+                <div>
+                    {"Created At: " + new Date(project.createdAt).toLocaleString("en-US")}
+                </div>
             </div>
         </div>
     )

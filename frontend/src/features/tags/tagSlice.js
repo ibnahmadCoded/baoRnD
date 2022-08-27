@@ -32,7 +32,7 @@ export const deleteTag = createAsyncThunk("tags/delete", async (tagData, thunkAP
 })
 
 // add tag
-export const addTag = createAsyncThunk("fields/add", async (tagData, thunkAPI) => {
+export const addTag = createAsyncThunk("tags/add", async (tagData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await tagService.addTag(tagData, token)

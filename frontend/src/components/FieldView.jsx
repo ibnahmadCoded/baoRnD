@@ -79,7 +79,7 @@ const FieldView = () => {
                         <div class="mb-4">
                             <input type="text" id="field" name="field"
                                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
-                                placeholder="Enter goal" value={field} onChange={onChange} required 
+                                placeholder="Enter field" value={field} onChange={onChange} required 
                             />
                         </div>
                         <div>
