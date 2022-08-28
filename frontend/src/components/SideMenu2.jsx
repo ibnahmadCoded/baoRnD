@@ -1,4 +1,4 @@
-const SideMenu = () => {
+const SideMenu2 = ({notifications}) => {
   return (
     <aside class="w-64" aria-label="Sidebar">
             <div class="overflow-y-auto py-4 px-3 bg-custom-50 rounded dark:bg-gray-800">
@@ -38,7 +38,7 @@ const SideMenu = () => {
                       <a href="/notifications" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#386641" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Notifications</span>
-                        <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-black bg-custom-150 rounded-full dark:bg-blue-900 dark:text-blue-200"></span>
+                        <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-black bg-custom-150 rounded-full dark:bg-blue-900 dark:text-blue-200">{notifications}</span>
                       </a>
                   </li>
                   <li>
@@ -67,4 +67,4 @@ const SideMenu = () => {
   )
 }
 
-export default SideMenu
+export default SideMenu2

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
-import SideMenu from "../components/SideMenu";
+import SideMenu2 from "../components/SideMenu";
 
 const Messaging = () => {
     const navigate = useNavigate()
@@ -26,7 +26,7 @@ const Messaging = () => {
             <div class="flex flex-row flex-wrap py-4">
             {/* Side Menu */}
             
-            <SideMenu />
+            <SideMenu2 />
 
             <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
                 <p>Sorry, the messaging service is still in testing stage. We will notify you when it is launched. Thank you!</p>

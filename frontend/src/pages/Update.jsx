@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import SideMenu from "../components/SideMenu";
+import SideMenu2 from "../components/SideMenu";
 import { getAnUpdate, resetupdates } from "../features/updates/updateSlice";
 import IndividualUpdateItem from "../components/IndividualUpdateItem"
 
@@ -40,7 +40,7 @@ const Update = () => {
             <div class="flex flex-row flex-wrap py-4">
             <section>
                 {/* Side Menu */}
-                <SideMenu />
+                <SideMenu2 />
             </section>
 
             <main role="main" class="w-full sm:w-2/3 pt-1 px-2">

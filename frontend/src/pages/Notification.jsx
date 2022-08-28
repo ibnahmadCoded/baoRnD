@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from "../components/Spinner"
-import SideMenu from "../components/SideMenu"
+import SideMenu2 from "../components/SideMenu2"
 import NotificationItem from "../components/NotificationItem"
 import { getNotifications, reset } from "../features/notifications/notificationSlice"
 
@@ -12,6 +12,8 @@ function Notification() {
 
     const { user } = useSelector((state) => state.auth)
     const { notifications, isLoading, isError, isSuccess, message } = useSelector((state) => state.notifications)
+
+    const n = notifications.filter((n) => n.seen === false)
 
     useEffect(() => {
       if(isError){
@@ -46,7 +48,7 @@ function Notification() {
         <div class="flex flex-row flex-wrap py-4">
           {/* Side Menu */}
           
-          <SideMenu />
+          <SideMenu2 notifications={n.length}/>
 
           <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
             {notifications.length > 0 ? 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from "../components/Spinner"
 import { getProjects, reset } from "../features/projects/projectSlice"
-import SideMenu from "../components/SideMenu"
+import SideMenu2 from "../components/SideMenu"
 import ProjectItem from "../components/ProjectItem"
 import SideButtons from "../components/SideButtons"
 
@@ -49,7 +49,7 @@ function Dashboard() {
 
             <section>
               {/* Side Menu */}
-              <SideMenu />
+              <SideMenu2 />
             </section>
             
             <main role="main" class="w-full sm:w-2/3 pt-1 px-2">

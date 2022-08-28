@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { toast } from "react-toastify"
 import Spinner from "../components/Spinner"
 import { getfeedbacks, reset, submitfeedback } from "../features/feedbacks/feedbackSlice"
-import SideMenu from "../components/SideMenu"
+import SideMenu2 from "../components/SideMenu"
 import FeedbackItem from "../components/FeedbackItem"
 import { getfeedbackStatus } from "../features/feedbackstatus/statusSlice"
 
@@ -94,7 +94,7 @@ function Support() {
         <div class="flex flex-row flex-wrap py-4">
           {/* Side Menu */}
           
-          <SideMenu />
+          <SideMenu2 />
 
           <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
           

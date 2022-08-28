@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import SideMenu from "../components/SideMenu";
+import SideMenu2 from "../components/SideMenu";
 import { getUsers, resetusers } from "../features/users/userSlice";
 import Spinner from "../components/Spinner";
 import SideButtons from "../components/SideButtons";
@@ -85,7 +85,7 @@ const MyProfile = () => {
           <div class="flex flex-row flex-wrap py-4">
           <section>
               {/* Side Menu */}
-              <SideMenu />
+              <SideMenu2 />
           </section>
 
           <main role="main" class="w-full sm:w-2/3 pt-1 px-2">

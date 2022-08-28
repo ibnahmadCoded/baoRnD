@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import SideMenu from "../components/SideMenu";
+import SideMenu2 from "../components/SideMenu";
 import Spinner from "../components/Spinner";
 import { getMyProjects, reset } from "../features/projects/projectSlice";
 import ProjectItem from "../components/ProjectItem";
@@ -49,7 +49,7 @@ const MyProjects = () => {
             <div class="flex flex-row flex-wrap py-4">
             <section>
                 {/* Side Menu */}
-                <SideMenu />
+                <SideMenu2 />
             </section>
             
             <main role="main" class="w-full sm:w-2/3 pt-1 px-2">

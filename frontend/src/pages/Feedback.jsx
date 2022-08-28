@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { submitfeedback } from '../features/feedbacks/feedbackSlice'
 import Spinner from '../components/Spinner'
-import SideMenu from '../components/SideMenu'
+import SideMenu2 from '../components/SideMenu'
 
 function Feedback() {
     const [formData, setFormData] = useState({
@@ -74,7 +74,7 @@ function Feedback() {
                 <div class="flex flex-row flex-wrap py-4">
                 {/* Side Menu */}
                 
-                <SideMenu />
+                <SideMenu2 />
 
                 <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
                     <p>Your praise keep us working hard to provide the best experience for you. However, we love your positive criticism even more! Feel free to tell us

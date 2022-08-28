@@ -1,5 +1,5 @@
 import ReferralForm from "../components/ReferralForm"
-import SideMenu from "../components/SideMenu"
+import SideMenu2 from "../components/SideMenu"
 
 const ReferUser = () => {
     return (
@@ -20,7 +20,7 @@ const ReferUser = () => {
   
                 <section>
                   {/* Side Menu */}
-                  <SideMenu />
+                  <SideMenu2 />
                 </section>
                 
                 <main role="main" class="w-full sm:w-2/3 pt-1 px-2">

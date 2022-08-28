@@ -1,5 +1,5 @@
 import ProjectForm from "../components/ProjectForm"
-import SideMenu from "../components/SideMenu"
+import SideMenu2 from "../components/SideMenu"
 
 const CreateProject = () => {
     return (
@@ -16,7 +16,7 @@ const CreateProject = () => {
 
               <section>
                 {/* Side Menu */}
-                <SideMenu />
+                <SideMenu2 />
               </section>
               
               <main role="main" class="w-full sm:w-2/3 pt-1 px-2">
