@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
+import PasswordChecklist from "react-password-checklist"
 
 function Register() {
     // no signups during beta period, 
@@ -131,6 +132,13 @@ function Register() {
                                 placeholder="Please repeat your password." value={confirmpassword} onChange={onChange} required 
                             />
                         </div>
+                        <PasswordChecklist
+                            rules={["minLength","specialChar","number","capital","match"]}
+                            minLength={5}
+                            value={password}
+                            valueAgain={confirmpassword}
+                            onChange={(isValid) => {}}
+                        />
                         {/* privacy and terms agreement  */}
                         <div class="flex items-start mb-4">
                             <div class="flex items-center h-5">

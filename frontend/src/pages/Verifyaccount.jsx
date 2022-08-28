@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { verify, reset } from '../features/auth/authSlice'
+import { logout, verify, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
 function Verifyaccount() {
@@ -23,7 +23,9 @@ function Verifyaccount() {
         }
 
         if(isSuccess || user.verified){
-            navigate("/")   
+            dispatch(logout())
+            dispatch(reset())
+            navigate("/login")   
         }
 
         dispatch(reset())
