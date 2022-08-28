@@ -15,15 +15,41 @@ const getContacts = async (token) => {
     return response.data
 }
 
-// delete contact
-const deleteContact = async (token) => {
+// get contacts
+const getContactRequests = async (token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
-    const response = await axios.delete(API_URL, config)
+    const response = await axios.get(API_URL + "/requests", config)
+    
+    return response.data
+}
+
+// delete contact
+const deleteContact = async (contactId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(API_URL + contactId, config)
+    
+    return response.data
+}
+
+// delete contact request
+const deleteContactRequest = async (contactId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(API_URL + "requests/" + contactId, config)
     
     return response.data
 }
@@ -49,11 +75,15 @@ const acceptContact = async (contactId, token) => {
         }
     }
 
-    const response = await axios.put(API_URL + contactId, config)
+    //const contactId = contactId
+    
+    const body = {}
+
+    const response = await axios.put(API_URL + contactId, body, config)
     
     return response.data
 }
 
-const contactService = { getContacts, deleteContact, addContact, acceptContact }
+const contactService = { getContacts, deleteContact, addContact, acceptContact, getContactRequests, deleteContactRequest }
 
 export default contactService

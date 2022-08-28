@@ -7,7 +7,16 @@ const User = require('../models/userModel')
 // route: GET /api/contacts
 // access Private
 const getContacts = asyncHandler(async (req, res) => {
-    const contacts =  await Contact.find({ user: req.user.id })
+    const contacts =  await Contact.find({ user: req.user.id, accepted: true })
+
+    res.status(200).json(contacts)
+})
+
+// desc:  Get all contact requests of a user. Current user
+// route: GET /api/contacts/requests
+// access Private
+const getContactRequests = asyncHandler(async (req, res) => {
+    const contacts =  await Contact.find({ contact: req.user.id, accepted: false })
 
     res.status(200).json(contacts)
 })
@@ -21,10 +30,11 @@ const addContact = asyncHandler(async (req, res) => {
         throw new Error('Please provide the user you want to add to your contact')
     }
 
-    const user = await User.findById(req.body.contact)
+    const contactuser = await User.findById(req.body.contact)
+    const user = await User.findById(req.user.id)
 
     // check that user exists
-    if(!user){
+    if(!contactuser){
         res.status(401)
         throw new Error('User does not exist')
     }
@@ -39,7 +49,9 @@ const addContact = asyncHandler(async (req, res) => {
 
     const c = await Contact.create({
         user: req.user.id,
+        username: user.name,
         contact: req.body.contact,
+        contactname: contactuser.name
     })
     
     await Notification.create({
@@ -93,7 +105,9 @@ const acceptContact = asyncHandler(async (req, res) => {
     // replicate the contact for the user who just accepted. The user`s contact list should also include the user who sent them the request
     const c = await Contact.create({
         user: req.user.id,
+        username: user.name,
         contact: updatedContact.user,
+        contactname: updatedContact.username,
         accepted: true,
     })
     
@@ -119,12 +133,37 @@ const deleteContact = asyncHandler(async (req, res) => {
         throw new Error('Contact does not exist')
     }
 
+    // only the user can delete a contact
+    if(contact.user.toString() !== req.user.id){
+        res.status(400)
+        throw new Error('User unauthorized')
+    }
+
     await contact.remove()
 
     // the the contact of the other user who has the current user as their contact but was deleted by the current user
-    const second_contact = await Contact.findOne({user: req.user.id} || {contact: req.user.id})
+    const second_contact = await Contact.findOne({user: contact.contact, contact: req.user.id})
 
-    await second_contact.remove()
+    if(second_contact){
+        await second_contact.remove()
+    }
+
+    res.status(200).json({ id: req.params.id })
+})
+
+// desc:    Delete a contact
+// route:   DELETE /api/contacts/request/:id
+// access:  Private
+// dev:     Aliyu A.   
+const deleteContactRequest = asyncHandler(async (req, res) => {
+    const contact = await Contact.findById(req.params.id)
+
+    if(!contact){
+        res.status(400)
+        throw new Error('Contact does not exist')
+    }
+
+    await contact.remove()
 
     res.status(200).json({ id: req.params.id })
 })
@@ -133,5 +172,6 @@ module.exports = {
     addContact,
     getContacts,
     acceptContact,
-    deleteContact
+    deleteContact,
+    getContactRequests,deleteContactRequest,
 }

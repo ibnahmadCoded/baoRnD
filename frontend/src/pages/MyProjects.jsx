@@ -21,13 +21,16 @@ const MyProjects = () => {
           navigate("/landing")
       }
 
+      if(isSuccess){
+      }
+
       dispatch(getMyProjects())
 
       // remove the return if u want it to persist
       return() => {
         dispatch(reset)
       }
-    }, [user, navigate, isError, message, dispatch])
+    }, [user, navigate, isError, isSuccess, message, dispatch])
 
     if(isLoading){
       return <Spinner />

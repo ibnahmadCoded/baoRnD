@@ -48,7 +48,6 @@ const RequestItem = ({request}) => {
 
     return (
         <>
-        {console.log(request.toname)}
         {/* only the request sender (those they sent), the project owner (all), or the request receiver (those they received) can view requests. */}
         {(request.user === user._id || request.to === user._id || project.user === user._id) ?
         <>

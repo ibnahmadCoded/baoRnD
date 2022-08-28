@@ -22,7 +22,7 @@ const StakeholderView = () => {
       type: '',
       viewership: '',
       update: ''
-  })
+    })
 
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -90,7 +90,7 @@ const StakeholderView = () => {
           ...prevState,
           [e.target.name]: e.target.value,
       }))
-  }
+    }
 
   if(isLoadingStakeholder){
     return <Spinner />

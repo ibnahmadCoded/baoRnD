@@ -31,6 +31,9 @@ const MaterialView = () => {
         if(isErrorMaterial){
           console.log(messageMaterial)
         }
+
+        if(isSuccessMaterial){
+        }
   
         dispatch(getMaterials(params.id))
   
@@ -38,7 +41,7 @@ const MaterialView = () => {
           dispatch(resetmaterials)
         }
   
-      }, [user, params.id, messageMaterial, isErrorMaterial, navigate, dispatch])
+      }, [user, params.id, messageMaterial, isErrorMaterial, isSuccessMaterial, navigate, dispatch])
 
     const onSubmit = e => {
         e.preventDefault()

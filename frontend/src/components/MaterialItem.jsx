@@ -27,9 +27,9 @@ const MaterialItem = ({material}) => {
                     <p>
                         Material: 
                         {material.material.substring(0, 4) !== "http" ? 
-                            <a className="text-custom-100 hover:text-custom-150 text-bold" target="_blank" href={"https://" + material.material}> {material.material}</a>
+                            <a className="text-custom-100 hover:text-custom-150 text-bold" target="_blank" rel="noreferrer" href={"https://" + material.material}> {material.material}</a>
                         : 
-                            <a className="text-custom-100 hover:text-custom-150 text-bold" target="_blank" href={material.material}> {material.material}</a>
+                            <a className="text-custom-100 hover:text-custom-150 text-bold" target="_blank" rel="noreferrer" href={material.material}> {material.material}</a>
                         }
                         
                     </p>

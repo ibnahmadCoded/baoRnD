@@ -2,16 +2,15 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SideMenu from "../components/SideMenu";
-import { getAnUpdate, resetupdates } from "../features/updates/updateSlice";
-import IndividualUpdateItem from "../components/IndividualUpdateItem"
+import { getUser, resetusers } from "../features/users/userSlice";
 
-const Update = () => {
+const Profile = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
 
-    const { update } = useSelector((state) => state.updates)
+    const { auser } = useSelector((state) => state.users)
 
     const params = useParams()
 
@@ -20,10 +19,10 @@ const Update = () => {
           navigate("/landing")
       }
 
-      dispatch(getAnUpdate(params.id))
+      dispatch(getUser(params.id))
 
       return() => {
-        dispatch(resetupdates)
+        dispatch(resetusers)
       }
     }, [user, navigate, params.id, dispatch])
 
@@ -31,7 +30,7 @@ const Update = () => {
         <>
         <section className="text-3xl font-bold py-0 px-5 content-center">
         <h1 className="text-center">Welcome {user && user.name}</h1>
-        <p className="text-custom-120 text-2xl text-center">Here goes the full update</p>
+        <p className="text-custom-120 text-2xl text-center">Here goes the user profile</p>
         </section>
 
         {/* Dashborad Menu */}
@@ -45,11 +44,22 @@ const Update = () => {
 
             <main role="main" class="w-full sm:w-2/3 pt-1 px-2">
                 <section>
-                    {update ? (
-                        <div>
-                            <IndividualUpdateItem key={update._id} update={update}/>
+                <p className="md:ml-28 md:mb-5">You will soon be able to glimpse other details about the user here. 
+                    NOTE: this is still in beta stage. Please bear with us.
+                </p>
+                    {auser ? (
+                        <div className="my-0 mx-auto w-9/12 mb-5">
+                            <div class="bg-custom-50 py-8 px-6 rounded-lg sm:px-10">
+                                <p>
+                                    Name: <span className="text-custom-100 font-bold">{auser.name}</span>
+                                </p>
+                    
+                                <p>
+                                    Account type: {auser.type}
+                                </p>
+                            </div>
                         </div>
-                    ) : (<h3>Update not found</h3>)}
+                    ) : (<h3>User not found</h3>)}
                 </section>   
             </main>
 
@@ -75,4 +85,4 @@ const Update = () => {
     )
 }
 
-export default Update
+export default Profile

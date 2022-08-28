@@ -20,6 +20,7 @@ import MyProjects from "./pages/MyProjects"
 import Project from './pages/Project';
 import Update from './pages/Update';
 import ReferUser from './pages/ReferUser';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path='/myprojects' element={<MyProjects />}/>
             <Route path='/project/:id' element={<Project />}/>
             <Route path='/update/:id' element={<Update />}/>
+            <Route path='/profile/:id' element={<Profile />}/>
             <Route path='/' element={<Dashboard />}/>
           </Routes>
           <Footer />

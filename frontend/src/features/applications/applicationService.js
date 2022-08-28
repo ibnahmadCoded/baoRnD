@@ -16,7 +16,7 @@ const getProjectapplications = async (projectId, token) => {
 }
 
 // get user`s applications
-const getMyApplicaitons = async (token) => {
+const getMyApplications = async (token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -71,6 +71,6 @@ const replyApplication = async (applicationData, token) => {
     return response.data
 }
 
-const applicationService = { getMyApplicaitons, deleteApplication, addApplication, replyApplication, getProjectapplications }
+const applicationService = { getMyApplications, deleteApplication, addApplication, replyApplication, getProjectapplications }
 
 export default applicationService

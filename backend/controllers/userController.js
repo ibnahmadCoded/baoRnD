@@ -267,13 +267,14 @@ const loginUser = asyncHandler(async (req, res) => {
         await Metric.findByIdAndUpdate(m._id, {logins: m.logins + 1}, {
             new: true,
         })
-
+        console.log(user.createdAt)
         res.json({
             _id: user.id,
             name: user.name,
             email: user.email,
             type: user.type,
             verified: user.verified,
+            createdAt: user.createdAt,
             token: generateToken(user._id)
         })
     } else {
