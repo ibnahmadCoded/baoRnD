@@ -89,7 +89,7 @@ const sendEmail = asyncHandler(async (req, res) => {
         if(referral){
             // send referral email to the user again
             mailTransport().sendMail({
-                from: 'waitlistsignups@bd.com',
+                from: 'welcome@baornd.com',
                 to: emails[i].email,
                 subject: 'baoRnD SignUp Link',
                 html: generateWaitlistEmailTemplate(`http://localhost:3000/registerwithreferral?id=${referral._id}`)

@@ -8,10 +8,12 @@ let verificationCode = ''
 // desc: this function generates an OTP verification code to be sent to user
 // note: change to a more secure function or package later
 const generateVerificationCode = () => {
+
     for(let i = 0; i <= 3; i++){
         const randomValue = Math.round(Math.random() * 9)
         verificationCode = verificationCode + randomValue
     }
+
     return verificationCode
 }
 

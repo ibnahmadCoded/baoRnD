@@ -58,7 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
         await verificationtoken.save()
 
         mailTransport().sendMail({
-            from: 'welcome@bd.com',
+            from: 'welcome@baornd.com',
             to: user.email,
             subject: 'Verify Your Account',
             html: generateEmailTemplate(OTP),
@@ -175,7 +175,7 @@ const registerReferredUser = asyncHandler(async (req, res) => {
         await verificationtoken.save()
 
         mailTransport().sendMail({
-            from: 'welcome@bd.com',
+            from: 'welcome@baornd.com',
             to: user.email,
             subject: 'Verify Your Account',
             html: generateEmailTemplate(OTP),
@@ -404,7 +404,7 @@ const verifyEmail = async(req, res) => {
     await u.save()
 
     mailTransport().sendMail({
-        from: 'welcome@bd.com',
+        from: 'welcome@baornd.com',
         to: u.email,
         subject: 'Account Verification Success',
         html: plainEmailTemplate(
@@ -442,7 +442,7 @@ const forgotPassword = async (req, res) => {
     await resetToken.save()
 
     mailTransport().sendMail({
-        from: 'help@bd.com',
+        from: 'help@baornd.com',
         to: user.email,
         subject: 'Reset Password',
         html: generatePasswordResetEmailTemplate(`http://localhost:3000/api/users/resetpassword?token=${t}&id=${user._id}`),   
@@ -482,7 +482,7 @@ const resetPassword = async(req, res) => {
     await ResetpasswordToken.findOneAndDelete({user: user._id})
 
     mailTransport().sendMail({
-        from: 'help@bd.com',
+        from: 'help@baornd.com',
         to: user.email,
         subject: 'Password Reset Successfully',
         html: plainEmailTemplate(

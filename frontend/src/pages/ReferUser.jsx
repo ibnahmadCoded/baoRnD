@@ -35,7 +35,7 @@ const ReferUser = () => {
                     <div class="py-8 px-6 mx-auto ">
                     <a
                         href="/createproject"
-                        class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Add New Project
+                        class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Send Referral
                     </a>
                   </div>
                 </section>
