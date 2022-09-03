@@ -194,7 +194,7 @@ const RequestView = () => {
             {/** Non-owner can never view requests to a project */}
             {(requests.length > 0) ? (
                 <div>
-                    {requests.map((request) => (
+                    {[...requests].reverse().map((request) => (
                         <>
                         {request.project === params.id ? (
                             <RequestItem key={request._id} request={request}/>

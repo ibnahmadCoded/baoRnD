@@ -18,6 +18,7 @@ const generateVerificationCode = () => {
 }
 
 // change values to the hosting service or email hosting service in production
+/*
 const mailTransport = () =>  nodemailer.createTransport({
         host: "smtp.mailtrap.io",
         port: 2525,
@@ -26,6 +27,26 @@ const mailTransport = () =>  nodemailer.createTransport({
           pass: process.env.MAILTRAP_PASSWORD
         }
       });
+*/
+
+const mailTransport = () =>  nodemailer.createTransport({
+    host: "smtp.zoho.com",
+    port: 465,
+    auth: {
+      user: process.env.ZOHO_WELCOME_USERNAME,
+      pass: process.env.ZOHO_WELCOME_PASSWORD
+    }
+  });
+
+const mailTransport2 = () =>  nodemailer.createTransport({
+    host: "smtp.zoho.com",
+    port: 465,
+    auth: {
+      user: process.env.ZOHO_HELP_USERNAME,
+      pass: process.env.ZOHO_HELP_PASSWORD
+    }
+  });
+
 
 // email template for OTP email verification
 const generateEmailTemplate = verificationcode => {
@@ -47,9 +68,9 @@ const generateEmailTemplate = verificationcode => {
     <body>
     <div>
         <div style="max-width: 620px; margin: 0 auto; font-family: sans-serif; color: #272727;">
-            <h1 style="background: #f6f6f6; padding: 10px; text-align: center; color: #272727;">We are delighted to welcome you to baornd!</h1>
+            <h1 style="background: #F1EDE0; padding: 10px; text-align: center; color: #272727;">We are delighted to welcome you to baornd!</h1>
             <p>Please verify your account to continue. Your verification code is: </p>
-            <p style="width: 80px; margin: 0 auto; font-weight: bold; text-align: center; background: #f6f6f6; border-radius: 5px; font-size: 25px;">
+            <p style="width: 80px; margin: 0 auto; font-weight: bold; text-align: center; background: #F1EDE0; border-radius: 5px; font-size: 25px;">
             ${verificationcode}</p>
         </div>
     </div>
@@ -78,7 +99,7 @@ const plainEmailTemplate = (heading, message) => {
     <body>
     <div>
         <div style="max-width: 620px; margin: 0 auto; font-family: sans-serif; color: #272727;">
-            <h1 style="background: #f6f6f6; padding: 10px; text-align: center; color: #272727;">${heading}</h1>
+            <h1 style="background: #F1EDE0; padding: 10px; text-align: center; color: #272727;">${heading}</h1>
             <p>${message}</p>
         </div>
     </div>
@@ -107,11 +128,11 @@ const generatePasswordResetEmailTemplate = url => {
     <body>
     <div>
         <div style="max-width: 620px; margin: 0 auto; font-family: sans-serif; color: #272727;">
-            <h1 style="background: #f6f6f6; padding: 10px; text-align: center; color: #272727;">Your Password Reset URL is ready!</h1>
+            <h1 style="background: #F1EDE0; padding: 10px; text-align: center; color: #272727;">Your Password Reset URL is ready!</h1>
             <p>Please click the link below to reset your password </p>
             <div style="text-align: center;">
                 <a href="${url}" style="font-family: sans-serif; margin: 0 auto; padding: 20px; text-align: center; 
-                background: #e63946; border-radius: 5px; font-size: 20px 10px; color: #fff; cursor: pointer; text-decoration: none; display: inline-block;"> 
+                background: #E36414; border-radius: 5px; font-size: 20px 10px; color: #000; cursor: pointer; text-decoration: none; display: inline-block;"> 
                 Reset Password</a>
             </div>
         </div>
@@ -151,11 +172,11 @@ const generateReferralEmailTemplate = (type, url) => {
     <body>
     <div>
         <div style="max-width: 620px; margin: 0 auto; font-family: sans-serif; color: #272727;">
-            <h1 style="background: #f6f6f6; padding: 10px; text-align: center; color: #272727;">A user on baoRnD referred you to join the platform as ${type}!</h1>
+            <h1 style="background: #F1EDE0; padding: 10px; text-align: center; color: #272727;">A user on baoRnD referred you to join the platform as ${type}!</h1>
             <p>Please click the link below to create an account </p>
             <div style="text-align: center;">
                 <a href="${url}" style="font-family: sans-serif; margin: 0 auto; padding: 20px; text-align: center; 
-                background: #e63946; border-radius: 5px; font-size: 20px 10px; color: #fff; cursor: pointer; text-decoration: none; display: inline-block;"> 
+                background: #E36414; border-radius: 5px; font-size: 20px 10px; color: #000; cursor: pointer; text-decoration: none; display: inline-block;"> 
                 Signup</a>
             </div>
         </div>
@@ -185,11 +206,11 @@ const generateWaitlistEmailTemplate = (url) => {
     <body>
     <div>
         <div style="max-width: 620px; margin: 0 auto; font-family: sans-serif; color: #272727;">
-            <h1 style="background: #f6f6f6; padding: 10px; text-align: center; color: #272727;">Thank you for joining the baoRnD Waitlist. Your signup link is ready!</h1>
+            <h1 style="background: #F1EDE0; padding: 10px; text-align: center; color: #272727;">Thank you for joining the baoRnD Waitlist. Your signup link is ready!</h1>
             <p>Please click the link below to create an account </p>
             <div style="text-align: center;">
                 <a href="${url}" style="font-family: sans-serif; margin: 0 auto; padding: 20px; text-align: center; 
-                background: #e63946; border-radius: 5px; font-size: 20px 10px; color: #fff; cursor: pointer; text-decoration: none; display: inline-block;"> 
+                background: #E36414; border-radius: 5px; font-size: 20px 10px; color: #fff; cursor: pointer; text-decoration: none; display: inline-block;"> 
                 Signup</a>
             </div>
         </div>
@@ -202,6 +223,7 @@ const generateWaitlistEmailTemplate = (url) => {
 module.exports = {
     generateVerificationCode,
     mailTransport,
+    mailTransport2,
     generateEmailTemplate,
     plainEmailTemplate,
     generatePasswordResetEmailTemplate,

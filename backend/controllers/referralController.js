@@ -49,7 +49,7 @@ const addReferral = asyncHandler(async (req, res) => {
     if(r){
         // send referral email to the user again
         mailTransport().sendMail({
-            from: 'referrals@bd.com',
+            from: 'welcome@baornd.com',
             to: req.body.email,
             subject: 'baoRnD Referral',
             html: generateReferralEmailTemplate(req.body.type, 
@@ -70,7 +70,7 @@ const addReferral = asyncHandler(async (req, res) => {
 
         // send referral email to the user
         mailTransport().sendMail({
-            from: 'referrals@bd.com',
+            from: 'welcome@baornd.com',
             to: req.body.email,
             subject: 'baoRnD Referral',
             html: generateReferralEmailTemplate(req.body.type, 

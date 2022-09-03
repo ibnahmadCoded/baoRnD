@@ -9,6 +9,7 @@ const Referral = require('../models/referralModel')
 const Metric = require("../models/metricModel")
 const { generateVerificationCode, 
         mailTransport, 
+        mailTransport2,
         generateEmailTemplate, 
         plainEmailTemplate, 
         generatePasswordResetEmailTemplate, 
@@ -441,7 +442,7 @@ const forgotPassword = async (req, res) => {
     const resetToken = new ResetpasswordToken({ user: user._id, token: t })
     await resetToken.save()
 
-    mailTransport().sendMail({
+    mailTransport2().sendMail({
         from: 'help@baornd.com',
         to: user.email,
         subject: 'Reset Password',
@@ -481,7 +482,7 @@ const resetPassword = async(req, res) => {
 
     await ResetpasswordToken.findOneAndDelete({user: user._id})
 
-    mailTransport().sendMail({
+    mailTransport2().sendMail({
         from: 'help@baornd.com',
         to: user.email,
         subject: 'Password Reset Successfully',

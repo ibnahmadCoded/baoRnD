@@ -153,7 +153,7 @@ const InvestmentView = () => {
                 {/** Non-owner can ever view investments to a project */}
                 {(investments.length > 0 && project.user === user._id) ? (
                     <div>
-                        {investments.map((investment) => (
+                        {[...investments].reverse().map((investment) => (
                             <>
                             {investment.project === params.id ? (
                                 <InvestmentItem key={investment._id} investment={investment}/>

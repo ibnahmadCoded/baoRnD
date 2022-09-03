@@ -114,7 +114,7 @@ const MaterialView = () => {
                     ) 
                     : (null)}
                     
-                    {materials.map((material) => (
+                    {[...materials].reverse().map((material) => (
                         <>
                         {material.project === params.id ? (
                             <MaterialItem key={material._id} material={material}/>

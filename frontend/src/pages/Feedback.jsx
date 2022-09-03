@@ -8,10 +8,11 @@ import SideMenu2 from '../components/SideMenu'
 
 function Feedback() {
     const [formData, setFormData] = useState({
+        type: '',
         feedback: ''
     })
 
-    const { feedback } = formData
+    const { type, feedback } = formData
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -44,6 +45,7 @@ function Feedback() {
         e.preventDefault()
 
         const feedbackData = {
+            type: type,
             feedback: feedback,
         }
 
@@ -52,6 +54,7 @@ function Feedback() {
         toast.success("Feedback successfully submitted. Thank you.")
 
         setFormData({
+            type: "",
             feedback: ""
         })
     } 
@@ -77,7 +80,7 @@ function Feedback() {
                 <SideMenu2 />
 
                 <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
-                    <p>Your praise keep us working hard to provide the best experience for you. However, we love your positive criticism even more! Feel free to tell us
+                    <p className='ml-5 mb-5'>Your praise keep us working hard to provide the best experience for you. However, we love your positive criticism even more! Feel free to tell us
                         anything here. You can even request for a new feature. 
                     </p>
                     <section className="my-0 mx-auto w-9/12 mb-44">
@@ -85,6 +88,18 @@ function Feedback() {
                             <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg sm:px-10">
                                 <form onSubmit={onSubmit}>
                                     <div class="mb-4">
+                                        <label for="type" class="block mb-2 text-sm font-medium text-gray-900">What kind of feedback are you submitting?</label>
+                                        <select id="type" name="type" placeholder="Select Type"
+                                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5"
+                                            value={type} onChange={onChange} required>
+                                            <option label=" "></option>
+                                            <option value="Question">Ask question</option>
+                                            <option value="Request">Request new feature</option>
+                                            <option value="Complaint">Complain about something</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="type" class="block mb-2 text-sm font-medium text-gray-900">Please write your feedback in the box below</label>
                                         <textarea type="textarea" id="feedback" name="feedback"
                                             class="shadow-sm bg-gray-50 border h-32 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
                                             placeholder="Write your feedback" value={feedback} onChange={onChange} required 

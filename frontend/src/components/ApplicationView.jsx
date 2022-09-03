@@ -150,7 +150,7 @@ const ApplicationView = () => {
             {/** Non-owner can never view applications to a project */}
             {(applications.length > 0 && project.user === user._id) ? (
                 <div>
-                    {applications.map((application) => (
+                    {[...applications].reverse().map((application) => (
                         <>
                         {application.project === params.id ? (
                             <ApplicationItem key={application._id} application={application}/>

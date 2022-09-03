@@ -95,7 +95,7 @@ const GoalView = () => {
 
             {goals.length > 0 ? (
                 <div>
-                    {goals.map((goal) => (
+                    {[...goals].reverse().map((goal) => (
                         <>
                         {goal.project === params.id ? (
                             <GoalItem key={goal._id} goal={goal}/>

@@ -68,7 +68,7 @@ const IndividualProjectItem = ({project}) => {
                   
                         <button 
                             onClick={() => dispatch(deleteStakeholder({project: params.id, user: user._id, type: "Follower"}), setFollow(false))} 
-                            className="bg-custom-100 float-right text-black w-16 h-10 rounded-tr-lg hover:bg-custom-150 hover:text-white">
+                            className="bg-custom-100 float-right text-white w-16 h-10 rounded-tr-lg hover:bg-custom-150 hover:text-black">
                                 Unfollow
                         </button>
                    
@@ -77,7 +77,7 @@ const IndividualProjectItem = ({project}) => {
                     <button 
                             onClick={() => dispatch(addStakeholder({project: params.id, user: user._id, type: "Follower", viewership: "true", update: "false",}), 
                             setFollow(true))} 
-                            className="bg-custom-100 float-right text-black w-16 h-10 rounded-tr-lg hover:bg-custom-150 hover:text-white">
+                            className="bg-custom-100 float-right text-white w-16 h-10 rounded-tr-lg hover:bg-custom-150 hover:text-black">
                                 Follow
                     </button>
                 )}

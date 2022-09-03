@@ -1,6 +1,8 @@
 const SideMenu = () => {
+
   return (
-    <aside class="w-64" aria-label="Sidebar">
+    <>
+    <aside class="w-64 hidden md:block" aria-label="Sidebar">
             <div class="overflow-y-auto py-4 px-3 bg-custom-50 rounded dark:bg-gray-800">
                 <ul class="space-y-2">
                   <li>
@@ -70,7 +72,8 @@ const SideMenu = () => {
                   <a class="text-sm text-blue-900 underline hover:text-custom-150 dark:text-blue-400 dark:hover:text-custom-150" href="/givefeedback">Give feedback</a>
                 </div>
             </div>
-          </aside>
+        </aside>
+        </>
   )
 }
 

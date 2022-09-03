@@ -111,7 +111,7 @@ const MilestoneView = () => {
 
             {milestones.length > 0 ? (
                 <div>
-                    {milestones.map((milestone) => (
+                    {[...milestones].reverse().map((milestone) => (
                         <>
                         {milestone.project === params.id ? (
                             <MilestoneItem key={milestone._id} milestone={milestone}/>

@@ -96,7 +96,7 @@ const DeliverableView = () => {
 
             {deliverables.length > 0 ? (
                 <div>
-                    {deliverables.map((deliverable) => (
+                    {[...deliverables].reverse().map((deliverable) => (
                         <>
                         {deliverable.project === params.id ? (
                             <DeliverableItem key={deliverable._id} deliverable={deliverable}/>

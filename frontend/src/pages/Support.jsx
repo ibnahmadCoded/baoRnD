@@ -118,7 +118,7 @@ function Support() {
                                   <option value="Request">Request new feature</option>
                                   <option value="Complaint">Complain about something</option>
                               </select>
-                            </div>
+                        </div>
                         <div class="mb-4">
                             <label for="type" class="block mb-2 text-sm font-medium text-gray-900">Please write your feedback in the box below</label>
                             <textarea type="textarea" id="feedback" name="feedback"
