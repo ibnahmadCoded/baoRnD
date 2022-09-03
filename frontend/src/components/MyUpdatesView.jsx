@@ -39,7 +39,7 @@ const MyUpdatesView = () => {
     return (
         <>
         <section>
-        <p className="md:ml-28 md:mb-5">You can find all your project updates here. Only text updates for now. We are still in beta stage. Please bear with us.</p>
+        <p className="md:ml-14 mt-5 md:mb-5">You can find all your project updates here. Only text updates for now. We are still in beta stage. Please bear with us.</p>
 
             {updates.length > 0 ? (
                 <div>

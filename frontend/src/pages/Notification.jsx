@@ -39,8 +39,8 @@ function Notification() {
   return (
     <>
     <section className="text-3xl font-bold py-0 px-5 content-center">
-      <h1 className="text-center">Welcome {user && user.name}</h1>
-      <p className="text-custom-120 text-2xl text-center">Here are your notifications</p>
+      {/* <h1 className="text-center">Welcome {user && user.name}</h1> */}
+      <p className="text-custom-120 text-2xl text-center ml-20">Notifications</p>
     </section>
 
     <section>

@@ -42,6 +42,13 @@ const SideMenu2 = ({notifications}) => {
                       </a>
                   </li>
                   <li>
+                      <a href="/resources" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 24 24"><path fill="#386641" d="M20.738 14.341c-.419.265-.912.298-1.286.087c-.476-.27-.738-.898-.738-1.774v-2.618c0-1.264-.5-2.164-1.336-2.407c-1.416-.413-2.482 1.32-2.882 1.972l-2.498 4.05v-4.95c-.028-1.14-.398-1.821-1.1-2.027c-.466-.135-1.161-.081-1.837.953l-5.597 8.987A9.875 9.875 0 0 1 2.326 12c0-5.414 4.339-9.818 9.672-9.818c5.332 0 9.67 4.404 9.67 9.818c.004.018.002.034.003.053c.05 1.049-.29 1.883-.933 2.29zm3.08-2.34l-.001-.055C23.787 5.353 18.497 0 11.997 0C5.48 0 .177 5.383.177 12c0 6.616 5.303 12 11.82 12c2.991 0 5.846-1.137 8.037-3.2c.435-.41.46-1.1.057-1.541a1.064 1.064 0 0 0-1.519-.059a9.56 9.56 0 0 1-6.574 2.618c-2.856 0-5.425-1.263-7.197-3.268l5.048-8.105v3.737c0 1.794.696 2.374 1.28 2.544c.584.17 1.476.054 2.413-1.468c.998-1.614 2.025-3.297 3.023-4.88v2.276c0 1.678.672 3.02 1.843 3.68c1.056.597 2.384.543 3.465-.14c1.312-.828 2.018-2.354 1.944-4.193z"/></svg>
+                        <span class="ml-3">Resource Center</span>
+                        <span class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300">New</span>
+                      </a>
+                  </li>
+                  <li>
                       <a href="/support" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="#386641" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                         <span class="ml-3">Support</span>

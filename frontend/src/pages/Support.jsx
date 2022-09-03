@@ -17,10 +17,11 @@ function Support() {
     const { status, isLoadingS, isErrorS, isSuccessS, messageS } = useSelector((state) => state.feedbackstatus)
 
     const [formData, setFormData] = useState({
+      type: "",
       feedback: ''
     })
 
-    const { feedback } = formData
+    const { type, feedback } = formData
 
     useEffect(() => {
       if(!user){
@@ -69,6 +70,7 @@ function Support() {
       e.preventDefault()
 
       const feedbackData = {
+          type: type,
           feedback: feedback,
       }
 
@@ -77,6 +79,7 @@ function Support() {
       toast.success("Feedback successfully submitted. Thank you.")
 
       setFormData({
+          type: "",
           feedback: ""
       })
   }
@@ -84,8 +87,8 @@ function Support() {
   return (
     <>
     <section className="text-3xl font-bold py-0 px-5 content-center">
-      <h1 className="text-center">Welcome {user && user.name}</h1>
-      <p className="text-custom-120 text-2xl text-center">Here is the Support page</p>
+      {/* <h1 className="text-center">Welcome {user && user.name}</h1> */}
+      <p className="text-custom-120 text-2xl text-center">Support</p>
     </section>
 
     {/* Dashborad Menu */}
@@ -98,7 +101,7 @@ function Support() {
 
           <main role="main" class="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
           
-                <p class="md:ml-28 md:mb-5">You can give us <a href="/givefeedback" class="text-custom-150 hover:text-custom-100">feedback</a> here, You can also upvote feedbacks if it is what you would like us to focus on. You can request new features 
+                <p class="md:ml-14 md:mb-5">You can give us <a href="/givefeedback" class="text-custom-150 hover:text-custom-100">feedback</a> here, You can also upvote feedbacks if it is what you would like us to focus on. You can request new features 
                         using the feedback form or make a request to our support team using the same form. We read all feedbacks, we will surely get back to you. Thank you for your support.
                 </p>
 
@@ -106,11 +109,23 @@ function Support() {
                   <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg sm:px-10 mb-5">
                     <form onSubmit={onSubmit}>
                       <div class="mb-4">
-                        <textarea type="textarea" id="feedback" name="feedback"
-                          class="shadow-sm bg-gray-50 border h-32 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
-                          placeholder="Write your feedback" value={feedback} onChange={onChange} required 
-                        />
-                      </div>
+                              <label for="type" class="block mb-2 text-sm font-medium text-gray-900">What kind of feedback are you submitting?</label>
+                              <select id="type" name="type" placeholder="Select Type"
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5"
+                                value={type} onChange={onChange} required>
+                                  <option label=" "></option>
+                                  <option value="Question">Ask question</option>
+                                  <option value="Request">Request new feature</option>
+                                  <option value="Complaint">Complain about something</option>
+                              </select>
+                            </div>
+                        <div class="mb-4">
+                            <label for="type" class="block mb-2 text-sm font-medium text-gray-900">Please write your feedback in the box below</label>
+                            <textarea type="textarea" id="feedback" name="feedback"
+                              class="shadow-sm bg-gray-50 border h-32 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
+                              placeholder="Write your feedback" value={feedback} onChange={onChange} required 
+                            />
+                         </div>
                                     
                       <div>
                         <button type="submit" class="text-white bg-custom-100 hover:bg-custom-150 focus:ring-4 focus:outline-none focus:ring-custom-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">

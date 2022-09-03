@@ -24,6 +24,7 @@ const saveFeedback = asyncHandler(async (req, res) => {
 
     const f = await Feedback.create({
         user: req.user.id,
+        type: req.body.type,
         feedback: req.body.feedback,
     })
 

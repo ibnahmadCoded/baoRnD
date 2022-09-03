@@ -94,7 +94,9 @@ const ReferralForm = () => {
                     </div>
 
                     <div>
-                        <button type="submit" class="text-black bg-custom-150 hover:bg-custom-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-custom-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add My Project</button>
+                        <button type="submit" class="text-black bg-custom-150 hover:bg-custom-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-custom-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Send Referral
+                        </button>
                     </div>
                 </form>
             </div>

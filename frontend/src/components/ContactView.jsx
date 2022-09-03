@@ -72,8 +72,7 @@ const ContactView = ({users}) => {
         <>
             
         <section className="content">
-            <p className="md:ml-28 md:mb-5">You can find your contacts here, send new requests, accept or reject requests here. 
-                NOTE: this is still in beta stage. Please bear with us.
+            <p className="md:ml-10 mt-5 md:mb-5">You can find your contacts here, send new requests, accept or reject requests here. Please bear with us in this beta stage.
             </p>
 
             {/* Show contact addition form */}

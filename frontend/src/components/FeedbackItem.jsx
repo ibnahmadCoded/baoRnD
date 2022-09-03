@@ -89,7 +89,11 @@ const FeedbackItem = ({feedback, status}) => {
                 </div>
             
                 <div className="bg-custom-50 w-11/12 py-8 px-6 rounded-lg sm:px-10">
-                        {feedback.feedback}
+                    {feedback.type === "Question" ? <p>Type: <span className="text-black">Question</span></p> : null}
+                    {feedback.type === "Request" ? <p>Type: <span className="text-custom-100">Feature Request</span></p> : null}
+                    {feedback.type === "Complaint" ? <p>Type: <span className="text-custom-150">Complaint</span></p> : null}
+                    
+                     Feedback:   {feedback.feedback}
                 </div>
             </div>
         </>

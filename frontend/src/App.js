@@ -13,6 +13,7 @@ import Waitlist from './pages/Waitlist';
 import Feedback from './pages/Feedback';
 import CreateProject from './pages/CreateProject';
 import Support from "./pages/Support";
+import Resources from './pages/Resources';
 import Notification from "./pages/Notification";
 import Messaging from './pages/Messaging';
 import MyProfile from "./pages/MyProfile"
@@ -39,6 +40,7 @@ function App() {
             <Route path='/createproject' element={<CreateProject />}/>
             <Route path='/refer' element={<ReferUser />}/>
             <Route path='/support' element={<Support />}/>
+            <Route path='/resources' element={<Resources />}/>
             <Route path='/notifications' element={<Notification />}/>
             <Route path='/messaging' element={<Messaging />}/>
             <Route path='/myprofile' element={<MyProfile />}/>

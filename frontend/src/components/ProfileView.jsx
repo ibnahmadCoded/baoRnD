@@ -6,7 +6,8 @@ const ProfileView = () => {
 
     return (
         <>
-        <p className="md:ml-28 md:mb-5">You can find your profile details here. This is quite brief. We will have your projects featured here soon. Please bear with us.</p>
+        <p className="md:ml-10 mt-5 md:mb-5">You can find your profile details here. This is quite brief. We will have your projects featured here soon. Please bear with us.</p>
+        
         <div className="my-0 mx-auto w-9/12 mb-5">
         <div class="bg-custom-50 py-8 px-6 rounded-lg sm:px-10">
             <p>

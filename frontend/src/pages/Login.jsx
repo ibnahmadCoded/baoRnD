@@ -64,7 +64,7 @@ function Login() {
 
         <section className="my-0 mx-auto w-9/12 mb-28">
             <div class=" sm:mx-auto sm:w-full sm:max-w-md">
-                <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+                <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg sm:px-10 mt-5">
                     <form onSubmit={onSubmit}>
                         <div class="mb-4">
                             <input type="email" id="email" name="email" 

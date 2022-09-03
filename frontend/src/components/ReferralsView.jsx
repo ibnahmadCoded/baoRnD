@@ -40,7 +40,7 @@ const ReferralsView = () => {
             
         <section className="content">
 
-            <p className="md:ml-28 md:mb-5">You can find your referrals here.
+            <p className="md:ml-40 mt-5 md:mb-5">You can find your referrals here.
                 NOTE: this is still in beta stage. Please bear with us.
             </p>
 

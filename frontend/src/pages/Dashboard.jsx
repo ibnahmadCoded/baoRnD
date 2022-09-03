@@ -38,7 +38,8 @@ function Dashboard() {
     return (
       <>
       <section className="text-3xl font-bold py-0 px-5 content-center">
-        <h1 className="text-center">Welcome {user && user.name}</h1>
+        {/* <h1 className="text-center">Welcome {user && user.name}</h1> */}
+        
         <p className="text-custom-120 text-2xl text-center">Projects</p>
       </section>
 

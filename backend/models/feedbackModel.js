@@ -7,6 +7,11 @@ const feedbackSchema = mongoose.Schema({
         required: true,
         ref: 'User' // acts as foreign key, i.e. linked to the userModel, which is exported as User. 
     },
+    type: {
+        // the feedback type. Can be Complaint, Request, or Question. All rendered differently in the frontend on a later date
+        type: String,
+        required: [true, 'Please add feedback type']
+    },
     feedback: {
         type: String,
         required: [true, 'Please add a feedback']

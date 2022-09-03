@@ -6,7 +6,7 @@ const CodeView = () => {
             
     <section className="content">
         <div>
-            <h3 className="text-3xl">Coming soon!</h3>
+            <h3 className="text-3xl md:ml-28">Coming soon!</h3>
         </div>
     </section>         
         

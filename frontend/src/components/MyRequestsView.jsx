@@ -39,7 +39,7 @@ const MyRequestsView = () => {
     return (
         <>
         <section>
-        <p className="md:ml-28 md:mb-5">You can find all your requests here. We are still in beta stage. Please bear with us.</p>
+        <p className="md:ml-40 mt-5 md:mb-5">You can find all your requests here. We are still in beta stage. Please bear with us.</p>
 
             {requests.length > 0 ? (
                 <div>
