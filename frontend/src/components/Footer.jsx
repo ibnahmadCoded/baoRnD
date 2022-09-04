@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import { useState } from "react"
-//import icon_facebook from "../img/icon-facebook.svg"
+import icon_facebook from "../img/icon-facebook.svg"
 import icon_twitter from "../img/icon-twitter.svg"
 import icon_instagram from "../img/icon-instagram.svg"
 import icon_youtube from "../img/icon-youtube.svg"
-import icon_linkedin from "../img/icon-linkedin.svg"
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -61,24 +60,29 @@ const Footer = () => {
 
                     
                     {/* Social links */}
-                    <div className="flex justif-center space-x-4">
+                    <div className="flex justif-center space-x-4" target="_blank" rel="noopener noreferrer">
                         {/* Link 1 */}
-                        <a href="/landing">
+                        <a href="https://www.linkedin.com/in/bao-rnd-ba62a724b/">
                         <svg width="32" height="32" viewBox="0 0 16 16"><path fill="currentColor" d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248c-.015-.709-.52-1.248-1.342-1.248c-.822 0-1.359.54-1.359 1.248c0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586c.173-.431.568-.878 1.232-.878c.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252c-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/></svg>
                         </a>
 
                         {/* Link 2 */}
-                        <a href="/landing">
+                        <a href="/landing" target="_blank" rel="noopener noreferrer">
+                            <img src={icon_facebook} alt="" class="h-8"/>
+                        </a>
+
+                        {/* Link 2 */}
+                        <a href="https://www.youtube.com/channel/UCus3rYeZt9DW7PVCS7fxBGA" target="_blank" rel="noopener noreferrer">
                             <img src={icon_youtube} alt="" class="h-8"/>
                         </a>
 
                         {/* Link 3 */}
-                        <a href="/landing">
+                        <a href="https://twitter.com/baoRnD" target="_blank" rel="noopener noreferrer">
                             <img src={icon_twitter} alt="" class="h-8"/>
                         </a>
 
                         {/* Link 5 */}
-                        <a href="/landing">
+                        <a href="https://www.instagram.com/baornd/" target="_blank" rel="noopener noreferrer">
                             <img src={icon_instagram} alt="" class="h-8"/>
                         </a>
                     </div>
@@ -87,23 +91,23 @@ const Footer = () => {
                 {/* List */}
                 <div className="flex justify-around space-x-32">
                     <div className="flex flex-col space-y-3 text-white">
-                        <a href="/landing" className="hover:text-custom-150 text-black">Home</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">Pricing</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">Products</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">About Us</a>
+                        <a href="/" className="hover:text-custom-150 text-black">Home</a>
+                        <a href="/pricing" className="hover:text-custom-150 text-black">Pricing</a>
+                        <a href="/products" className="hover:text-custom-150 text-black">Products</a>
+                        <a href="/about" className="hover:text-custom-150 text-black">About Us</a>
                     </div>
 
                     <div className="flex flex-col space-y-3 text-white">
-                        <a href="/landing" className="hover:text-custom-150 text-black">Careers</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">Community</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">Team</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">Terms and Privacy Policy</a>
+                        <a href="/careers" className="hover:text-custom-150 text-black">Careers</a>
+                        <a href="/support" className="hover:text-custom-150 text-black">Community</a>
+                        <a href="/team" className="hover:text-custom-150 text-black">Team</a>
+                        <a href="/privacy" className="hover:text-custom-150 text-black">Terms and Privacy Policy</a>
                     </div>
 
                     <div className="flex flex-col space-y-3 text-white">
-                        <a href="/landing" className="hover:text-custom-150 text-black">Services</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">FAQ</a>
-                        <a href="/landing" className="hover:text-custom-150 text-black">Contact Us</a>
+                        <a href="/services" className="hover:text-custom-150 text-black">Services</a>
+                        <a href="/faq" className="hover:text-custom-150 text-black">FAQ</a>
+                        <a href="/contact" className="hover:text-custom-150 text-black">Contact Us</a>
                     </div>
                 </div>
 

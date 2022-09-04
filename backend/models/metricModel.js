@@ -119,6 +119,14 @@ const metricSchema = mongoose.Schema({
         // total amount requests replied to
         type: Number,
     },
+    subscriptionsamount: {
+        // total amount of subscriptions
+        type: Number,
+    },
+    subscriptions: {
+        // total number (count) of subscriptions
+        type: Number,
+    },
 },
 {
     timestamps: true

@@ -59,7 +59,7 @@ function Login() {
             <h1 className='text-3xl text-center'>
                  Login
             </h1>
-            <p className="text-custom-120 text-2xl text-center">Login and start chaning the world, one project at a time</p>
+            <p className="text-custom-120 text-2xl text-center">Login and start changing the world, one project at a time</p>
         </section>
 
         <section className="my-0 mx-auto w-9/12 mb-28">

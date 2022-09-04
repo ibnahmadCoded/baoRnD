@@ -22,6 +22,17 @@ import Project from './pages/Project';
 import Update from './pages/Update';
 import ReferUser from './pages/ReferUser';
 import Profile from './pages/Profile';
+import Pricing from './pages/Pricing';
+import Subscribe from './pages/Subscribe';
+import Products from './pages/Products';
+import About from './pages/About';
+import Careers from './pages/Careers';
+import Team from './pages/Team';
+import Privacy from './pages/Privacy';
+import Services from './pages/Services';
+import Contact from './pages/Contact';
+import FAQ from './pages/FAQ';
+
 
 function App() {
   return (
@@ -48,6 +59,16 @@ function App() {
             <Route path='/project/:id' element={<Project />}/>
             <Route path='/update/:id' element={<Update />}/>
             <Route path='/profile/:id' element={<Profile />}/>
+            <Route path='/pricing' element={<Pricing />}/>
+            <Route path='/products' element={<Products />}/>
+            <Route path='/about' element={<About />}/>
+            <Route path='/careers' element={<Careers />}/>
+            <Route path='/team' element={<Team />}/>
+            <Route path='/privacy' element={<Privacy />}/>
+            <Route path='/services' element={<Services />}/>
+            <Route path='/contact' element={<Contact />}/>
+            <Route path='/faq' element={<FAQ />}/>
+            <Route path='/subscribe/:price' element={<Subscribe />}/>
             <Route path='/' element={<Dashboard />}/>
           </Routes>
           <Footer />

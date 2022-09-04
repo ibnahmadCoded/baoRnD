@@ -692,7 +692,9 @@ const updateMetrics = asyncHandler(async (req, res) => {
         payments: 0,
         requestamount: 0,
         requestreplies: 0,
-        requests: 0
+        requests: 0,
+        subscriptions: 0,
+        subscriptionsamount: 0
     })
     
     res.status(200).json(m)
