@@ -32,6 +32,7 @@ const mailTransport = () =>  nodemailer.createTransport({
 const mailTransport = () =>  nodemailer.createTransport({
     host: "smtp.zoho.com",
     port: 465,
+    secure: true,
     auth: {
       user: process.env.ZOHO_WELCOME_USERNAME,
       pass: process.env.ZOHO_WELCOME_PASSWORD
@@ -41,6 +42,7 @@ const mailTransport = () =>  nodemailer.createTransport({
 const mailTransport2 = () =>  nodemailer.createTransport({
     host: "smtp.zoho.com",
     port: 465,
+    secure: true,
     auth: {
       user: process.env.ZOHO_HELP_USERNAME,
       pass: process.env.ZOHO_HELP_PASSWORD
