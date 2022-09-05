@@ -145,7 +145,7 @@ const Landing = () => {
             {/* Testimonials */}
             <div className="flex flex-col mt-24 md:flex-row md:space-x-6">
               {/* Testimonial 1 */}
-              <div className="flex flex-col items-center p-6 space-y-6 rounded-lg bg-custom-50 md:w-1/3 sm:mb-12">
+              <div className="flex flex-col items-center p-6 space-y-6 rounded-lg bg-custom-50 md:w-1/3 mb-12">
                 <img src={avatar_anisha} class="w-16 -mt-14" alt="" />
                 <h5 className="text-lg font-bold">Anisha Lee</h5>
                 <p className="text-sm text-custom-120">baoRnd has supercharged my work. The ability to engage my clients while ensuring accurate results with the tools on baoRnD 
@@ -153,7 +153,7 @@ const Landing = () => {
               </div>
 
               {/* Testimonial 2 */}
-              <div className="flex flex-col items-center p-6 space-y-6 rounded-lg bg-custom-50 md:w-1/3 sm:mb-12">
+              <div className="flex flex-col items-center p-6 space-y-6 rounded-lg bg-custom-50 md:w-1/3 mb-12">
                 <img src={avatar_richard} class="w-16 -mt-14" alt="" />
                 <h5 className="text-lg font-bold">Richard Duncan</h5>
                 <p className="text-sm text-custom-120">I love baoRnd especially because it has helped me to efficiently and easily supervise my students` projects.
@@ -161,7 +161,7 @@ const Landing = () => {
               </div>
 
               {/* Testimonial 3 */}
-              <div className="flex flex-col items-center p-6 space-y-6 rounded-lg bg-custom-50 md:w-1/3 sm:mb-12">
+              <div className="flex flex-col items-center p-6 space-y-6 rounded-lg bg-custom-50 md:w-1/3 mb-12">
                 <img src={avatar_ali} class="w-16 -mt-14" alt="" />
                 <h5 className="text-lg font-bold">Ali Lam</h5>
                 <p className="text-sm text-custom-120">I did not want to limit myself to RnD projects in big corporations, so I put up my project on baoRnd. I am 2 months into 
@@ -169,7 +169,7 @@ const Landing = () => {
               </div>
             </div> 
 
-            <div className="my-8">
+            <div className="mb-12">
               {/* Button */}
               <a
                 href="/earlyaccess"

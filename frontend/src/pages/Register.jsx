@@ -83,8 +83,8 @@ function Register() {
         {/* Button */}
             <div class="py-8 px-6 mx-auto sm:px-10">
               <a
-                href="http://localhosT:3000/earlyaccess"
-                class="p-3 px-6 pt-2 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Join the waitlist
+                href="/earlyaccess"
+                class="p-3 px-6 pt-2 md:ml-28 ml-10 shadow-2xl text-black bg-custom-150 rounded-full baseline hover:bg-custom-100 hover:text-white">Join the waitlist
               </a>
             </div>
         </div>

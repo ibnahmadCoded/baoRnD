@@ -451,7 +451,8 @@ const forgotPassword = async (req, res) => {
         from: 'help@baornd.com',
         to: user.email,
         subject: 'Reset Password',
-        html: generatePasswordResetEmailTemplate(`http://localhost:3000/api/users/resetpassword?token=${t}&id=${user._id}`),   
+        //html: generatePasswordResetEmailTemplate(`http://localhost:3000/api/users/resetpassword?token=${t}&id=${user._id}`), 
+        html: generatePasswordResetEmailTemplate(`http://baornd.com/api/users/resetpassword?token=${t}&id=${user._id}`),    
         // change url later when in production. Using localhost cos frontend is using React server, from which the password would be reset.
     })
 
