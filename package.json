@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Boarderless And Open Research aNd Development (baornd) app for startup",
   "main": "server.js",
-  "engines" : { 
-    "npm" : ">=8.5.0",
-    "node" : ">=16.14.2"
+  "engines": {
+    "npm": ">=8.5.0",
+    "node": ">=16.14.2"
   },
   "scripts": {
     "start": "node backend/server.js",
@@ -26,7 +26,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.0",
     "nodemailer": "^6.7.7",
-    "serve": "^14.0.1",
     "stripe": "^10.3.0",
     "swagger-jsdoc": "^6.2.4",
     "swagger-ui-express": "^4.5.0"
