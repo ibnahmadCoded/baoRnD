@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "Boarderless And Open Research aNd Development (baornd) app for startup",
   "main": "server.js",
-  "engines": {
-    "npm": ">=8.5.0",
-    "node": ">=16.14.2"
-  },
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
