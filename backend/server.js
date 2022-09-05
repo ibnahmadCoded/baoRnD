@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const colors = require('colors')
 const dotenv = require('dotenv').config()
@@ -44,6 +45,15 @@ app.use('/api/payment', require('./routes/paymentRoutes'))
 app.use('/api/request', require('./routes/requestRoutes'))
 app.use('/api/userfeedback', require('./routes/userFeedbackRoutes'))
 app.use('/api/subscribe', require('./routes/subscribeRoutes'))
+
+// Serve the frontend statics
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, '../frontend/build')))
+
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')))
+} else {
+    app.get('/', (req, res) => res.send('Current version not in production'))
+}   
 
 app.use(errorHandler)
 
