@@ -12,7 +12,8 @@ const About = () => {
                     <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-custom-50 rounded-lg border border-gray-100 shadow xl:p-8">
                         <h3 class="text-2xl font-semibold text-custom-100">About</h3>
                         <p class="mb-5 mt-5 font-light text-gray-500 sm:text-xl">
-                            baoRnD is a Singaporean software company providing repository, networking and management solutions for projects involving little or no code.
+                            baoRnD is a Singaporean software company providing repository, networking and management solutions for projects involving little or no code. 
+                            The version you are currently using is v0.0.1.
                         </p>
                     </div>
 
