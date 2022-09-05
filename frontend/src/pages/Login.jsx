@@ -21,6 +21,7 @@ function Login() {
     useEffect(() => {
         if(isError){
             toast.error(message)
+            navigate("/landing")   
         }
 
         if(isSuccess || user){

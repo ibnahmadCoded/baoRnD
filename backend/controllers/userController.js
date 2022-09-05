@@ -252,6 +252,11 @@ const loginUser = asyncHandler(async (req, res) => {
     // get the user email
     const user = await User.findOne({email})
 
+    if(!user){
+        res.status(400)
+        throw new Error('User does not exist')
+    }
+
     // an unverified user cannot access a protected route
     // the login route is notprotected, therefore we have to check verification here
     if(!user.verified){
