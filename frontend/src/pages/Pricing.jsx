@@ -145,7 +145,7 @@ const Pricing = () => {
                    
                     <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-custom-50 rounded-lg border border-gray-100 shadow xl:p-8">
                         <h3 class="mb-4 text-2xl font-semibold">Free</h3>
-                        <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">Relevant for multiple users, mainly used by startups and SMEs.</p>
+                        <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">Good for single project with small files, for students.</p>
                         <div class="flex justify-center items-baseline my-8">
                             <span class="mr-2 text-5xl font-extrabold">$0</span>
                             <span class="text-gray-500 dark:text-gray-400">/month</span>
