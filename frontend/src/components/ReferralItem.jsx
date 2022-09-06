@@ -22,16 +22,16 @@ const ReferralItem = ({referral}) => {
                     {referral.user === user._id ? (
                     <>
                         <p className="text-custom-100 font-bold">{referral.email}</p>
-                        <p>referred as {referral.type}</p>
-                        
+                        {referral.joined ? <span className="text-custom-100">Signed up</span> : <span className="text-custom-150">Not signed up</span>}
+                        <p>referred {moment(new Date(referral.createdAt)).fromNow()} as {referral.type}</p>
+                        <p className=" text-sm">
+                            
+                        </p>
                     </>
                     ) : (
                         null
                     )
                     }
-                </p>
-                <p className=" text-sm">
-                    {moment(new Date(referral.createdAt)).fromNow()}
                 </p>
             </div>
         </div>

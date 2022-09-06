@@ -11,7 +11,7 @@ const Team = () => {
                     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Designed for projects like yours</h2>
                     <p class="mb-5 font-light text-gray-500 sm:text-xl">Here at baoRnD we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
                 </div>
-                <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+                <div class="space-y-16 lg:grid lg:grid-cols-3 mt-20 sm:gap-6 xl:gap-10 lg:space-y-0">
                
                     <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-custom-50 rounded-lg border border-gray-100 shadow xl:p-8">
                         <div class="bg-indigo-500 text-white overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg flex justify-center items-center">

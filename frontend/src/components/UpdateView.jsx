@@ -114,6 +114,7 @@ const UpdateView = () => {
                                 Add Update
                             </button>
                         </div>
+                        <button onClick={() => navigate(`/editor/${params.id}`)}>use editor</button>
                     </form>
                 </div>
             </section>

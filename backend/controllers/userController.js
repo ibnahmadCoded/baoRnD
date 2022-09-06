@@ -254,7 +254,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
     if(!user){
         res.status(400)
-        throw new Error('User does not exist')
+        // user does not exist
+        throw new Error('Email and password do not match')
     }
 
     // an unverified user cannot access a protected route
