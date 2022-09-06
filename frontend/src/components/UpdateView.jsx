@@ -114,7 +114,7 @@ const UpdateView = () => {
                                 Add Update
                             </button>
                         </div>
-                        <button onClick={() => navigate(`/editor/${params.id}`)}>use editor</button>
+                        <button className="text-custom-100 font-semibold hover:text-custom-150" onClick={() => navigate(`/editor/${params.id}`)}>use editor</button>
                     </form>
                 </div>
             </section>
