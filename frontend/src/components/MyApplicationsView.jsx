@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from "./Spinner"
 import { getMyApplications, resetapplications } from "../features/applications/applicaitonSlice"
-import ApplicationItem from "./ApplicationItem"
+import MyApplicationItem from "./MyApplicationItem"
 
 const MyApplicationsView = () => {
     const navigate = useNavigate()
@@ -46,7 +46,7 @@ const MyApplicationsView = () => {
                     {[...applications].reverse().map((application) => (
                         <>
                         {application.user === user._id ? (
-                            <ApplicationItem key={application._id} application={application}/>
+                            <MyApplicationItem key={application._id} application={application}/>
                         ) : (null)}
                         </>
                     ))}

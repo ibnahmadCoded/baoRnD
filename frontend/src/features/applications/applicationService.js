@@ -29,14 +29,14 @@ const getMyApplications = async (token) => {
 }
 
 // delete application
-const deleteApplication = async (applicationId, token) => {
+const deleteApplication = async (applicationData, token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
-    const response = await axios.delete(API_URL + applicationId, config)
+    const response = await axios.delete(API_URL + applicationData.applicationId, config)
     
     return response.data
 }

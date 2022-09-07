@@ -47,8 +47,17 @@ const UpdateItem = ({update}) => {
                 </p>
             )}
             </>
-            <p className="mb-5">{update.content.substring(0,150) + "..."}</p>
-            <a className="hover:text-custom-150" href={"/update/" + update._id}> View full update</a>
+
+           
+            {update.content !== "Not available" ? (
+                <>
+                    <p className="mb-5">{update.content.substring(0,150) + "..."}</p>
+                    <a className="hover:text-custom-150" href={"/update/" + update._id}> View full update</a>
+                </>
+            ) : (
+                <p className="mb-5">{update.content}</p>
+            )}
+          
         </div>
         </div>
         </>
