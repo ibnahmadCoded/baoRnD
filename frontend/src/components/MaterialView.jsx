@@ -74,10 +74,8 @@ const MaterialView = () => {
         <>   
         <section className="content">
             <p className="md:ml-28 md:mb-5">You can find project materials here. Files, and other formats will soon be supported. Please bear with us.</p>
-            {materials.length > 0 ? (
-                <div>
-                    {/* The project owner should be able add new materials */}
-                    {project.user === user._id ? (
+            {/* The project owner should be able add new materials */}
+            {project.user === user._id ? (
                         <section className="my-0 mx-auto w-9/12">
                         <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg sm:px-10 mb-5">
                         <form onSubmit={onSubmit}>
@@ -112,8 +110,9 @@ const MaterialView = () => {
                         </div>
                         </section>
                     ) 
-                    : (null)}
-                    
+            : (null)}
+            {materials.length > 0 ? (
+                <div>
                     {[...materials].reverse().map((material) => (
                         <>
                         {material.project === params.id ? (
