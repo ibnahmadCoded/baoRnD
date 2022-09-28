@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { addUpdate, getProjectUpdates, resetupdates } from "../features/updates/updateSlice"
@@ -6,6 +6,20 @@ import Spinner from "./Spinner"
 import { getStake, resetstakeholders } from "../features/stakeholders/stakeholderSlice"
 import UpdateItem from "./UpdateItem"
 import { toast } from "react-toastify"
+import Quill from "quill";
+
+const TOOLBAR_OPTIONS = [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ font: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["bold", "italic", "underline", "strike", "link"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    [{ align: [] }],
+    ["image", "blockquote", "code-block"],
+    
+    ["clean"],
+]
 
 const UpdateView = () => {
     const navigate = useNavigate()
@@ -16,13 +30,13 @@ const UpdateView = () => {
     const { project } = useSelector((state) => state.project)
     const { updates, isLoadingUpdate, isErrorUpdate, isSuccessUpdate, messageUpdate } = useSelector((state) => state.updates)
     const { stake, isLoadingStakeholder, isErrorStakehodler, isSuccessStakeholder, messageStakeholder } = useSelector((state) => state.stakeholders)
+    const [quill, setQuill] = useState()
 
     const [formUpdate, setFormUpdate] = useState({
         type: '',
-        content: '',
     })
 
-    const { type, content } = formUpdate
+    const { type } = formUpdate
 
     useEffect(() => {
         if(!user){
@@ -57,7 +71,7 @@ const UpdateView = () => {
       const onSubmit = e => {
         e.preventDefault()
 
-        const updateData = { project: params.id, type: type, content: content  }
+        const updateData = { project: params.id, type: type, content: quill.getContents()  }
 
         dispatch(addUpdate(updateData))
 
@@ -75,6 +89,16 @@ const UpdateView = () => {
             [e.target.name]: e.target.value,
         }))
     }
+
+    const  wrapperRef = useCallback((wrapper) => {
+        if(wrapper == null) return
+
+        wrapper.innerHTML = ""
+        const editor = document.createElement("div")
+        wrapper.append(editor)
+        const q = new Quill(editor, { theme: "snow", modules: { toolbar: TOOLBAR_OPTIONS } })
+        setQuill(q)
+    }, [])
   
     if(isLoadingUpdate){
           return <Spinner />
@@ -91,7 +115,7 @@ const UpdateView = () => {
             {/* The project owner should be able add new updates */}
             {(project.user === user._id || stake.update) ? (
             <section className="my-0 mx-auto w-9/12">
-                <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg sm:px-10 mb-5">
+                <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg hidden md:block mb-5">
                     <form onSubmit={onSubmit}>
                         <p class="font-bold mb-3">Add New Update</p>
                         <label for="" class="block mb-2 text-sm font-medium text-gray-900">Select update type</label>
@@ -103,21 +127,23 @@ const UpdateView = () => {
                             <option value="Note">Note</option>
                             <option value="Hidden">Hidden</option>
                         </select>
-                        <div class="mb-4">
-                            <textarea type="textarea" id="content" name="content"
-                                class="shadow-sm bg-gray-50 border h-28 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-custom-100 focus:border-custom-100 block w-full p-2.5" 
-                                placeholder="Enter update content" value={content} onChange={onChange}
-                            />
-                        </div>
+                        <div className="mb-4 editorcontainer" ref={wrapperRef}></div>
                         <div>
                             <button type="submit" class="mb-5 text-black bg-custom-150 hover:bg-custom-100 hover:text-white focus:ring-4 focus:outline-none focus:ring-custom-100 rounded-lg text-sm px-5 py-2.5 text-center">
                                 Add Update
                             </button>
                         </div>
-                        <button className="text-custom-100 font-semibold hover:text-custom-150" onClick={() => navigate(`/editor/${params.id}`)}>use editor</button>
+
+                        {/* <button className="text-custom-100 font-semibold hover:text-custom-150" onClick={() => navigate(`/editor/${params.id}`)}>use editor</button> */}
+                        
                     </form>
                 </div>
+
+                <div class="border-2 border-custom-150 py-8 px-6 shadow rounded-lg md:hidden sm:block mb-5">
+                    <p>You can only add update from a PC</p>
+                </div>
             </section>
+            
             ) 
             : (null)}
 

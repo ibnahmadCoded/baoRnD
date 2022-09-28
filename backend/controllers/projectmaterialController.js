@@ -57,20 +57,39 @@ const addProjectmaterial = asyncHandler(async (req, res) => {
         throw new Error('User not authorized')
     }
 
-    const projectmaterial = await Projectmaterial.create({
-        project: req.body.project,
-        material: req.body.material,
-        visibility: req.body.visibility,
-        type: req.body.type
-    })
+    if(req.body.type === "Link" || req.body.type === "Text"){
+        const projectmaterial = await Projectmaterial.create({
+            project: req.body.project,
+            material: req.body.material,
+            visibility: req.body.visibility,
+            type: req.body.type
+        })
 
-    const m = await Metric.findOne() 
+        const m = await Metric.findOne() 
 
-    await Metric.findByIdAndUpdate(m._id, {projectmaterials: m.projectmaterials + 1}, {
-        new: true,
-    })
+        await Metric.findByIdAndUpdate(m._id, {projectmaterials: m.projectmaterials + 1}, {
+            new: true,
+        })
 
-    res.status(200).json(projectmaterial)
+        res.status(200).json(projectmaterial)
+    }
+
+    if(req.body.type === "File"){
+        const projectmaterial = await Projectmaterial.create({
+            project: req.body.project,
+            material: req.body.material,
+            visibility: req.body.visibility,
+            type: req.body.type
+        })
+
+        const m = await Metric.findOne() 
+
+        await Metric.findByIdAndUpdate(m._id, {projectmaterials: m.projectmaterials + 1}, {
+            new: true,
+        })
+
+        res.status(200).json(projectmaterial)
+    }
     
 })
 

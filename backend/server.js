@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require('express')
+const fileUpload = require('express-fileupload')
 const colors = require('colors')
 const dotenv = require('dotenv').config()
 const {errorHandler} = require('./middleware/errorMiddleware')
@@ -11,6 +12,9 @@ connectDB()
 const app = express()
 
 app.use(express.json())
+app.use(fileUpload())
+
+// file upload endpoint
 
 app.use(express.urlencoded({ extended: false }))
 
@@ -45,6 +49,7 @@ app.use('/api/payment', require('./routes/paymentRoutes'))
 app.use('/api/request', require('./routes/requestRoutes'))
 app.use('/api/userfeedback', require('./routes/userFeedbackRoutes'))
 app.use('/api/subscribe', require('./routes/subscribeRoutes'))
+app.use('/api/upload', require('./routes/uploadFileRoutes'))
 
 // Serve the frontend statics
 if(process.env.NODE_ENV === "production"){

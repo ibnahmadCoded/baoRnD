@@ -33,7 +33,7 @@ const projectupdateSchema = mongoose.Schema({
     },
     content: {
         // The content of the update
-        type: String,
+        type: Object, // a Quill object (the image uploads as part of the docs not sorted)
         required: [true, 'Please add content of your update']
     },
 }, {

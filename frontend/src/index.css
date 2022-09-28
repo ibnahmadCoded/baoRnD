@@ -83,3 +83,53 @@
   .dropdown.show {
     display: block;
   }
+
+  .editorcontainer .ql-editor {
+    width: 8.5in; /* width of s sheet of paper */
+    min-height: 1.5in; 
+    /* padding: 1in; */
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    background-color: white;
+  }
+
+  .editorcontainer .ql-container.ql-snow {
+    border: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .editorcontainer .ql-toolbar.ql-snow {
+    /* width: 8.5in; */
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #F1EDE0; /* f3f3f3 for grey bg */
+    border: none;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  /* printing configs. currently no working. to fix later. */
+  @page {
+    margin: 1in;
+  }
+
+  @media print {
+    body {
+      background: none;
+    }
+
+    .editorcontainer .ql-editor {
+      width: 6.5in; /* width of s sheet of paper */
+      height: 9in; /* height of s sheet of paper */
+      padding: 0;
+      margin: 0;
+      box-shadow: none;
+      align-self: flex-start;
+    }
+
+    .editorcontainer .ql-toolbar.ql-snow {
+      display: none;
+    }
+  }

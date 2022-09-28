@@ -1,5 +1,7 @@
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { deleteUpdate } from "../features/updates/updateSlice"
+import Quill from "quill";
 
 const IndividualUpdateItem = ({update}) => {
     const dispatch = useDispatch()
@@ -7,7 +9,17 @@ const IndividualUpdateItem = ({update}) => {
     const { user } = useSelector((state) => state.auth)
     const { project } = useSelector((state) => state.project)
 
-    
+    const  wrapperRef = useCallback((wrapper) => {
+        if(wrapper == null) return
+
+        wrapper.innerHTML = ""
+        const editor = document.createElement("div")
+        wrapper.append(editor)
+        const quill = new Quill(editor)
+        quill.setContents(update.content)
+        quill.setText(quill.getText(0, 150))
+        quill.disable()
+    }, [update.content])
 
     return (
         <>
@@ -51,7 +63,11 @@ const IndividualUpdateItem = ({update}) => {
                 </p>
             )}
             </>
-            <p className="mb-5">{update.content}</p>
+            {typeof(update.content) == "string" ? 
+                <p className="mb-5">{update.content.substring(0,150) + "..."}</p> 
+                : 
+                <div ref={wrapperRef}></div>
+            }
             <a className="hover:text-custom-150" href={"/project/" + update.project}> Back to project</a>
         </div>
         </div>

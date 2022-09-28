@@ -32,7 +32,7 @@ import Privacy from './pages/Privacy';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
-import WYSIWYGEditor from './pages/WYSIWYGEditor';
+import WYSIWYGEditor from './pages/WYSIWYGEditor2';
 
 
 function App() {
@@ -69,7 +69,7 @@ function App() {
             <Route path='/services' element={<Services />}/>
             <Route path='/contact' element={<Contact />}/>
             <Route path='/faq' element={<FAQ />}/>
-            <Route path='/editor/:id' element={<WYSIWYGEditor />}/>
+            <Route path='/editor/:id/' element={<WYSIWYGEditor />}/> {/** currentl< not in use in the app */}
             <Route path='/subscribe/:price' element={<Subscribe />}/>
             <Route path='/' element={<Dashboard />}/>
           </Routes>

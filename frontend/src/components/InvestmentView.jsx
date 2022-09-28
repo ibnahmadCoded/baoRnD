@@ -115,7 +115,7 @@ const InvestmentView = () => {
                         <p class="font-bold mb-1">General Investment Information</p>
                         <p>Message from the project owner: {project.appmsg}</p>
                         <span className="text-custom-100 font-bold">${totalInvested}</span> out of <span className="text-custom-150">${project.amount} </span> invested.
-                        <p>Join the investors in this proejct. </p>
+                        <p>Join other investors in this proejct. </p>
                         <form className="mt-5" onSubmit={onSubmit}>
                             <p class="font-bold mb-3">Make New Investment</p>
                             

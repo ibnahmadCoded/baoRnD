@@ -110,6 +110,46 @@ const MaterialItem = ({material}) => {
                 ) : (
                     null
                 )}
+
+                {material.type === "File" && material.visibility === "Hidden" && project.user === user._id ? (
+                    /// update. stakeholders should be able to see hidden materials also. (maybe from backend)
+                    <>
+                    <p>
+                        Type: {material.type}
+                    </p>
+                    <p>
+                        Visibility: <span className="text-custom-150">Hidden</span>
+                    </p>
+                    <p>
+                        <img style={{ width: '100%' }} src={material.material} alt='' />
+                    </p>
+                    <p>
+                        Created At: {new Date(material.createdAt).toLocaleString("en-Us")}
+                    </p>
+                    </>
+                    
+                ) : (
+                    null
+                )}
+
+                {material.type === "File" && material.visibility === "Visible" ? (
+                    <>
+                    <p>
+                        Type: {material.type}
+                    </p>
+                    <p>
+                        Visibility: <span className="text-custom-100">Visible</span>
+                    </p>
+                    <p>
+                        <img style={{ width: '100%' }} src={material.material} alt='' />
+                    </p>
+                    <p>
+                        Created At: {new Date(material.createdAt).toLocaleString("en-Us")}
+                    </p>
+                    </>
+                ) : (
+                    null
+                )}
         </div>
         </div>
         </>
