@@ -11,7 +11,7 @@ const uploadFile = asyncHandler(async (req, res) => {
 
     const file = req.files.file
 
-    // only accep jpg and png files for now
+    // only accep jpg and png files for now. though pdf upload works, it does not render in frontend
 
     uploadPath = path.resolve(__dirname, '../', '../', 'frontend', 'public', 'uploads')
 
